@@ -1,5 +1,5 @@
 #main {
-  background-color: var(--cyan-700);
+  background-color: var(--cyan-800);
   height: 5em;
   margin: 0;
   display: flex;
@@ -13,19 +13,56 @@
   font-size: 2.5em;
   padding-left: 1em;
   margin: 0;
-  width: 50%;
-  color: white;
+  color: #f2e0c2;
 }
 
 #user_icon {
-  color: white;
+  color: #f0e4d1;
   font-size: 2em;
-}
-
-#title {
-  width: 90%;
+  margin-left:0.5em;
 }
 
 #for_user {
   float: right;
+}
+
+#search, #add_announcement, #favourite{
+  background-color: #f0e4d1;
+  color: var(--cyan-900);
+  padding: 0.1em;
+  width: 9.5rem;
+  font-size: 1.15em;
+  border-radius: 0.5rem;
+  height : 2.6em;
+  margin: 0.5em;
+  text-align:center;
+  border: 3px solid #f0e4d1;
+}
+
+#search:hover, #add_announcement:hover, #favourite:hover{
+  background-color: var(--cyan-800);
+  color:  #f0e4d1;
+  border: 3px solid #f0e4d1;
+}
+
+#favourite{
+  padding-top:0.5em;
+}
+
+#search{
+  margin-left:2em;
+}
+
+#left_div{
+  width:70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+#right-div{
+  width:30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center
 }

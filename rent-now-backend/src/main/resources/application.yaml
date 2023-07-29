@@ -4,3 +4,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8443/realms/rent-now
+  datasource:
+    url: jdbc:mysql://localhost:3306/rent-now-database
+    username: root
+    password: kudybson
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
