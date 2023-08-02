@@ -14,9 +14,9 @@
     <div>
       <span id="add_announcement" class="pi pi-plus"> Add an announcement</span>
     </div>
-    <div id="for_user">
-      <span id="user_icon" class="pi pi-user"></span>
-    </div>
+    <span id="user_icon" class="pi pi-user" (click)="menu.toggle($event)"></span>
+    <p-menu #menu [model]="avatarMenuItems" [popup]="true"
+            styleClass="menu-items-override"></p-menu>
   </div>
 </div>
 

@@ -7,9 +7,7 @@
   align-items: center
 }
 
-
 #name {
-  font-family: Candara;
   font-size: 2.5em;
   padding-left: 1em;
   margin: 0;
@@ -17,17 +15,22 @@
 }
 
 #user_icon {
-  color: #f0e4d1;
+  color: #f1e2c9;
   font-size: 2em;
   margin-left:0.5em;
+  float:right;
+  border: 3px solid #f0e4d1;
+  border-radius: 0.5rem;
+  padding:0.15em;
 }
 
-#for_user {
-  float: right;
+#user_icon:hover{
+  color: white;
+  border: 3px solid white;
 }
 
 #search, #add_announcement, #favourite{
-  background-color: #f0e4d1;
+  background-color: #f1e2c9;
   color: var(--cyan-900);
   padding: 0.1em;
   width: 9.5rem;
@@ -39,10 +42,9 @@
   border: 3px solid #f0e4d1;
 }
 
-#search:hover, #add_announcement:hover, #favourite:hover{
-  background-color: var(--cyan-800);
-  color:  #f0e4d1;
-  border: 3px solid #f0e4d1;
+#favourite:hover, #search:hover, #add_announcement:hover{
+  background-color: #eae9e9;
+  border: 3px solid #eae9e9;
 }
 
 #favourite{
@@ -65,4 +67,13 @@
   display: flex;
   flex-direction: row;
   align-items: center
+}
+
+:host {
+  ::ng-deep .menu-items-override {
+    background-color: #f1e2c9;
+    color: white;
+    margin-top: 0.2em;
+    width: 10em;
+  }
 }

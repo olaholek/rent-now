@@ -11,6 +11,8 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ButtonModule} from "primeng/button";
 import {SidebarModule} from "primeng/sidebar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MenuModule} from "primeng/menu";
+import {AvatarModule} from "primeng/avatar";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -37,14 +39,16 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     ErrorPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    KeycloakAngularModule,
-    ButtonModule,
-    SidebarModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        KeycloakAngularModule,
+        ButtonModule,
+        SidebarModule,
+        BrowserAnimationsModule,
+        MenuModule,
+        AvatarModule
+    ],
   providers: [
     {
     provide: APP_INITIALIZER,
