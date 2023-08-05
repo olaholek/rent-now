@@ -29,12 +29,12 @@ public class Accommodation implements Serializable {
     private Address address;
 
     @Column(name = "PRICE_FOR_DAY")
-    @NotEmpty
+    @NotNull
     private BigDecimal priceForDay;
 
     @Column(name = "SQUARE_FOOTAGE")
-    @NotEmpty
-    private BigDecimal squareFootage;
+    @NotNull
+    private double squareFootage;
 
     @Column(name = "DESCRIPTION")
     @NotEmpty

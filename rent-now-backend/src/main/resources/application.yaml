@@ -11,4 +11,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+server:
+  servlet:
+    context-path: /api
+  tomcat:
+    accesslog:
+      enabled: true

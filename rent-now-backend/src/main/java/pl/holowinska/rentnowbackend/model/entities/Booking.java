@@ -1,7 +1,6 @@
 package pl.holowinska.rentnowbackend.model.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +47,6 @@ public class Booking implements Serializable {
     private Timestamp bookingDate;
 
     @Column(name = "PRICE")
-    @NotEmpty
+    @NotNull
     private BigDecimal price;
 }

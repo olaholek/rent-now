@@ -12,7 +12,7 @@
       <span id="favourite" class="pi pi-heart-fill"> My favourite</span>
     </div>
     <div>
-      <span id="add_announcement" class="pi pi-plus"> Add an announcement</span>
+      <span (click)="toMainPage()" id="add_announcement" class="pi pi-plus"> Add an announcement</span>
     </div>
     <span id="user_icon" class="pi pi-user" (click)="menu.toggle($event)"></span>
     <p-menu #menu [model]="avatarMenuItems" [popup]="true"
