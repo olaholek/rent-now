@@ -80,6 +80,27 @@ class UserRepositoryTest extends IntegrationTest {
     }
 
     @Test
+    public void addressShouldBeDeletedWithUser() {
+        //given
+        UUID uuid = UUID.randomUUID();
+        User user = new User();
+        user.setId(uuid);
+        user.setFirstName("Ola");
+        user.setLastName("Holo");
+        user.setAddress(getAddress());
+        user.setPhoneNumber("675534211");
+
+        //when
+        User saved = userRepository.save(user);
+        Address address = saved.getAddress();
+        userRepository.delete(saved);
+        Optional<Address> byId = addressRepository.findById(address.getId());
+
+        //then
+        assertFalse(byId.isPresent());
+    }
+
+    @Test
     public void userShouldBeUpdated() {
         //given
         UUID uuid = UUID.randomUUID();
@@ -110,6 +131,6 @@ class UserRepositoryTest extends IntegrationTest {
         address.setStreet("Wybickiego");
         address.setApartmentNumber("106");
         address.setHouseNumber("56");
-        return address;
+        return addressRepository.save(address);
     }
 }

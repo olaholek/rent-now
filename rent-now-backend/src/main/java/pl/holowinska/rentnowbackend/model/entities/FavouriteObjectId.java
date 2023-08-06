@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.LazyGroup;
-import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
 
 import java.io.Serializable;
 
@@ -16,16 +15,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ConvenienceId implements Serializable {
+public class FavouriteObjectId implements Serializable {
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    @LazyGroup("user")
+    @NotNull
+    private User user;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = Accommodation.class)
     @JoinColumn(name = "ACCOMMODATION_ID", referencedColumnName = "ACCOMMODATION_ID")
     @LazyGroup("accommodation")
     @NotNull
     private Accommodation accommodation;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "CONVENIENCE_TYPE")
-    @NotNull
-    private ConvenienceType convenienceType;
 }

@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import pl.holowinska.rentnowbackend.model.entities.*;
+import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class FavouriteObjectRepositoryTest extends IntegrationTest {
+public class ConvenienceRepositoryTest extends IntegrationTest {
 
     @Autowired
     AddressRepository addressRepository;
@@ -23,83 +24,66 @@ class FavouriteObjectRepositoryTest extends IntegrationTest {
     AccommodationRepository accommodationRepository;
 
     @Autowired
-    UserRepository userRepository;
+    ConvenienceRepository convenienceRepository;
 
     @Autowired
-    FavouriteObjectRepository favouriteObjectRepository;
+    UserRepository userRepository;
 
     @Test
-    public void favouriteObjectShouldBeSaved() {
+    public void convenienceShouldBeSaved() {
         //given
-        FavouriteObject favouriteObject = new FavouriteObject();
-        FavouriteObjectId id = new FavouriteObjectId(getUser(), getAccommodation());
-        favouriteObject.setId(id);
+        Convenience convenience = new Convenience();
+        ConvenienceId id = new ConvenienceId(getAccommodation(), ConvenienceType.BALCONY);
+        convenience.setId(id);
 
         //when
-        FavouriteObject saved = favouriteObjectRepository.save(favouriteObject);
-        Optional<FavouriteObject> byId = favouriteObjectRepository.findById(saved.getId());
+        Convenience saved = convenienceRepository.save(convenience);
+        Optional<Convenience> byId = convenienceRepository.findById(saved.getId());
 
         //then
         assertTrue(byId.isPresent());
     }
 
     @Test
-    public void favouriteObjectShouldNotBeSaved() {
+    public void convenienceShouldNotBeSaved() {
         //given
-        FavouriteObject favouriteObject = new FavouriteObject();
+        Convenience convenience = new Convenience();
 
         //when
         //then
         assertThrows(JpaSystemException.class, () -> {
-            favouriteObjectRepository.save(favouriteObject);
-            favouriteObjectRepository.flush();
+            convenienceRepository.save(convenience);
+            convenienceRepository.flush();
         });
     }
 
     @Test
-    public void favouriteObjectShouldBeDeleted() {
+    public void convenienceShouldBeDeleted() {
         //given
-        FavouriteObject favouriteObject = new FavouriteObject();
-        FavouriteObjectId id = new FavouriteObjectId(getUser(), getAccommodation());
-        favouriteObject.setId(id);
+        Convenience convenience = new Convenience();
+        ConvenienceId id = new ConvenienceId(getAccommodation(), ConvenienceType.BALCONY);
+        convenience.setId(id);
 
         //when
-        FavouriteObject saved = favouriteObjectRepository.save(favouriteObject);
-        favouriteObjectRepository.delete(saved);
-        Optional<FavouriteObject> byId = favouriteObjectRepository.findById(saved.getId());
+        Convenience saved = convenienceRepository.save(convenience);
+        convenienceRepository.delete(saved);
+        Optional<Convenience> byId = convenienceRepository.findById(saved.getId());
 
         //then
         assertFalse(byId.isPresent());
     }
 
     @Test
-    public void userShouldNotBeDeletedWithFavouriteObject() {
+    public void accommodationShouldNotBeDeletedWithConvenience() {
         //given
-        FavouriteObject favouriteObject = new FavouriteObject();
-        FavouriteObjectId id = new FavouriteObjectId(getUser(), getAccommodation());
-        favouriteObject.setId(id);
+        Convenience convenience = new Convenience();
+        ConvenienceId id = new ConvenienceId(getAccommodation(), ConvenienceType.BALCONY);
+        convenience.setId(id);
 
         //when
-        FavouriteObject saved = favouriteObjectRepository.save(favouriteObject);
-        User user = saved.getId().getUser();
-        favouriteObjectRepository.delete(saved);
-        Optional<User> byId = userRepository.findById(user.getId());
-
-        //then
-        assertTrue(byId.isPresent());
-    }
-
-    @Test
-    public void accommodationShouldNotBeDeletedWithFavouriteObject() {
-        //given
-        FavouriteObject favouriteObject = new FavouriteObject();
-        FavouriteObjectId id = new FavouriteObjectId(getUser(), getAccommodation());
-        favouriteObject.setId(id);
-
-        //when
-        FavouriteObject saved = favouriteObjectRepository.save(favouriteObject);
+        Convenience saved = convenienceRepository.save(convenience);
         Accommodation accommodation = saved.getId().getAccommodation();
-        favouriteObjectRepository.delete(saved);
+        convenienceRepository.delete(saved);
         Optional<Accommodation> byId = accommodationRepository.findById(accommodation.getId());
 
         //then

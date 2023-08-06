@@ -28,6 +28,12 @@ public class Accommodation implements Serializable {
     @NotNull
     private Address address;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    @LazyGroup("user")
+    @NotNull
+    private User user;
+
     @Column(name = "PRICE_FOR_DAY")
     @NotNull
     private BigDecimal priceForDay;
