@@ -1,19 +1,23 @@
 package pl.holowinska.rentnowbackend.model.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 
-@Entity(name = "FAVOURITE_OBJECT")
+@Entity(name = "CONVENIENCE")
 @NoArgsConstructor
 @Getter
 @Setter
-public class FavouriteObject implements Serializable {
+public class Convenience {
 
     @EmbeddedId
-    private FavouriteObjectId id;
+    private ConvenienceId id;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {KeycloakService} from "keycloak-angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit{
   public avatarMenuItems: MenuItem[] = [];
 
   constructor(
-    private readonly keycloak: KeycloakService
+    private readonly keycloak: KeycloakService,
+    private readonly router: Router
   ) { }
 
   public ngOnInit() {
@@ -29,5 +31,9 @@ export class HeaderComponent implements OnInit{
         },
       }
     ]
+  }
+
+  public toMainPage() {
+    this.router.navigate(['/home']);
   }
 }

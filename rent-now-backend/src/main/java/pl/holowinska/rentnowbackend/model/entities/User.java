@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity(name = "USER")
+@Entity(name = "USERS")
 @NoArgsConstructor
 @Getter
 @Setter

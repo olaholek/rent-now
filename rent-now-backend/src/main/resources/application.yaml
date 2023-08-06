@@ -7,8 +7,14 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/rent-now-database
     username: root
-    password: kudybson
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+server:
+  servlet:
+    context-path: /api
+  tomcat:
+    accesslog:
+      enabled: true
