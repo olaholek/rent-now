@@ -9,6 +9,7 @@ import pl.holowinska.rentnowbackend.model.entities.Accommodation;
 import pl.holowinska.rentnowbackend.model.entities.Address;
 import pl.holowinska.rentnowbackend.model.entities.Booking;
 import pl.holowinska.rentnowbackend.model.entities.User;
+import pl.holowinska.rentnowbackend.model.enums.Status;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -40,6 +41,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = getAccommodation();
         Booking booking = new Booking();
         booking.setUser(getUser());
+        booking.setStatus(Status.BOOKED);
         booking.setAccommodation(accommodation);
         booking.setBookingDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -60,6 +62,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = getAccommodation();
         Booking booking = new Booking();
         booking.setAccommodation(accommodation);
+        booking.setStatus(Status.BOOKED);
         booking.setBookingDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setEndDate(Timestamp.valueOf(LocalDateTime.now().plusMonths(2)));
@@ -79,6 +82,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = getAccommodation();
         Booking booking = new Booking();
         booking.setUser(getUser());
+        booking.setStatus(Status.BOOKED);
         booking.setAccommodation(accommodation);
         booking.setBookingDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -100,6 +104,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = getAccommodation();
         Booking booking = new Booking();
         booking.setUser(getUser());
+        booking.setStatus(Status.BOOKED);
         booking.setAccommodation(accommodation);
         booking.setBookingDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -122,6 +127,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = getAccommodation();
         Booking booking = new Booking();
         booking.setUser(getUser());
+        booking.setStatus(Status.BOOKED);
         booking.setAccommodation(accommodation);
         booking.setBookingDate(Timestamp.valueOf(LocalDateTime.now()));
         booking.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -146,7 +152,7 @@ class BookingRepositoryTest extends IntegrationTest {
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
         accommodation.setUser(getUser());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
         return accommodationRepository.save(accommodation);
@@ -158,7 +164,6 @@ class BookingRepositoryTest extends IntegrationTest {
         user.setId(uuid);
         user.setFirstName("Ola");
         user.setLastName("Holo");
-        user.setAddress(getAddress());
         user.setPhoneNumber("675534211");
         return userRepository.save(user);
     }

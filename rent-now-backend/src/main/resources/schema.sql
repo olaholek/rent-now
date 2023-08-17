@@ -22,12 +22,10 @@ CREATE TABLE ADDRESS
 
 CREATE TABLE USERS(
                       USER_ID BINARY(16) NOT NULL,
-                      FIRST_NAME  VARCHAR(255) NOT NULL,
-                      LAST_NAME VARCHAR(255) NOT NULL,
-                      PHONE_NUMBER VARCHAR(9)  NOT NULL,
-                      ADDRESS_ID   BIGINT NOT NULL,
-                      CONSTRAINT PK_USER PRIMARY KEY (USER_ID),
-                      CONSTRAINT FK_ADDRESS_USER FOREIGN KEY (ADDRESS_ID) REFERENCES ADDRESS (ADDRESS_ID)
+                      FIRST_NAME  VARCHAR(255),
+                      LAST_NAME VARCHAR(255),
+                      PHONE_NUMBER VARCHAR(9),
+                      CONSTRAINT PK_USER PRIMARY KEY (USER_ID)
 );
 
 CREATE TABLE ACCOMMODATION(
@@ -35,7 +33,7 @@ CREATE TABLE ACCOMMODATION(
                               ADDRESS_ID   BIGINT NOT NULL,
                               USER_ID BINARY(16) NOT NULL,
                               PRICE_FOR_DAY DECIMAL(10, 2) NOT NULL,
-                              SQUARE_FOOTAGE DECIMAL(10, 2) NOT NULL,
+                              SQUARE_FOOTAGE DECIMAL(10, 2),
                               DESCRIPTION VARCHAR(300),
                               CONSTRAINT PK_ACCOMMODATION PRIMARY KEY (ACCOMMODATION_ID),
                               CONSTRAINT FK_USER_ACCOMMODATION FOREIGN KEY (USER_ID) REFERENCES USERS (USER_ID),
@@ -70,6 +68,7 @@ CREATE TABLE BOOKING(
                         END_DATE TIMESTAMP NOT NULL,
                         BOOKING_DATE TIMESTAMP NOT NULL,
                         PRICE DECIMAL(10, 2) NOT NULL,
+                        STATUS VARCHAR(255) NOT NULL,
                         CONSTRAINT PK_BOOKING PRIMARY KEY (BOOKING_ID),
                         CONSTRAINT FK_USER_BOOKING FOREIGN KEY (USER_ID) REFERENCES USERS (USER_ID),
                         CONSTRAINT FK_ACCOMMODATION_BOOKING FOREIGN KEY (ACCOMMODATION_ID) REFERENCES ACCOMMODATION (ACCOMMODATION_ID)

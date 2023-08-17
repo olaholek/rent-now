@@ -94,7 +94,7 @@ public class ConvenienceRepositoryTest extends IntegrationTest {
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
         accommodation.setUser(getUser());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
         return accommodationRepository.save(accommodation);
@@ -106,7 +106,6 @@ public class ConvenienceRepositoryTest extends IntegrationTest {
         user.setId(uuid);
         user.setFirstName("Ola");
         user.setLastName("Holo");
-        user.setAddress(getAddress());
         user.setPhoneNumber("675534211");
         return userRepository.save(user);
     }

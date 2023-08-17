@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.LazyGroup;
+import pl.holowinska.rentnowbackend.model.enums.Status;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -49,4 +50,9 @@ public class Booking implements Serializable {
     @Column(name = "PRICE")
     @NotNull
     private BigDecimal price;
+
+    @Column(name = "STATUS", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Status status;
 }

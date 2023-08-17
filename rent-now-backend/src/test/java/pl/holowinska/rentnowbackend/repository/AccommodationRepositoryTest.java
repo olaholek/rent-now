@@ -32,7 +32,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
@@ -50,7 +50,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
 
@@ -67,7 +67,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
@@ -86,14 +86,14 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
-        saved.setSquareFootage(40);
+        saved.setSquareFootage(40.0);
         Accommodation updated = accommodationRepository.save(saved);
 
         //then
@@ -105,7 +105,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
@@ -125,7 +125,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         //given
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
-        accommodation.setSquareFootage(30);
+        accommodation.setSquareFootage(30.0);
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
@@ -161,7 +161,6 @@ class AccommodationRepositoryTest extends IntegrationTest {
         user.setId(uuid);
         user.setFirstName("Ola");
         user.setLastName("Holo");
-        user.setAddress(getAddress());
         user.setPhoneNumber("675534211");
         return userRepository.save(user);
     }

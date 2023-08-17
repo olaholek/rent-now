@@ -39,8 +39,7 @@ public class Accommodation implements Serializable {
     private BigDecimal priceForDay;
 
     @Column(name = "SQUARE_FOOTAGE")
-    @NotNull
-    private double squareFootage;
+    private Double squareFootage;
 
     @Column(name = "DESCRIPTION")
     @NotEmpty

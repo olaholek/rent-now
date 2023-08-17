@@ -1,12 +1,11 @@
 package pl.holowinska.rentnowbackend.model.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.LazyGroup;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -22,23 +21,14 @@ public class User implements Serializable {
     @Column(name = "USER_ID", columnDefinition = "BINARY(16)", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "FIRST_NAME", nullable = false)
-    @NotEmpty
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
-    @Column(name = "LAST_NAME", nullable = false)
-    @NotEmpty
+    @Column(name = "LAST_NAME")
     private String lastName;
 
     @Column(name = "PHONE_NUMBER")
-    @NotEmpty
     private String phoneNumber;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ADDRESS_ID")
-    @LazyGroup("address")
-    @NotNull
-    private Address address;
 
     @Override
     public boolean equals(Object o) {
