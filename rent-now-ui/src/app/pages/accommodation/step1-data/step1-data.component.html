@@ -1,0 +1,142 @@
+<div class="container1">
+  <div class="box">
+    <label for="name">Name</label>
+    <input pInputText id="acc-name" type="text"/>
+    <!--<small class="p-error" *ngIf="(name.invalid && submitted) || (name.dirty && name.invalid)">Name is required.</small>-->
+<!--    //todo-->
+  </div>
+</div>
+
+<div class="container2">
+  <div class="box">
+    <label for="country">Country</label>
+    <input
+      pInputText
+      id="acc-country"
+      type="text"
+    />
+  </div>
+</div>
+
+<div class="container2">
+  <div class="box">
+    <label for="city">City</label>
+    <input
+      pInputText
+      id="acc-city"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="street">Street</label>
+    <input
+      pInputText
+      id="acc-street"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="houseNumber">House number</label>
+    <input
+      pInputText
+      id="acc-houseNumber"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="apartmentNumber">Apartment number</label>
+    <input
+      pInputText
+      id="acc-ApartmentNumber"
+      type="text"
+    />
+  </div>
+</div>
+
+<div class="container2">
+  <div class="box">
+    <label for="postalCode">Postal code</label>
+    <input
+      pInputText
+      pattern="^[0-9]{2}-[0-9]{3}"
+      id="acc-postalCode"
+    />
+  </div>
+
+  <div class="box">
+    <label for="post">Post</label>
+    <input
+      pInputText
+      id="acc-post"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="county">County</label>
+    <input
+      pInputText
+      id="acc-county"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="province">Province</label>
+    <input
+      pInputText
+      id="acc-province"
+      type="text"
+    />
+  </div>
+</div>
+
+<div class="container2">
+  <div class="box">
+    <label for="price">Price for day</label>
+    <input
+      pInputText
+      id="acc-price"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="square">Square footage</label>
+    <input
+      pInputText
+      id="acc-square"
+      type="text"
+    />
+  </div>
+
+  <div class="box">
+    <label for="maxNumberOfPeople">Maximum number of people</label>
+    <input
+      id="acc-max"
+      type="number"
+    />
+  </div>
+</div>
+
+<div class="box">
+  <label for="description">Description</label>
+  <input
+    pInputText
+    id="acc-desc"
+    type="text"
+  />
+</div>
+
+<p id="facilities">Facilities</p>
+<div *ngFor="let category of categories" class="field-checkbox">
+  <p-checkbox name="group" [value]="category" [(ngModel)]="selectedCategories"></p-checkbox>
+  <label [for]="category">{{ category }}</label>
+</div>
+
+<div id="divButton" class="grid grid-nogutter justify-content-end">
+  <p-button label="Save" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+</div>
