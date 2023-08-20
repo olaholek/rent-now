@@ -30,7 +30,9 @@ CREATE TABLE USERS(
 
 CREATE TABLE ACCOMMODATION(
                               ACCOMMODATION_ID BIGINT AUTO_INCREMENT NOT NULL,
+                              NAME varchar(100) not null,
                               ADDRESS_ID   BIGINT NOT NULL,
+                              MAX_NO_OF_PEOPLE  INT NOT NULL,
                               USER_ID BINARY(16) NOT NULL,
                               PRICE_FOR_DAY DECIMAL(10, 2) NOT NULL,
                               SQUARE_FOOTAGE DECIMAL(10, 2),

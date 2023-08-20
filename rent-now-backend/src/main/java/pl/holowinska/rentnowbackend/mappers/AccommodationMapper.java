@@ -13,12 +13,14 @@ public class AccommodationMapper {
         if (accommodation == null) return null;
         return AccommodationRS.builder()
                 .id(accommodation.getId())
+                .name(accommodation.getName())
                 .addressRS(AddressMapper.mapToDto(accommodation.getAddress()))
                 .conveniences(conveniences)
                 .priceForDay(accommodation.getPriceForDay())
                 .description(accommodation.getDescription())
                 .squareFootage(accommodation.getSquareFootage())
                 .userUUID(accommodation.getUser().getId())
+                .maxNoOfPeople(accommodation.getMaxNoOfPeople())
                 .build();
     }
 }

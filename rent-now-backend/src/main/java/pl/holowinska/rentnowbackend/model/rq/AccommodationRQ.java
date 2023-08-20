@@ -20,14 +20,18 @@ import java.util.UUID;
 public class AccommodationRQ {
 
     @NotNull
+    private String name;
+    @NotNull
     private AddressRQ addressRQ;
     @NotNull
     private UUID userUUID;
     @NotNull
     @Positive
     private BigDecimal priceForDay;
-    private Double squareFootage;
+    private BigDecimal squareFootage;
     @NotBlank
     private String description;
     private HashMap<ConvenienceType, BigDecimal> conveniences;
+    @NotNull
+    private Integer maxNoOfPeople;
 }

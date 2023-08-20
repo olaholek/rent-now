@@ -13,10 +13,12 @@ import java.util.UUID;
 public class AccommodationRS {
 
     private Long id;
+    private String name;
     private AddressRS addressRS;
     private UUID userUUID;
     private BigDecimal priceForDay;
-    private Double squareFootage;
+    private BigDecimal squareFootage;
     private String description;
     private HashMap<ConvenienceType, BigDecimal> conveniences;
+    private Integer maxNoOfPeople;
 }
