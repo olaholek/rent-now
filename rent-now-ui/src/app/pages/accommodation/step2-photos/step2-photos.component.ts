@@ -1,27 +1,34 @@
 import {Component, OnInit} from '@angular/core';
-import {FileUpload} from "primeng/fileupload";
 import {MessageService} from "primeng/api";
+import {ActivatedRoute} from "@angular/router";
+import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
 
 @Component({
-    selector: 'app-step2-photos',
-    templateUrl: './step2-photos.component.html',
-    styleUrls: ['./step2-photos.component.scss']
+  selector: 'app-step2-photos',
+  templateUrl: './step2-photos.component.html',
+  styleUrls: ['./step2-photos.component.scss']
 })
 export class Step2PhotosComponent implements OnInit {
 
-    uploadedFiles: any[] = [];
+  id: string | null | undefined;
 
-    constructor(private messageService: MessageService) {
-    }
+  constructor(private readonly accommodationService: AccommodationServiceImpl,
+              private readonly route: ActivatedRoute,
+              private messageService: MessageService) {
+    this.route.queryParamMap
+      .subscribe(params => {
+        this.id = params.get('id');
+      })
+  }
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+  }
 
-    onUpload(event: FileUpload) {
-        for (let file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-
-        this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-    }
+  onUpload(event: { files: Blob[] }) {
+    this.accommodationService.addPhotos(this.id, event.files).subscribe(
+      () => {
+        this.messageService.add({severity: 'success', summary: 'Photos saved', detail: ''});
+      }
+    );
+  }
 }

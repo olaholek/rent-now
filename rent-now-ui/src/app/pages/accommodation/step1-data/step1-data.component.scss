@@ -38,7 +38,7 @@ label {
   margin-bottom: 1em;
 }
 
-#facilities {
+.facilities {
   font-size: 22px;
 }
 
@@ -56,4 +56,24 @@ p-button {
 
 #divButton {
   padding-bottom: 2em;
+}
+
+#cost{
+  height: 1.5em;
+  width: 4em;
+  margin-left: auto;
+}
+
+#facilities-container {
+  display: flex;
+  width: 50%;
+}
+
+.column {
+  flex: 1;
+  padding: 10px;
+}
+
+.field-checkbox {
+  margin-bottom: 10px;
 }

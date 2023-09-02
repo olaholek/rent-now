@@ -9,6 +9,6 @@ export interface AccommodationRQ {
     priceForDay: bigDecimal;
     squareFootage: bigDecimal;
     description: string;
-    conveniences: Map<ConvenienceType, bigDecimal>;
+    conveniences: Map<ConvenienceType, string>;
     maxNoOfPeople: number;
 }

@@ -1,13 +1,13 @@
 export enum ConvenienceType {
-  PRIVATE_BATHROOM = "Private bathroom",
-  BALCONY = "Balcony",
-  KITCHEN = "Kitchen",
-  AIR_CONDITIONING = "Air conditioning",
-  POOL = "Pool",
-  TV = "TV",
-  BREAKFAST = "Breakfast",
-  WASHING_MACHINE = "Washing machine",
-  DINNER = "Dinner",
-  SAUNA = "Sauna",
-  PARKING = "Parking"
+  PRIVATE_BATHROOM,
+  BALCONY,
+  KITCHEN,
+  AIR_CONDITIONING,
+  POOL,
+  TV,
+  BREAKFAST,
+  WASHING_MACHINE,
+  DINNER,
+  SAUNA,
+  PARKING
 }
