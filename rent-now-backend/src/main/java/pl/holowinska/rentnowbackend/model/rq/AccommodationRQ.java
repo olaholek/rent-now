@@ -3,10 +3,7 @@ package pl.holowinska.rentnowbackend.model.rq;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
 
 import java.math.BigDecimal;
@@ -17,6 +14,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class AccommodationRQ {
 
     @NotNull
