@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ConvenienceRepository extends JpaRepository<Convenience, ConvenienceId> {
 
-    @Query("select c from Convenience c where c.id.accommodation.id = :accommodationId")
+    @Query("select c from CONVENIENCE c where c.id.accommodation.id = :accommodationId")
     List<Convenience> getConvenienceByAccommodationId(Long accommodationId);
 }
