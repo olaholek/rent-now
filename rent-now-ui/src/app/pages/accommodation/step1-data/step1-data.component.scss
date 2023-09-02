@@ -28,6 +28,11 @@ label {
 #acc-desc {
   width: 96%;
   height: 10em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 5px;
+  border-width: 1.5px;
+  padding: 0.5em;
 }
 
 #acc-name {
@@ -76,4 +81,9 @@ p-button {
 
 .field-checkbox {
   margin-bottom: 10px;
+}
+
+.asterisk{
+  color: #e00707;
+  font-size: 13px;
 }

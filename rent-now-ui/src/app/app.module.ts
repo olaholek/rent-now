@@ -22,6 +22,7 @@ import {MessageService} from "primeng/api";
 import {Step1DataComponent} from './pages/accommodation/step1-data/step1-data.component';
 import {Step2PhotosComponent} from './pages/accommodation/step2-photos/step2-photos.component';
 import {StepsModule} from "primeng/steps";
+import {ToastModule} from "primeng/toast";
 
 function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
@@ -65,7 +66,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
         InputTextareaModule,
         FileUploadModule,
         HttpClientModule,
-        StepsModule
+        StepsModule,
+        ToastModule
     ],
     providers: [
         {
