@@ -24,6 +24,18 @@ export class HeaderComponent implements OnInit{
   private async initAvatarMenuItems(){
     this.avatarMenuItems = [
       {
+        label: 'My announcements',
+        command: () => {
+          this.router.navigate(['/announcements'])
+        },
+      },
+      {
+        label: 'My reservations',
+        command: () => {
+          this.router.navigate(['/reservations'])
+        },
+      },
+      {
         label: 'Sign out',
         icon: 'pi pi-sign-out',
         command: () => {
@@ -35,5 +47,13 @@ export class HeaderComponent implements OnInit{
 
   public toMainPage() {
     this.router.navigate(['/home']);
+  }
+
+  public toFavouritePage() {
+    this.router.navigate(['/favourites']);
+  }
+
+  public toAddAnnouncementPage() {
+    this.router.navigate(['/announcements/add']);
   }
 }

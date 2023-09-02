@@ -1,18 +1,18 @@
 <div id="main">
   <div id="left_div">
     <div id="title">
-      <b><p id="name">RENT-NOW</p></b>
+      <b><p (click)="toMainPage()" id="name">RENT-NOW</p></b>
     </div>
     <div>
-      <b><span id="search" class="pi pi-search"> Search for accommodation</span></b>
+      <b><span (click)="toMainPage()" id="search" class="pi pi-search"> Search for accommodation</span></b>
     </div>
   </div>
   <div id="right-div">
     <div>
-      <span id="favourite" class="pi pi-heart-fill"> My favourite</span>
+      <span (click)="toFavouritePage()" id="favourite" class="pi pi-heart-fill"> My favourite</span>
     </div>
     <div>
-      <span (click)="toMainPage()" id="add_announcement" class="pi pi-plus"> Add an announcement</span>
+      <span (click)="toAddAnnouncementPage()" id="add_announcement" class="pi pi-plus"> Add an announcement</span>
     </div>
     <span id="user_icon" class="pi pi-user" (click)="menu.toggle($event)"></span>
     <p-menu #menu [model]="avatarMenuItems" [popup]="true"

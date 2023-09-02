@@ -110,7 +110,7 @@ class FavouriteObjectRepositoryTest extends IntegrationTest {
         Accommodation accommodation = new Accommodation();
         accommodation.setAddress(getAddress());
         accommodation.setUser(getUser());
-        accommodation.setSquareFootage(30.0);
+        accommodation.setSquareFootage(BigDecimal.valueOf(30));
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
         return accommodationRepository.save(accommodation);

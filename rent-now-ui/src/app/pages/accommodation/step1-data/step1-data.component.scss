@@ -1,0 +1,89 @@
+input {
+  height: 3em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 5px;
+  border-width: 1.5px;
+  padding: 0.5em;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+  justify-content: flex-start;
+  gap: 3em;
+}
+
+label {
+  margin-bottom: 0.3em;
+  font-size: 18px;
+}
+
+#acc-desc {
+  width: 96%;
+  height: 10em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 5px;
+  border-width: 1.5px;
+  padding: 0.5em;
+}
+
+#acc-name {
+  width: 96%;
+}
+
+.container1 {
+  margin-bottom: 1em;
+}
+
+.facilities {
+  font-size: 22px;
+}
+
+#acc-max {
+  width: 13.5em;
+}
+
+.field-checkbox {
+  margin-bottom: 0.5em;
+}
+
+p-button {
+  float: right;
+}
+
+#divButton {
+  padding-bottom: 2em;
+}
+
+#cost{
+  height: 1.5em;
+  width: 4em;
+  margin-left: auto;
+}
+
+#facilities-container {
+  display: flex;
+  width: 50%;
+}
+
+.column {
+  flex: 1;
+  padding: 10px;
+}
+
+.field-checkbox {
+  margin-bottom: 10px;
+}
+
+.asterisk{
+  color: #e00707;
+  font-size: 13px;
+}

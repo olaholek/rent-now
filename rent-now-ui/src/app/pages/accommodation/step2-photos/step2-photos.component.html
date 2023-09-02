@@ -1,0 +1,11 @@
+<h2>Add photos of your accommodation</h2>
+<p-fileUpload name="file"
+              [customUpload]="true"
+              (uploadHandler)="onUpload($event)"
+              [multiple]="true" accept="image/*">
+    <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+    </ng-template>
+</p-fileUpload>
