@@ -1,8 +1,11 @@
 package pl.holowinska.rentnowbackend.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
 import pl.holowinska.rentnowbackend.mappers.AccommodationMapper;
 import pl.holowinska.rentnowbackend.mappers.AddressMapper;
 import pl.holowinska.rentnowbackend.model.entities.*;
@@ -18,9 +21,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -50,30 +51,15 @@ public class AccommodationServiceImpl implements AccommodationService {
         Address address = AddressMapper.mapToEntity(accommodationRQ.getAddressRQ());
         Accommodation accommodation = new Accommodation();
         accommodation.setUser(user);
-        accommodation.setAddress(address);
-        accommodation.setDescription(accommodationRQ.getDescription());
-        accommodation.setSquareFootage(accommodationRQ.getSquareFootage());
-        accommodation.setPriceForDay(accommodationRQ.getPriceForDay());
-        accommodation.setMaxNoOfPeople(accommodationRQ.getMaxNoOfPeople());
-        accommodation.setName(accommodationRQ.getName());
-        Accommodation saved = accommodationRepository.save(accommodation);
+        Accommodation saved = setFieldsAndSaveAccommodation(accommodationRQ, address, accommodation);
 
-        HashMap<ConvenienceType, BigDecimal> conveniences = accommodationRQ.getConveniences();
-        if (conveniences != null) {
-            for (ConvenienceType type : conveniences.keySet()) {
-                Convenience convenience = new Convenience();
-                ConvenienceId id = new ConvenienceId(saved, type);
-                convenience.setPrice(conveniences.get(type));
-                convenience.setId(id);
-                convenienceRepository.save(convenience);
-            }
-        }
+        HashMap<ConvenienceType, BigDecimal> conveniences = setAndSaveConveniences(accommodationRQ, saved);
 
         return AccommodationMapper.mapToDto(saved, conveniences);
     }
 
     @Override
-    public AccommodationRS addPhotosToAccommodation(Long accommodationId, List<MultipartFile> files) throws IOException {
+    public AccommodationRS addPhotosToAccommodation(Long accommodationId, List<MultipartFile> files) throws IOException, AccommodationNotFoundException {
         File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
         if (!directory.exists()) {
             directory.mkdirs();
@@ -87,12 +73,81 @@ public class AccommodationServiceImpl implements AccommodationService {
             Files.write(of1, file.getBytes());
         }
 
-        Accommodation accommodation = accommodationRepository.findById(accommodationId).orElse(null);
+        Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
+        if (accommodation.isEmpty()) {
+            throw new AccommodationNotFoundException();
+        }
+        HashMap<ConvenienceType, BigDecimal> conveniences = getConveniences(accommodationId);
+        return AccommodationMapper.mapToDto(accommodation.get(), conveniences);
+    }
+
+    @Override
+    public AccommodationRS getAccommodationById(Long accommodationId) throws AccommodationNotFoundException {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
+        if (accommodation.isEmpty()) {
+            throw new AccommodationNotFoundException();
+        }
+        HashMap<ConvenienceType, BigDecimal> conveniences = getConveniences(accommodationId);
+        return AccommodationMapper.mapToDto(accommodation.get(), conveniences);
+    }
+
+    @Override
+    public Page<AccommodationRS> getAccommodationByUserUUID(UUID userUUID, Pageable pageable) {
+        return accommodationRepository.getAllByUser(userUUID, pageable)
+                .map(a -> AccommodationMapper.mapToDto(a, getConveniences(a.getId())));
+    }
+
+    @Override
+    public void deleteAccommodation(Long accommodationId) {
+        convenienceRepository.deleteConveniencesByAccommodationId(accommodationId);
+        accommodationRepository.deleteById(accommodationId);
+    }
+
+    @Override
+    public AccommodationRS updateAccommodation(Long accommodationId, AccommodationRQ accommodationRQ) throws AccommodationNotFoundException {
+        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(accommodationId);
+        if (optionalAccommodation.isEmpty()) {
+            throw new AccommodationNotFoundException();
+        }
+        Address address = AddressMapper.mapToEntity(accommodationRQ.getAddressRQ());
+        Accommodation accommodation = optionalAccommodation.get();
+        Accommodation saved = setFieldsAndSaveAccommodation(accommodationRQ, address, accommodation);
+
+        convenienceRepository.deleteConveniencesByAccommodationId(accommodationId);
+        HashMap<ConvenienceType, BigDecimal> conveniences = setAndSaveConveniences(accommodationRQ, saved);
+        return AccommodationMapper.mapToDto(saved, conveniences);
+    }
+
+    private Accommodation setFieldsAndSaveAccommodation(AccommodationRQ accommodationRQ, Address address, Accommodation accommodation) {
+        accommodation.setAddress(address);
+        accommodation.setDescription(accommodationRQ.getDescription());
+        accommodation.setSquareFootage(accommodationRQ.getSquareFootage());
+        accommodation.setPriceForDay(accommodationRQ.getPriceForDay());
+        accommodation.setMaxNoOfPeople(accommodationRQ.getMaxNoOfPeople());
+        accommodation.setName(accommodationRQ.getName());
+        return accommodationRepository.save(accommodation);
+    }
+
+    private HashMap<ConvenienceType, BigDecimal> getConveniences(Long accommodationId) {
         List<Convenience> convenienceList = convenienceRepository.getConvenienceByAccommodationId(accommodationId);
         HashMap<ConvenienceType, BigDecimal> conveniences = new HashMap<>();
         for (Convenience convenience : convenienceList) {
             conveniences.put(convenience.getId().getConvenienceType(), convenience.getPrice());
         }
-        return AccommodationMapper.mapToDto(accommodation, conveniences);
+        return conveniences;
+    }
+
+    private HashMap<ConvenienceType, BigDecimal> setAndSaveConveniences(AccommodationRQ accommodationRQ, Accommodation saved) {
+        HashMap<ConvenienceType, BigDecimal> conveniences = accommodationRQ.getConveniences();
+        if (conveniences != null) {
+            for (ConvenienceType type : conveniences.keySet()) {
+                Convenience convenience = new Convenience();
+                ConvenienceId id = new ConvenienceId(saved, type);
+                convenience.setPrice(conveniences.get(type));
+                convenience.setId(id);
+                convenienceRepository.save(convenience);
+            }
+        }
+        return conveniences;
     }
 }
