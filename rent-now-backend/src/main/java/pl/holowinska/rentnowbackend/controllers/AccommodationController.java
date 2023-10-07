@@ -4,17 +4,22 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
+import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
 import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.services.AccommodationService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -65,8 +70,8 @@ public class AccommodationController {
     }
 
     @GetMapping("/user/{userUUID}")
-    public Page<AccommodationRS> getAccommodationByUserUUID(@PathVariable UUID userUUID,
-                                                            Pageable pageable) {
+    public Page<AccommodationRS> getAccommodationListByUserUUID(@PathVariable UUID userUUID,
+                                                                Pageable pageable) {
         return accommodationService.getAccommodationByUserUUID(userUUID, pageable);
     }
 
@@ -89,5 +94,38 @@ public class AccommodationController {
         }
     }
 
+    @GetMapping("/filter")
+    public Page<AccommodationRS> getAccommodationListByFilter(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "street", required = false) String street,
+            @RequestParam(value = "squareFootage", required = false) BigDecimal squareFootage,
+            @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
+            @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+            @RequestParam(value = "conveniences", required = false) List<ConvenienceType> conveniences,
+            Pageable pageable) {
+
+        AccommodationCriteriaRQ accommodationCriteriaRQ =
+                AccommodationCriteriaRQ.builder()
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .city(city)
+                        .street(street)
+                        .squareFootage(squareFootage)
+                        .minPrice(minPrice)
+                        .maxPrice(maxPrice)
+                        .conveniences(conveniences)
+                        .build();
+
+        try {
+            return accommodationService.getAccommodationListByFilter(accommodationCriteriaRQ, pageable);
+        } catch (IllegalArgumentException e) {
+            return Page.empty();
+        }
+
+    }
+
     //todo 2 endpoints: pobieranie wszystkich noclegów na stronę głowną (sort id desc) i filtrowanie noclegów
+    // na pierwsze stronie bedziemy tez pobierac z cryteriami tylk domyslnie będzie ustawiona data od dzis do jutro
 }

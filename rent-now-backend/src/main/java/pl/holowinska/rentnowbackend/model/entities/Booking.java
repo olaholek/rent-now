@@ -11,6 +11,8 @@ import pl.holowinska.rentnowbackend.model.enums.Status;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "BOOKING")
 @NoArgsConstructor
@@ -55,4 +57,8 @@ public class Booking implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Status status;
+
+    @OneToMany(mappedBy = "id.booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<BookingConvenience> bookingConveniences = new HashSet<>();
+    //todo dodać sprawdzic
 }

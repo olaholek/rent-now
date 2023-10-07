@@ -1,7 +1,9 @@
 package pl.holowinska.rentnowbackend.services;
 
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,18 +12,27 @@ import pl.holowinska.rentnowbackend.mappers.AccommodationMapper;
 import pl.holowinska.rentnowbackend.mappers.AddressMapper;
 import pl.holowinska.rentnowbackend.model.entities.*;
 import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
+import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
 import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.repository.AccommodationRepository;
+import pl.holowinska.rentnowbackend.repository.BookingRepository;
 import pl.holowinska.rentnowbackend.repository.ConvenienceRepository;
 import pl.holowinska.rentnowbackend.repository.UserRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,11 +41,13 @@ public class AccommodationServiceImpl implements AccommodationService {
     private final UserRepository userRepository;
     private final AccommodationRepository accommodationRepository;
     private final ConvenienceRepository convenienceRepository;
+    private final BookingRepository bookingRepository;
 
-    public AccommodationServiceImpl(UserRepository userRepository, AccommodationRepository accommodationRepository, ConvenienceRepository convenienceRepository) {
+    public AccommodationServiceImpl(UserRepository userRepository, AccommodationRepository accommodationRepository, ConvenienceRepository convenienceRepository, BookingRepository bookingRepository) {
         this.userRepository = userRepository;
         this.accommodationRepository = accommodationRepository;
         this.convenienceRepository = convenienceRepository;
+        this.bookingRepository = bookingRepository;
     }
 
 
@@ -118,6 +131,57 @@ public class AccommodationServiceImpl implements AccommodationService {
         return AccommodationMapper.mapToDto(saved, conveniences);
     }
 
+    @Override
+    public Page<AccommodationRS> getAccommodationListByFilter(AccommodationCriteriaRQ accommodationCriteriaRQ,
+                                                              Pageable pageable) {
+        if (accommodationCriteriaRQ.getStartDate().isBefore(LocalDate.now()) ||
+                !accommodationCriteriaRQ.getEndDate().isAfter(accommodationCriteriaRQ.getStartDate())) {
+            throw new IllegalArgumentException();
+        }
+        return accommodationRepository.findAll(accommodationByCriteria(accommodationCriteriaRQ),
+                pageable).map(entity -> AccommodationMapper.mapToDto(entity, getConveniences(entity.getId())));
+    }
+
+    private Specification<Accommodation> accommodationByCriteria(AccommodationCriteriaRQ accommodationCriteriaRQ) {
+        return (root, query, cb) -> {
+            long numberOfDays = getNumberOfBookingDays(accommodationCriteriaRQ.getStartDate(), accommodationCriteriaRQ.getEndDate());
+            LocalDateTime startDate = LocalDateTime.of(accommodationCriteriaRQ.getStartDate(), LocalTime.of(0, 0, 0));
+            LocalDateTime endDate = LocalDateTime.of(accommodationCriteriaRQ.getEndDate(), LocalTime.of(0, 0));
+            List<Long> accommodationIdsFromBooking = bookingRepository.getBookingAccommodationIdByDates(
+                    Timestamp.valueOf(startDate),
+                    Timestamp.valueOf(endDate));
+            List<Long> allAccommodationIds = accommodationRepository.findAll().stream().map(Accommodation::getId).collect(Collectors.toList());
+            List<Long> wynikowaLista = allAccommodationIds.stream()
+                    .filter(element -> !accommodationIdsFromBooking.contains(element))
+                    .collect(Collectors.toList());
+            Predicate spec = root.get("id").in(wynikowaLista);
+            if (accommodationCriteriaRQ.getCity() != null && !accommodationCriteriaRQ.getCity().equals("")) {
+                spec = cb.and(spec, cb.equal(root.get("address").get("city"), accommodationCriteriaRQ.getCity()));
+            }
+            if (accommodationCriteriaRQ.getStreet() != null && !accommodationCriteriaRQ.getStreet().equals("")) {
+                spec = cb.and(spec, cb.equal(root.get("address").get("street"), accommodationCriteriaRQ.getStreet()));
+            }
+            if (accommodationCriteriaRQ.getSquareFootage() != null) {
+                spec = cb.and(spec, cb.equal(root.get("squareFootage"), accommodationCriteriaRQ.getSquareFootage()));
+            }
+            if (accommodationCriteriaRQ.getMinPrice() != null) {
+                spec = cb.and(spec, cb.greaterThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMinPrice()
+                        .divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.DOWN)));
+            }
+            if (accommodationCriteriaRQ.getMaxPrice() != null) {
+                spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMaxPrice()
+                        .divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.UP)));
+            }
+            List<ConvenienceType> filterConveniences = accommodationCriteriaRQ.getConveniences();
+            if (filterConveniences != null && !filterConveniences.isEmpty()) {
+                spec = cb.and(spec, root.get("id").in(convenienceRepository.getAccommodationByConveniencesList(
+                        filterConveniences, filterConveniences.size()
+                )));
+            }
+            return spec;
+        };
+    }
+
     private Accommodation setFieldsAndSaveAccommodation(AccommodationRQ accommodationRQ, Address address, Accommodation accommodation) {
         accommodation.setAddress(address);
         accommodation.setDescription(accommodationRQ.getDescription());
@@ -149,5 +213,9 @@ public class AccommodationServiceImpl implements AccommodationService {
             }
         }
         return conveniences;
+    }
+
+    private Long getNumberOfBookingDays(LocalDate startDate, LocalDate endDate) {
+        return ChronoUnit.DAYS.between(startDate, endDate);
     }
 }
