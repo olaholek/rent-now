@@ -20,4 +20,6 @@ public class AccommodationCriteriaRQ {
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private List<ConvenienceType> conveniences;
+    private Integer maxNoOfPeople;
+    private String name;
 }

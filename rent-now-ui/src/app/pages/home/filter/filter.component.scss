@@ -1,0 +1,107 @@
+#main {
+  margin: 3% 12%;
+  align-items: center;
+  -webkit-box-shadow: 0px 0px 200px 0px rgb(161, 159, 159);
+  -moz-box-shadow: 0px 0px 200px 0px rgb(159, 158, 158);
+  box-shadow: 0px 0px 200px 0px rgb(220, 220, 220);
+  padding: 2% 3%;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #e5e2da;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  height: 3em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 5px;
+  border-width: 1.5px;
+  padding: 0.5em;
+}
+
+.asterisk {
+  color: #e00707;
+  font-size: 13px;
+}
+
+label {
+  margin-bottom: 0.3em;
+  font-size: 16px;
+}
+
+#first {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.element {
+  margin-right: 1em;
+}
+
+#minPrice {
+  width: 8em;
+}
+
+#maxPrice, #maxNumberOfPeople {
+  width: 8em;
+}
+
+#startDate, #endDate {
+  width: 10em;
+}
+
+#divButton {
+  float: right;
+  margin-top: 1.5em;
+  width: 10em;
+}
+
+#buttons {
+  height: 3em;
+  margin-top: 1.5em;
+}
+
+#button {
+  width: 9em;
+}
+
+#buttonMore, #buttonLess {
+  background-color: #f3f1ef;
+  float: right;
+  width: 9em;
+  margin-right: 1em;
+}
+
+#filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.facilities {
+  margin-bottom: 0.5em;
+}
+
+#conveniences {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+}
+#convenience-wrapper {
+  min-width: 10em;
+  padding:0.3rem;
+}
+#name {
+  width: 25em;
+}
+
+.list{
+  margin-right: 1em;
+}
+

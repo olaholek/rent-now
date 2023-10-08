@@ -103,7 +103,9 @@ public class AccommodationController {
             @RequestParam(value = "squareFootage", required = false) BigDecimal squareFootage,
             @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
             @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+            @RequestParam(value = "maxNoOfPeople", required = false) Integer maxNoOfPeople,
             @RequestParam(value = "conveniences", required = false) List<ConvenienceType> conveniences,
+            @RequestParam(value = "name", required = false) String name,
             Pageable pageable) {
 
         AccommodationCriteriaRQ accommodationCriteriaRQ =
@@ -116,6 +118,8 @@ public class AccommodationController {
                         .minPrice(minPrice)
                         .maxPrice(maxPrice)
                         .conveniences(conveniences)
+                        .maxNoOfPeople(maxNoOfPeople)
+                        .name(name)
                         .build();
 
         try {

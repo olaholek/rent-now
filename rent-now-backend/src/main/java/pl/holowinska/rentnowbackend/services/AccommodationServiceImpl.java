@@ -151,15 +151,15 @@ public class AccommodationServiceImpl implements AccommodationService {
                     Timestamp.valueOf(startDate),
                     Timestamp.valueOf(endDate));
             List<Long> allAccommodationIds = accommodationRepository.findAll().stream().map(Accommodation::getId).collect(Collectors.toList());
-            List<Long> wynikowaLista = allAccommodationIds.stream()
+            List<Long> resultList = allAccommodationIds.stream()
                     .filter(element -> !accommodationIdsFromBooking.contains(element))
                     .collect(Collectors.toList());
-            Predicate spec = root.get("id").in(wynikowaLista);
-            if (accommodationCriteriaRQ.getCity() != null && !accommodationCriteriaRQ.getCity().equals("")) {
-                spec = cb.and(spec, cb.equal(root.get("address").get("city"), accommodationCriteriaRQ.getCity()));
+            Predicate spec = root.get("id").in(resultList);
+            if (accommodationCriteriaRQ.getCity() != null && !accommodationCriteriaRQ.getCity().isEmpty()) {
+                spec = cb.and(spec, cb.like(root.get("address").get("city"), accommodationCriteriaRQ.getCity()));
             }
-            if (accommodationCriteriaRQ.getStreet() != null && !accommodationCriteriaRQ.getStreet().equals("")) {
-                spec = cb.and(spec, cb.equal(root.get("address").get("street"), accommodationCriteriaRQ.getStreet()));
+            if (accommodationCriteriaRQ.getStreet() != null && !accommodationCriteriaRQ.getStreet().isEmpty()) {
+                spec = cb.and(spec, cb.like(root.get("address").get("street"), accommodationCriteriaRQ.getStreet()));
             }
             if (accommodationCriteriaRQ.getSquareFootage() != null) {
                 spec = cb.and(spec, cb.equal(root.get("squareFootage"), accommodationCriteriaRQ.getSquareFootage()));
@@ -171,6 +171,12 @@ public class AccommodationServiceImpl implements AccommodationService {
             if (accommodationCriteriaRQ.getMaxPrice() != null) {
                 spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMaxPrice()
                         .divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.UP)));
+            }
+            if (accommodationCriteriaRQ.getMaxNoOfPeople() != null) {
+                spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("maxNoOfPeople"), accommodationCriteriaRQ.getMaxNoOfPeople()));
+            }
+            if (accommodationCriteriaRQ.getName() != null && !accommodationCriteriaRQ.getName().isEmpty()) {
+                spec = cb.and(spec, cb.like(root.get("name"), accommodationCriteriaRQ.getName()));
             }
             List<ConvenienceType> filterConveniences = accommodationCriteriaRQ.getConveniences();
             if (filterConveniences != null && !filterConveniences.isEmpty()) {

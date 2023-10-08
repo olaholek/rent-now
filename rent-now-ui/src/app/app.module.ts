@@ -23,6 +23,9 @@ import {Step1DataComponent} from './pages/accommodation/step1-data/step1-data.co
 import {Step2PhotosComponent} from './pages/accommodation/step2-photos/step2-photos.component';
 import {StepsModule} from "primeng/steps";
 import {ToastModule} from "primeng/toast";
+import { FilterComponent } from './pages/home/filter/filter.component';
+import { AllAccommodationsComponent } from './pages/home/all-accommodations/all-accommodations.component';
+import {CalendarModule} from "primeng/calendar";
 
 function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
@@ -50,25 +53,28 @@ function initializeKeycloak(keycloak: KeycloakService) {
         ErrorPageComponent,
         AccommodationCreateComponent,
         Step1DataComponent,
-        Step2PhotosComponent
+        Step2PhotosComponent,
+        FilterComponent,
+        AllAccommodationsComponent
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        KeycloakAngularModule,
-        ButtonModule,
-        SidebarModule,
-        BrowserAnimationsModule,
-        MenuModule,
-        AvatarModule,
-        CheckboxModule,
-        FormsModule,
-        InputTextareaModule,
-        FileUploadModule,
-        HttpClientModule,
-        StepsModule,
-        ToastModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    KeycloakAngularModule,
+    ButtonModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    MenuModule,
+    AvatarModule,
+    CheckboxModule,
+    FormsModule,
+    InputTextareaModule,
+    FileUploadModule,
+    HttpClientModule,
+    StepsModule,
+    ToastModule,
+    CalendarModule
+  ],
     providers: [
         {
             provide: APP_INITIALIZER,
