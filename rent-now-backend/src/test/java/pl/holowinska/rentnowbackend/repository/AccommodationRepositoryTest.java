@@ -36,6 +36,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
@@ -53,6 +55,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setSquareFootage(new BigDecimal(30));
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         //then
@@ -71,6 +75,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
@@ -90,6 +96,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
@@ -97,7 +105,7 @@ class AccommodationRepositoryTest extends IntegrationTest {
         Accommodation updated = accommodationRepository.save(saved);
 
         //then
-        assertEquals(updated.getSquareFootage(), 40);
+        assertEquals(updated.getSquareFootage(), new BigDecimal(40));
     }
 
     @Test
@@ -109,6 +117,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
@@ -129,6 +139,8 @@ class AccommodationRepositoryTest extends IntegrationTest {
         accommodation.setUser(getUser());
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
 
         //when
         Accommodation saved = accommodationRepository.save(accommodation);
