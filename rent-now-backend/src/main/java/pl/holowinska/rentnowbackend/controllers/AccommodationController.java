@@ -18,6 +18,7 @@ import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.services.AccommodationService;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -53,6 +54,30 @@ public class AccommodationController {
     ) {
         try {
             return ResponseEntity.ok(accommodationService.addPhotosToAccommodation(accommodationId, files));
+        } catch (AccommodationNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/photos/{id}")
+    public ResponseEntity<List<InputStream>> getAccommodationPhotos(@PathVariable("id") Long accommodationId
+    ) {
+        try {
+            return ResponseEntity.ok(accommodationService.getAccommodationPhotos(accommodationId));
+        } catch (AccommodationNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/photo/{id}")
+    public ResponseEntity<InputStream> getAccommodationMainPhoto(@PathVariable("id") Long accommodationId
+    ) {
+        try {
+            return ResponseEntity.ok(accommodationService.getAccommodationMainPhoto(accommodationId));
         } catch (AccommodationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (IOException e) {
@@ -131,5 +156,6 @@ public class AccommodationController {
     }
 
     //todo 2 endpoints: pobieranie wszystkich noclegów na stronę głowną (sort id desc) i filtrowanie noclegów
+    //todo ważne order by id desc
     // na pierwsze stronie bedziemy tez pobierac z cryteriami tylk domyslnie będzie ustawiona data od dzis do jutro
 }

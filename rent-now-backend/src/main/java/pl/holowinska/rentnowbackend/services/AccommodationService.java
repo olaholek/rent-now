@@ -8,7 +8,9 @@ import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
 import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,4 +29,8 @@ public interface AccommodationService {
     AccommodationRS updateAccommodation(Long accommodationId, AccommodationRQ accommodationRQ) throws AccommodationNotFoundException;
 
     Page<AccommodationRS> getAccommodationListByFilter(AccommodationCriteriaRQ accommodationCriteriaRQ, Pageable pageable);
+
+    List<InputStream> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, FileNotFoundException;
+
+    InputStream getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException;
 }
