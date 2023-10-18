@@ -1,5 +1,6 @@
 package pl.holowinska.rentnowbackend.services;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,9 +9,7 @@ import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
 import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +29,7 @@ public interface AccommodationService {
 
     Page<AccommodationRS> getAccommodationListByFilter(AccommodationCriteriaRQ accommodationCriteriaRQ, Pageable pageable);
 
-    List<InputStream> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, FileNotFoundException;
+    List<InputStreamResource> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, IOException;
 
-    InputStream getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException;
+    InputStreamResource getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException;
 }

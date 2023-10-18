@@ -2,6 +2,7 @@ package pl.holowinska.rentnowbackend.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,11 +19,12 @@ import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.services.AccommodationService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.http.MediaType.IMAGE_JPEG;
 
 @RestController
 @RequestMapping("/accommodations")
@@ -61,11 +63,12 @@ public class AccommodationController {
         }
     }
 
-    @GetMapping("/photos/{id}")
-    public ResponseEntity<List<InputStream>> getAccommodationPhotos(@PathVariable("id") Long accommodationId
+    @GetMapping(value = "/photos/{id}", produces = "image/jpeg")
+    public ResponseEntity<List<InputStreamResource>> getAccommodationPhotos(@PathVariable("id") Long accommodationId
     ) {
         try {
-            return ResponseEntity.ok(accommodationService.getAccommodationPhotos(accommodationId));
+            return ResponseEntity.ok().contentType(IMAGE_JPEG)
+                    .body(accommodationService.getAccommodationPhotos(accommodationId));
         } catch (AccommodationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (IOException e) {
@@ -73,11 +76,12 @@ public class AccommodationController {
         }
     }
 
-    @GetMapping("/photo/{id}")
-    public ResponseEntity<InputStream> getAccommodationMainPhoto(@PathVariable("id") Long accommodationId
+    @GetMapping(value = "/photo/{id}", produces = "image/jpeg")
+    public ResponseEntity<InputStreamResource> getAccommodationMainPhoto(@PathVariable("id") Long accommodationId
     ) {
         try {
-            return ResponseEntity.ok(accommodationService.getAccommodationMainPhoto(accommodationId));
+            return ResponseEntity.ok().contentType(IMAGE_JPEG)
+                    .body(accommodationService.getAccommodationMainPhoto(accommodationId));
         } catch (AccommodationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (IOException e) {
@@ -111,7 +115,8 @@ public class AccommodationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AccommodationRS> updateAccommodation(@PathVariable Long id, @RequestBody @Valid AccommodationRQ accommodationRQ) {
+    public ResponseEntity<AccommodationRS> updateAccommodation(@PathVariable Long id,
+                                                               @RequestBody @Valid AccommodationRQ accommodationRQ) {
         try {
             return ResponseEntity.ok(accommodationService.updateAccommodation(id, accommodationRQ));
         } catch (AccommodationNotFoundException e) {
@@ -147,15 +152,11 @@ public class AccommodationController {
                         .name(name)
                         .build();
 
+        //todo sortowanie będzie wysyłane w pageablu i jak będzie na stronce sortowanie to będziemy od nowa poebierać dane tym controllerem
         try {
             return accommodationService.getAccommodationListByFilter(accommodationCriteriaRQ, pageable);
         } catch (IllegalArgumentException e) {
             return Page.empty();
         }
-
     }
-
-    //todo 2 endpoints: pobieranie wszystkich noclegów na stronę głowną (sort id desc) i filtrowanie noclegów
-    //todo ważne order by id desc
-    // na pierwsze stronie bedziemy tez pobierac z cryteriami tylk domyslnie będzie ustawiona data od dzis do jutro
 }

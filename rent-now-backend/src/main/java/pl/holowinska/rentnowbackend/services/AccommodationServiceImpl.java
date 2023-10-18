@@ -1,6 +1,7 @@
 package pl.holowinska.rentnowbackend.services;
 
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,7 +21,9 @@ import pl.holowinska.rentnowbackend.repository.BookingRepository;
 import pl.holowinska.rentnowbackend.repository.ConvenienceRepository;
 import pl.holowinska.rentnowbackend.repository.UserRepository;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
@@ -53,8 +56,10 @@ public class AccommodationServiceImpl implements AccommodationService {
     @Override
     public AccommodationRS addAccommodation(AccommodationRQ accommodationRQ) {
 
-        User user = userRepository.findById(accommodationRQ.getUserUUID()).orElse(userRepository.save(new User(accommodationRQ.getUserUUID())));
-        if (accommodationRQ.getPriceForDay().compareTo(BigDecimal.ZERO) < 0 || (accommodationRQ.getSquareFootage() != null && accommodationRQ.getSquareFootage().compareTo(BigDecimal.ZERO) <= 0)) {
+        User user = userRepository.findById(accommodationRQ.getUserUUID())
+                .orElse(userRepository.save(new User(accommodationRQ.getUserUUID())));
+        if (accommodationRQ.getPriceForDay().compareTo(BigDecimal.ZERO) < 0
+                || (accommodationRQ.getSquareFootage() != null && accommodationRQ.getSquareFootage().compareTo(BigDecimal.ZERO) <= 0)) {
             throw new IllegalArgumentException();
         }
 
@@ -132,25 +137,26 @@ public class AccommodationServiceImpl implements AccommodationService {
         if (accommodationCriteriaRQ.getStartDate().isBefore(LocalDate.now()) || !accommodationCriteriaRQ.getEndDate().isAfter(accommodationCriteriaRQ.getStartDate())) {
             throw new IllegalArgumentException();
         }
-        return accommodationRepository.findAll(accommodationByCriteria(accommodationCriteriaRQ), pageable).map(entity -> AccommodationMapper.mapToDto(entity, getConveniences(entity.getId())));
+        return accommodationRepository.findAll(accommodationByCriteria(accommodationCriteriaRQ), pageable)
+                .map(entity -> AccommodationMapper.mapToDto(entity, getConveniences(entity.getId())));
     }
 
     @Override
-    public List<InputStream> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, FileNotFoundException {
+    public List<InputStreamResource> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, IOException {
 
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         if (accommodation.isEmpty()) {
             throw new AccommodationNotFoundException();
         }
 
-        List<InputStream> photos = new ArrayList<>();
+        List<InputStreamResource> photos = new ArrayList<>();
         File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();
             if (fileArray != null) {
                 for (File file : fileArray) {
-                    photos.add(new FileInputStream(file));
+                    photos.add(new InputStreamResource(new FileInputStream(file)));
                 }
             }
         }
@@ -158,20 +164,26 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public InputStream getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException {
+    public InputStreamResource getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException {
 
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         if (accommodation.isEmpty()) {
             throw new AccommodationNotFoundException();
         }
 
-        InputStream mainPhoto = null;
+        File defaultImage = new File("D:\\Praca Inżynierska\\photos\\default");
+        InputStreamResource mainPhoto = null;
         File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();
-            if (fileArray != null) {
-                mainPhoto = new FileInputStream(fileArray[0]);
+            if (fileArray != null && fileArray.length != 0) {
+                mainPhoto = new InputStreamResource(new FileInputStream(fileArray[0]));
+            }
+        } else {
+            File[] defaultArray = defaultImage.listFiles();
+            if (defaultArray != null && defaultArray.length != 0) {
+                mainPhoto = new InputStreamResource(new FileInputStream(defaultArray[0]));
             }
         }
         return mainPhoto;
@@ -183,7 +195,7 @@ public class AccommodationServiceImpl implements AccommodationService {
             LocalDateTime startDate = LocalDateTime.of(accommodationCriteriaRQ.getStartDate(), LocalTime.of(0, 0, 0));
             LocalDateTime endDate = LocalDateTime.of(accommodationCriteriaRQ.getEndDate(), LocalTime.of(0, 0));
             List<Long> accommodationIdsFromBooking = bookingRepository.getBookingAccommodationIdByDates(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
-            List<Long> allAccommodationIds = accommodationRepository.findAll().stream().map(Accommodation::getId).collect(Collectors.toList());
+            List<Long> allAccommodationIds = accommodationRepository.findAll().stream().map(Accommodation::getId).toList();
             List<Long> resultList = allAccommodationIds.stream().filter(element -> !accommodationIdsFromBooking.contains(element)).collect(Collectors.toList());
             Predicate spec = root.get("id").in(resultList);
             if (accommodationCriteriaRQ.getCity() != null && !accommodationCriteriaRQ.getCity().isEmpty()) {
