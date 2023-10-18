@@ -2,11 +2,15 @@
   <div id="first">
     <div class="box">
       <label for="startDate">Start date<span class="asterisk"> *</span></label>
-      <p-calendar [(ngModel)]="value.startDate" [showIcon]="true" id="startDate" class="element"></p-calendar>
+      <p-calendar [(ngModel)]="value.startDate" [showIcon]="true" id="startDate" class="element"
+                  (ngModelChange)="onStartDateChange($event)" dateFormat="dd.mm.yy"
+                  [minDate]="minStartDate"></p-calendar>
     </div>
     <div class="box">
-      <label for="startDate">End date<span class="asterisk"> *</span></label>
-      <p-calendar [(ngModel)]="value.endDate" [showIcon]="true" id="endDate" class="element"></p-calendar>
+      <label for="endDate">End date<span class="asterisk"> *</span></label>
+      <p-calendar [(ngModel)]="value.endDate" [showIcon]="true" id="endDate" class="element"
+                  (ngModelChange)="onEndDateChange($event)" [minDate]="minEndDate"
+                  dateFormat="dd.mm.yy"></p-calendar>
     </div>
     <div class="box">
       <label for="city">City</label>
@@ -19,7 +23,7 @@
         [(ngModel)]="value.minPrice"
         id="minPrice"
         type="text"
-        pattern="^[1-9][0-9]*(\.[0-9]+)?$"
+        pattern="^[0-9]*$"
         name="minPrice"
         #minPrice="ngModel"
         class="element"
@@ -36,7 +40,7 @@
         [(ngModel)]="value.maxPrice"
         id="maxPrice"
         type="text"
-        pattern="^[1-9][0-9]*(\.[0-9]+)?$"
+        pattern="^[0-9]*$"
         name="maxPrice"
         #maxPrice="ngModel"
         class="element"
@@ -55,7 +59,8 @@
              class="element"/>
     </div>
     <div id="divButton">
-      <button pButton type="button" label="Search" id="button" (click)="search()"></button>
+      <button pButton type="button" label="Search" id="button" (click)="search()"
+              [disabled]="invalidDateError"></button>
     </div>
   </div>
 
@@ -84,7 +89,7 @@
           [(ngModel)]="value.squareFootage"
           id="square"
           type="text"
-          pattern="^[1-9][0-9]*(\.[0-9]+)?$"
+          pattern="^[0-9]*$"
           name="square"
           class="element"
           #squareInput="ngModel"

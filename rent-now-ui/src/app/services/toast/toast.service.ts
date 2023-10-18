@@ -64,7 +64,6 @@ export class ToastService {
         if (!sticky) {
             sticky = false;
         }
-        console.log("elo")
         this.messageService.add({
             life: duration,
             severity: 'error',

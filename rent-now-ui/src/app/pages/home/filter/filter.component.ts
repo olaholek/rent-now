@@ -1,11 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AccommodationCriteriaRQ} from "../../../data/model/rq/AccommodationCriteriaRQ";
 import {ConvenienceType} from "../../../data/model/common/ConvenienceType";
-import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
-import {KeycloakService} from "keycloak-angular";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastService} from "../../../services/toast/toast.service";
-
 
 @Component({
   selector: 'app-filter',
@@ -15,6 +10,12 @@ import {ToastService} from "../../../services/toast/toast.service";
 export class FilterComponent implements OnInit {
   showFilters = false;
   conveniencesList: ConvenienceType[] = [];
+  minStartDate = new Date();
+  minEndDate = new Date();
+  startDateToValid = new Date();
+  endDateToValid = new Date();
+  invalidDateError = false;
+  @Output() filtersEmitter = new EventEmitter<AccommodationCriteriaRQ>();
 
   value: AccommodationCriteriaRQ = {
     startDate: new Date(),
@@ -29,13 +30,7 @@ export class FilterComponent implements OnInit {
     name: ''
   };
 
-  constructor(
-    private readonly accommodationService: AccommodationServiceImpl,
-    private readonly keycloak: KeycloakService,
-    private readonly route: ActivatedRoute,
-    private readonly toastService: ToastService,
-    private readonly router: Router
-  ) {
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -44,10 +39,8 @@ export class FilterComponent implements OnInit {
     }
     this.conveniencesList = this.conveniencesList.filter((category, index) => index < 11);
 
-    this.value.startDate = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    this.value.endDate = tomorrow;
+    this.minEndDate.setDate(this.minStartDate.getDate() + 1);
+    this.value.endDate.setDate(this.minEndDate.getDate());
   }
 
   toggleFilters() {
@@ -55,18 +48,7 @@ export class FilterComponent implements OnInit {
   }
 
   search(): void {
-    console.log("pppp")
-    // this.accommodationService.(this.value)
-    //   .pipe(
-    //     catchError((error) => {
-    //       this.toastService.showError('Error during accommodation creation.');
-    //       throw error;
-    //     })
-    //   )
-    //   .subscribe((res) => {
-    //     this.toastService.showSuccess('Accommodation created successfully.');
-    //     this.router.navigate(['announcements/add/photos'], {queryParams: {id: res.id}});
-    //   });
+    this.filtersEmitter.emit(this.value);
   }
 
   protected beutify(type: ConvenienceType): string {
@@ -75,5 +57,27 @@ export class FilterComponent implements OnInit {
 
   capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  onStartDateChange(event: Date) {
+    const today = new Date(Date.now());
+    this.startDateToValid = event;
+    this.resetTime(today);
+    this.resetTime(this.value.endDate);
+    this.resetTime(this.startDateToValid);
+    this.invalidDateError = this.startDateToValid === null || this.startDateToValid < today
+      || (this.startDateToValid.getFullYear() >= this.value.endDate.getFullYear() &&
+        this.startDateToValid.getMonth() >= this.value.endDate.getMonth() &&
+        this.startDateToValid.getDate() >= this.value.endDate.getDate());
+  }
+
+  resetTime(date: Date) {
+    date.setHours(0)
+    date.setSeconds(0)
+    date.setMinutes(0)
+  }
+
+  onEndDateChange(event: Date) {
+    this.invalidDateError = event === null || event <= this.startDateToValid;
   }
 }

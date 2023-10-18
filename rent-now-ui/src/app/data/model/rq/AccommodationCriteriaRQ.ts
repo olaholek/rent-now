@@ -1,4 +1,3 @@
-import bigDecimal from "js-big-decimal";
 import {ConvenienceType} from "../common/ConvenienceType";
 
 export interface AccommodationCriteriaRQ {
@@ -7,9 +6,9 @@ export interface AccommodationCriteriaRQ {
   endDate: Date;
   city?: string;
   street?: string;
-  squareFootage?: bigDecimal;
-  minPrice?: bigDecimal;
-  maxPrice?: bigDecimal;
+  squareFootage?: number;
+  minPrice?: number;
+  maxPrice?: number;
   conveniences?: ConvenienceType[];
   maxNoOfPeople?: number;
   name?: string;

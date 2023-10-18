@@ -1,2 +1,5 @@
-<app-filter></app-filter>
-<app-all-accommodations></app-all-accommodations>
+<app-filter (filtersEmitter)="getAccommodationList($event)"></app-filter>
+<app-all-accommodations [accommodationList]="accommodationList" [photos]="photos" [numberOfDays]="numberOfDays"></app-all-accommodations>
+<p-paginator *ngIf="accommodationList" (onPageChange)="onPageChange($event)" [first]="1"
+             [rows]="10" [totalRecords]="accommodationList.totalElements"></p-paginator>
+<!--<select></select>-->
