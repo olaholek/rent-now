@@ -97,6 +97,8 @@ public class ConvenienceRepositoryTest extends IntegrationTest {
         accommodation.setSquareFootage(BigDecimal.valueOf(30));
         accommodation.setDescription("Piękna okolica blisko centrum");
         accommodation.setPriceForDay(new BigDecimal(160));
+        accommodation.setName("Apartament");
+        accommodation.setMaxNoOfPeople(4);
         return accommodationRepository.save(accommodation);
     }
 

@@ -1,0 +1,84 @@
+#main {
+  margin: 2% 12%;
+  align-items: center;
+  -webkit-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  -moz-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  padding-top: 2em;
+  padding-left: 4em;
+  padding-right: 2em;
+}
+
+#image {
+  width: 10em;
+}
+
+#left {
+  width: 45%;
+  height: 18em;
+}
+
+#full {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+#name {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2em;
+}
+
+#favourite {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#heart-fill {
+  font-size: 1.7em;
+  color: #cc6969;
+}
+
+#heart {
+  font-size: 1.7em;
+}
+
+#price {
+  font-weight: bold;
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 25px;
+  font-family: Calibri;
+}
+
+#numberOfDays {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: #312f2f;
+  font-size: 14px;
+  font-family: Calibri;
+}
+
+#cost {
+  margin-top: 3em;
+}
+
+#noAccommodations {
+  text-align: center;
+  margin: 2em;
+}
+
+

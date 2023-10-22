@@ -1,1 +1,12 @@
-<div id="main">home works!</div>
+<app-filter (filtersEmitter)="getAccommodationList($event)"></app-filter>
+<div id="sortDiv" style="display: flex; justify-content: flex-end;">
+  <span id="sortText">Sort: </span>
+  <select id="selectSort" (change)="onChangeSort()" [(ngModel)]="selectedSort">
+    <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">{{sortOption}}</option>
+  </select>
+</div>
+<app-all-accommodations [accommodationList]="accommodationList" [photos]="photos"
+                        [numberOfDays]="numberOfDays" [startDate]="criteria.startDate"
+                        [endDate]="criteria.endDate"></app-all-accommodations>
+<p-paginator *ngIf="accommodationList" (onPageChange)="onPageChange($event)" [first]="1"
+             [rows]="10" [totalRecords]="accommodationList.totalElements"></p-paginator>

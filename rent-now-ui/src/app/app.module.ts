@@ -23,67 +23,79 @@ import {Step1DataComponent} from './pages/accommodation/step1-data/step1-data.co
 import {Step2PhotosComponent} from './pages/accommodation/step2-photos/step2-photos.component';
 import {StepsModule} from "primeng/steps";
 import {ToastModule} from "primeng/toast";
+import {FilterComponent} from './pages/home/filter/filter.component';
+import {AllAccommodationsComponent} from './pages/home/all-accommodations/all-accommodations.component';
+import {CalendarModule} from "primeng/calendar";
+import {PaginatorModule} from "primeng/paginator";
+import {GalleriaModule} from "primeng/galleria";
+import {ImageModule} from "primeng/image";
 
 function initializeKeycloak(keycloak: KeycloakService) {
-    return () =>
-        keycloak.init({
-            config: {
-                url: 'http://localhost:8443',
-                realm: 'rent-now',
-                clientId: 'rent-now-ui'
-            },
-            initOptions: {
-                onLoad: 'login-required',
-                silentCheckSsoRedirectUri:
-                    window.location.origin + '/assets/silent-check-sso.html'
-            },
-            bearerExcludedUrls: ['/assets']
-        });
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8443',
+        realm: 'rent-now',
+        clientId: 'rent-now-ui'
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      },
+      bearerExcludedUrls: ['/assets']
+    });
 }
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        HomeComponent,
-        ErrorPageComponent,
-        AccommodationCreateComponent,
-        Step1DataComponent,
-        Step2PhotosComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        KeycloakAngularModule,
-        ButtonModule,
-        SidebarModule,
-        BrowserAnimationsModule,
-        MenuModule,
-        AvatarModule,
-        CheckboxModule,
-        FormsModule,
-        InputTextareaModule,
-        FileUploadModule,
-        HttpClientModule,
-        StepsModule,
-        ToastModule
-    ],
-    providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initializeKeycloak,
-            multi: true,
-            deps: [KeycloakService]
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: KeycloakBearerInterceptor,
-            multi: true
-        },
-        MessageService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
+    ErrorPageComponent,
+    AccommodationCreateComponent,
+    Step1DataComponent,
+    Step2PhotosComponent,
+    FilterComponent,
+    AllAccommodationsComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    KeycloakAngularModule,
+    ButtonModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    MenuModule,
+    AvatarModule,
+    CheckboxModule,
+    FormsModule,
+    InputTextareaModule,
+    FileUploadModule,
+    HttpClientModule,
+    StepsModule,
+    ToastModule,
+    CalendarModule,
+    PaginatorModule,
+    GalleriaModule,
+    ImageModule
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true
+    },
+    MessageService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -10,6 +10,8 @@ import org.hibernate.annotations.LazyGroup;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "ACCOMMODATION")
 @NoArgsConstructor
@@ -52,4 +54,8 @@ public class Accommodation implements Serializable {
     @Column(name = "MAX_NO_OF_PEOPLE")
     @NotNull
     private Integer maxNoOfPeople;
+
+    @OneToMany(mappedBy = "id.accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Convenience> conveniences = new HashSet<>();
+    //todo to check czy działa jesli tak to zamienić w serwisie pobieranie udogodnien
 }
