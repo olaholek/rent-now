@@ -1,5 +1,5 @@
 #main {
-  margin: 3% 12%;
+  margin: 3% 12% 2%;
   align-items: center;
   -webkit-box-shadow: 0px 0px 200px 0px rgb(161, 159, 159);
   -moz-box-shadow: 0px 0px 200px 0px rgb(159, 158, 158);
@@ -9,6 +9,9 @@
   -moz-border-radius: 10px;
   border-radius: 10px;
   background-color: #e5e2da;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #dad6cc
 }
 
 .box {
@@ -93,15 +96,17 @@ label {
   flex-wrap: wrap;
   width: 90%;
 }
+
 #convenience-wrapper {
   min-width: 10em;
-  padding:0.3rem;
+  padding: 0.3rem;
 }
+
 #name {
   width: 25em;
 }
 
-.list{
+.list {
   margin-right: 1em;
 }
 

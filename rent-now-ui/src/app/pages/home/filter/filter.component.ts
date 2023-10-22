@@ -13,7 +13,6 @@ export class FilterComponent implements OnInit {
   minStartDate = new Date();
   minEndDate = new Date();
   startDateToValid = new Date();
-  endDateToValid = new Date();
   invalidDateError = false;
   @Output() filtersEmitter = new EventEmitter<AccommodationCriteriaRQ>();
 
@@ -62,19 +61,13 @@ export class FilterComponent implements OnInit {
   onStartDateChange(event: Date) {
     const today = new Date(Date.now());
     this.startDateToValid = event;
-    this.resetTime(today);
-    this.resetTime(this.value.endDate);
-    this.resetTime(this.startDateToValid);
-    this.invalidDateError = this.startDateToValid === null || this.startDateToValid < today
+    this.invalidDateError = this.startDateToValid === null
+      || (this.startDateToValid.getFullYear() < today.getFullYear() &&
+        this.startDateToValid.getMonth() < today.getMonth() &&
+        this.startDateToValid.getDate() < today.getDate())
       || (this.startDateToValid.getFullYear() >= this.value.endDate.getFullYear() &&
         this.startDateToValid.getMonth() >= this.value.endDate.getMonth() &&
         this.startDateToValid.getDate() >= this.value.endDate.getDate());
-  }
-
-  resetTime(date: Date) {
-    date.setHours(0)
-    date.setSeconds(0)
-    date.setMinutes(0)
   }
 
   onEndDateChange(event: Date) {

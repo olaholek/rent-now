@@ -5,12 +5,16 @@
     </div>
     <div id="right">
       <p id="name"><b>{{accommodation.name}}</b></p>
-      <p>{{accommodation.addressRS.city}}
-        ul.{{accommodation.addressRS.street}} {{accommodation.addressRS.houseNumber}}</p>
-      <div>
-        <p>{{numberOfDays}}</p>
-        COST
-        <p>{{getCost(accommodation.priceForDay)}}</p>
+      <p>
+        {{ accommodation.addressRS.city }}
+        <ng-container *ngIf="accommodation.addressRS.street !== '' && accommodation.addressRS.street != null">
+          ul.{{ accommodation.addressRS.street }}
+        </ng-container>
+        {{ accommodation.addressRS.houseNumber }}
+      </p>
+      <div id="cost">
+        <p id="numberOfDays">{{numberOfDays}} night</p>
+        <p id="price">{{getCost(accommodation.priceForDay)}} zł</p>
       </div>
       <div id="favourite">
         <div *ngIf="showEmptyHeart; then showHeart else showFillHeart"></div>
@@ -27,4 +31,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="accommodationList.totalElements === 0">
+  <p id="noAccommodations">No matching accommodations found :(</p>
 </div>

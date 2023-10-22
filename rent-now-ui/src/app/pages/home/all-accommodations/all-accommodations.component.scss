@@ -38,22 +38,47 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  margin-bottom:2em;
+  margin-bottom: 2em;
 }
 
-#favourite{
+#favourite {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-#heart-fill{
+#heart-fill {
   font-size: 1.7em;
   color: #cc6969;
 }
 
-#heart{
+#heart {
   font-size: 1.7em;
+}
+
+#price {
+  font-weight: bold;
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 25px;
+  font-family: Calibri;
+}
+
+#numberOfDays {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: #312f2f;
+  font-size: 14px;
+  font-family: Calibri;
+}
+
+#cost {
+  margin-top: 3em;
+}
+
+#noAccommodations {
+  text-align: center;
+  margin: 2em;
 }
 
 

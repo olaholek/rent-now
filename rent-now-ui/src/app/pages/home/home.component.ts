@@ -17,9 +17,14 @@ export class HomeComponent implements OnInit {
   accommodationList !: Page<AccommodationRS>;
   pageNo !: number;
   photos = new Map<number, SafeUrl>();
-  numberOfDays !: number;
+  numberOfDays = 1;
   sort !: string;
-  //todo zrobić wybór sortowania <select>
+
+  sortOptions = ['From the newest', 'Price high to low', 'Price low to high'];
+  options = new Map([
+    ['From the newest', 'id,desc'], ['Price high to low', 'priceForDay,desc'], ['Price low to high', 'priceForDay,asc']
+  ]);
+  selectedSort !: string;
 
   criteria: AccommodationCriteriaRQ = {
     startDate: new Date(),
@@ -42,13 +47,19 @@ export class HomeComponent implements OnInit {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.criteria.endDate = tomorrow;
-    this.sort = 'id,desc'
-    this.numberOfDays = accommodationService.getNumberOfDays(this.criteria.startDate, this.criteria.endDate);
+    this.selectedSort = this.sortOptions[0];
+    this.sort = <string>this.options.get(this.selectedSort);
   }
 
   ngOnInit(): void {
     this.pageNo = 0;
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
+  }
+
+  onChangeSort() {
+    this.sort = <string>this.options.get(this.selectedSort);
+    this.getAccommodations(this.criteria, this.pageNo, this.sort);
+    console.log(this.sort)
   }
 
   onPageChange(event: any) {
@@ -61,7 +72,7 @@ export class HomeComponent implements OnInit {
     this.accommodationService.filterAccommodations(criteria, pageNumber, 10, sort)
       .pipe(
         catchError((error) => {
-          this.toastService.showError('');
+          this.toastService.showError('Error during filter accommodations');
           throw error;
         })
       )
@@ -80,6 +91,7 @@ export class HomeComponent implements OnInit {
 
   getAccommodationList(criteria: AccommodationCriteriaRQ) {
     this.criteria = criteria;
+    this.numberOfDays = this.accommodationService.getNumberOfDays(this.criteria.startDate, this.criteria.endDate);
     this.getAccommodations(criteria, 0, this.sort);
   }
 }

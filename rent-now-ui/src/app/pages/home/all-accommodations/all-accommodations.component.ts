@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Page} from "../../../data/model/common/Page";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {SafeUrl} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
 
 @Component({
   selector: 'app-all-accommodations',
@@ -13,9 +15,11 @@ export class AllAccommodationsComponent implements OnInit {
   @Input() accommodationList !: Page<AccommodationRS>;
   @Input() photos = new Map<number, SafeUrl>();
   @Input() numberOfDays !: number;
+  @Input() startDate !: Date;
+  @Input() endDate !: Date;
   showEmptyHeart: boolean = false;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private readonly router: Router, private readonly accommodationService: AccommodationServiceImpl,) {
   }
 
   getPhoto(id: number): SafeUrl {
@@ -30,6 +34,12 @@ export class AllAccommodationsComponent implements OnInit {
   }
 
   showDetails(accommodationId: number) {
-    //id, startDate, endDate
+    this.router.navigate(['accommodation/view'], {
+      queryParams: {
+        id: accommodationId,
+        startDate: this.accommodationService.buildDateToSendInJSON(this.startDate),
+        endDate: this.accommodationService.buildDateToSendInJSON(this.endDate), mode: 'reserve'
+      }
+    })
   }
 }
