@@ -152,7 +152,6 @@ public class AccommodationController {
                         .name(name)
                         .build();
 
-        //todo sortowanie będzie wysyłane w pageablu i jak będzie na stronce sortowanie to będziemy od nowa poebierać dane tym controllerem
         try {
             return accommodationService.getAccommodationListByFilter(accommodationCriteriaRQ, pageable);
         } catch (IllegalArgumentException e) {

@@ -57,9 +57,9 @@ export class HomeComponent implements OnInit {
   }
 
   onChangeSort() {
+    this.pageNo = 0;
     this.sort = <string>this.options.get(this.selectedSort);
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
-    console.log(this.sort)
   }
 
   onPageChange(event: any) {
