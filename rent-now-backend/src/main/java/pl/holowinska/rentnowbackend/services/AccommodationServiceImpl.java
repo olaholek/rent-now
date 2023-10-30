@@ -72,7 +72,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public AccommodationRS addPhotosToAccommodation(Long accommodationId, List<MultipartFile> files) throws IOException, AccommodationNotFoundException {
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -81,7 +81,7 @@ public class AccommodationServiceImpl implements AccommodationService {
         for (MultipartFile file : files) {
             int i = file.getOriginalFilename().lastIndexOf(".");
             String ext = file.getOriginalFilename().substring(i);
-            Path of1 = Path.of("D:\\Praca Inżynierska\\photos\\" + accommodationId + "\\" + new Random().nextLong() + ext);
+            Path of1 = Path.of("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId + "\\" + new Random().nextLong() + ext);
             Files.write(of1, file.getBytes());
         }
 
@@ -139,25 +139,25 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public List<InputStreamResource> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, IOException {
+    public List<String> getAccommodationImageNames(Long accommodationId) throws AccommodationNotFoundException {
 
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         if (accommodation.isEmpty()) {
             throw new AccommodationNotFoundException();
         }
 
-        List<InputStreamResource> photos = new ArrayList<>();
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
+        List<String> fileNameList = new ArrayList<>();
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();
             if (fileArray != null) {
                 for (File file : fileArray) {
-                    photos.add(new InputStreamResource(new FileInputStream(file)));
+                    fileNameList.add(file.getName());
                 }
             }
         }
-        return photos;
+        return fileNameList;
     }
 
     @Override
@@ -170,7 +170,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
         File defaultImage = new File("D:\\Praca Inżynierska\\photos\\default");
         InputStreamResource mainPhoto = null;
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();

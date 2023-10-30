@@ -63,16 +63,14 @@ public class AccommodationController {
         }
     }
 
-    @GetMapping(value = "/photos/{id}", produces = "image/jpeg")
-    public ResponseEntity<List<InputStreamResource>> getAccommodationPhotos(@PathVariable("id") Long accommodationId
+    @GetMapping(value = "/photos/{id}")
+    public ResponseEntity<List<String>> getAccommodationImageNames(@PathVariable("id") Long accommodationId
     ) {
         try {
-            return ResponseEntity.ok().contentType(IMAGE_JPEG)
-                    .body(accommodationService.getAccommodationPhotos(accommodationId));
+            return ResponseEntity.ok()
+                    .body(accommodationService.getAccommodationImageNames(accommodationId));
         } catch (AccommodationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

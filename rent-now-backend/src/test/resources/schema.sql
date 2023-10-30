@@ -95,3 +95,8 @@ CREATE TABLE BOOKING_CONVENIENCE(
 
 alter table accommodation
     modify DESCRIPTION varchar(5000) null;
+alter table address
+    modify COUNTY varchar(255) null;
+
+alter table address
+    modify PROVINCE varchar(255) null;
