@@ -85,24 +85,21 @@
     </div>
 
     <div class="box">
-        <label for="county">County<span class="asterisk"> *</span></label>
+        <label for="county">County</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.county"
                 id="acc-county"
                 type="text"
-                name="county" required #county="ngModel"/>
-        <small *ngIf="county.invalid && (county.dirty || county.touched)" class="p-error">County is required.</small>
+                name="county"/>
     </div>
 
     <div class="box">
-        <label for="province">Province<span class="asterisk"> *</span></label>
+        <label for="province">Province</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.province"
                 id="acc-province"
                 type="text"
-                name="province" required #province="ngModel"/>
-        <small *ngIf="province.invalid && (province.dirty || province.touched)" class="p-error">Province is
-            required.</small>
+                name="province"/>
     </div>
 </div>
 
@@ -164,6 +161,7 @@
         <div *ngFor="let category of categories" class="field-checkbox">
             <input pInputText id="cost" [disabled]="!category.selected" [(ngModel)]="category.additionalCost"
                    placeholder="0 zł">
+<!--          //todo to check czy dziala po zmianie na number-->
         </div>
     </div>
 </div>

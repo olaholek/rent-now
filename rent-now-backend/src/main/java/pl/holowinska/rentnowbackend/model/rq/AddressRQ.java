@@ -24,8 +24,6 @@ public class AddressRQ {
     private String postalCode;
     @NotBlank
     private String post;
-    @NotBlank
     private String county;
-    @NotBlank
     private String province;
 }

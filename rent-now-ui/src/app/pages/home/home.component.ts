@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly accommodationService: AccommodationServiceImpl,
-    private readonly toastService: ToastService,
+    private readonly toastService: ToastService
   ) {
     this.criteria.startDate = new Date();
     const tomorrow = new Date();

@@ -79,12 +79,8 @@ export class AccommodationServiceImpl implements AccommodationService {
     )
   }
 
-  buildDateToSendInJSON(date: Date): string {
-    let rightMonth = date.getMonth() + 1;
-    let month = rightMonth < 10 ? '0' + rightMonth.toString() : rightMonth;
-    let day = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate();
-    return date.getFullYear().toString() + '-' +
-      month + '-' + day
+  getAccommodation(accommodationId: number): Observable<AccommodationRS> {
+    return this.httpClient.get<AccommodationRS>(this.baseUrl + "/" + accommodationId);
   }
 
   getAccommodationPhoto(accommodationId: number): Observable<Blob> {
@@ -93,8 +89,16 @@ export class AccommodationServiceImpl implements AccommodationService {
     return this.httpClient.get(this.baseUrl + "/photo/" + accommodationId, {headers: headers, responseType: 'blob'});
   }
 
-  getAccommodationPhotos(accommodationId: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(this.baseUrl + '/photos/' + accommodationId);
+  getAccommodationImageNames(accommodationId: number): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.baseUrl + '/photos/' + accommodationId);
+  }
+
+  buildDateToSendInJSON(date: Date): string {
+    let rightMonth = date.getMonth() + 1;
+    let month = rightMonth < 10 ? '0' + rightMonth.toString() : rightMonth;
+    let day = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate();
+    return date.getFullYear().toString() + '-' +
+      month + '-' + day
   }
 
   getConveniences(conveniences: ConvenienceType[]): string {

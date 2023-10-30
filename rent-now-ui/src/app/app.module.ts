@@ -29,6 +29,9 @@ import {CalendarModule} from "primeng/calendar";
 import {PaginatorModule} from "primeng/paginator";
 import {GalleriaModule} from "primeng/galleria";
 import {ImageModule} from "primeng/image";
+import {AccommodationViewComponent} from './pages/home/accommodation-view/accommodation-view.component';
+import {DialogModule} from "primeng/dialog";
+import {NgOptimizedImage} from "@angular/common";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -58,7 +61,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     Step1DataComponent,
     Step2PhotosComponent,
     FilterComponent,
-    AllAccommodationsComponent
+    AllAccommodationsComponent,
+    AccommodationViewComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CalendarModule,
     PaginatorModule,
     GalleriaModule,
-    ImageModule
+    ImageModule,
+    DialogModule,
+    NgOptimizedImage
   ],
   providers: [
     {
