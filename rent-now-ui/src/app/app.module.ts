@@ -29,7 +29,7 @@ import {CalendarModule} from "primeng/calendar";
 import {PaginatorModule} from "primeng/paginator";
 import {GalleriaModule} from "primeng/galleria";
 import {ImageModule} from "primeng/image";
-import {AccommodationViewComponent} from './pages/home/accommodation-view/accommodation-view.component';
+import {BookingComponent} from './pages/home/booking/booking.component';
 import {DialogModule} from "primeng/dialog";
 import {NgOptimizedImage} from "@angular/common";
 
@@ -62,7 +62,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     Step2PhotosComponent,
     FilterComponent,
     AllAccommodationsComponent,
-    AccommodationViewComponent
+    BookingComponent
   ],
   imports: [
     BrowserModule,

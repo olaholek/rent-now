@@ -34,7 +34,7 @@ export class AllAccommodationsComponent implements OnInit {
   }
 
   showDetails(accommodationId: number) {
-    this.router.navigate(['accommodation/view'], {
+    this.router.navigate(['booking'], {
       queryParams: {
         id: accommodationId,
         startDate: this.accommodationService.buildDateToSendInJSON(this.startDate),

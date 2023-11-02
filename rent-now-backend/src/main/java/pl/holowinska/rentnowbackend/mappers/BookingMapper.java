@@ -14,7 +14,7 @@ public class BookingMapper {
         return BookingRS.builder()
                 .id(booking.getId())
                 .userUUID(booking.getUser().getId())
-                .accommodationId(booking.getAccommodation().getId())
+                .accommodation(AccommodationMapper.mapToDto(booking.getAccommodation(), null))
                 .startDate(booking.getStartDate())
                 .endDate(booking.getEndDate())
                 .bookingDate(booking.getBookingDate())

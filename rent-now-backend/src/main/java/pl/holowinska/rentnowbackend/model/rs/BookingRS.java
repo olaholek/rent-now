@@ -16,7 +16,7 @@ public class BookingRS {
 
     private Long id;
     private UUID userUUID;
-    private Long accommodationId;
+    private AccommodationRS accommodation;
     private Timestamp startDate;
     private Timestamp endDate;
     private Timestamp bookingDate;

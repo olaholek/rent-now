@@ -42,3 +42,32 @@ export function getConvenienceType(convenienceString: string): ConvenienceType {
       throw new Error('Not found');
   }
 }
+
+export function getConvenienceTypeText(convenienceType: ConvenienceType): string {
+  switch (convenienceType) {
+    case ConvenienceType.PRIVATE_BATHROOM:
+      return 'Private Bathroom';
+    case ConvenienceType.BALCONY:
+      return 'Balcony';
+    case ConvenienceType.KITCHEN:
+      return 'Kitchen';
+    case ConvenienceType.AIR_CONDITIONING:
+      return 'Air Conditioning';
+    case ConvenienceType.POOL:
+      return 'Pool';
+    case ConvenienceType.TV:
+      return 'TV';
+    case ConvenienceType.BREAKFAST:
+      return 'Breakfast';
+    case ConvenienceType.WASHING_MACHINE:
+      return 'Washing Machine';
+    case ConvenienceType.DINNER:
+      return 'Dinner';
+    case ConvenienceType.SAUNA:
+      return 'Sauna';
+    case ConvenienceType.PARKING:
+      return 'Parking';
+    default:
+      return 'Unknown';
+  }
+}
