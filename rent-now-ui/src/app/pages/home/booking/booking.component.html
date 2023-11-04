@@ -1,0 +1,95 @@
+<div class="main">
+  <div id="details">
+    <div id="photos">
+      <ng-container *ngIf="photos.length === 0">
+      </ng-container>
+      <ng-container *ngIf="photos.length === 1">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+      </ng-container>
+      <ng-container *ngIf="photos.length >= 2">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+        <div id="thumbnails">
+          <div *ngFor="let photo of photos.slice(1)">
+            <img [src]="path + photo" alt="Image" width="100" id="thumbnail" (click)="showDialog(path + photo)">
+            <p-dialog [(visible)]="visible" [style]="{height: '70vw', width:'60vw'}" [modal]="true">
+              <div id="fullImage">
+                <img [src]="src" alt="Image" width="85%">
+              </div>
+            </p-dialog>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div>
+      <p id="name"><b>{{accommodation.name}}</b></p>
+      <div id="address">
+        <img src="assets/photos/location.png" alt="Image" width="20" id="location">
+        {{ accommodation.addressRS.city }}
+        <ng-container *ngIf="accommodation.addressRS.street !== '' && accommodation.addressRS.street != null">
+          ul. {{accommodation.addressRS.street }}
+        </ng-container>
+        {{ accommodation.addressRS.houseNumber }}
+        <ng-container
+          *ngIf="accommodation.addressRS.apartmentNumber !== '' && accommodation.addressRS.apartmentNumber != null">
+          /{{accommodation.addressRS.apartmentNumber }}
+        </ng-container>
+        , {{accommodation.addressRS.postalCode}} {{accommodation.addressRS.post}}
+      </div>
+      <p><b>Max number of people: </b>{{accommodation.maxNoOfPeople}}</p>
+      <p><b>Square footage: </b>{{accommodation.squareFootage}} m<sup>2</sup></p>
+      <div id="facilitiesListDiv">
+        <p id="facilities"><b>Facilities: </b></p>
+        <div *ngFor="let option of freeConveniences" class="facilitiesList">
+          <span class="pi pi-circle-fill" id="circle"></span>
+          <label [for]="option" id="xd">{{getConvenienceTypeText(option.convenience)}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="descriptionDiv">
+    <p class="header">Description</p>
+    <p id="description">{{accommodation.description}}</p>
+  </div>
+</div>
+<div class="main">
+  <div id="reservation">
+    <p class="header">Book accommodation</p>
+    <div id="dates">
+      <div class="box">
+        <label for="startDate">Start date</label>
+        <p-calendar [(ngModel)]="startDate" [showIcon]="true" id="startDate" class="element"
+                    dateFormat="dd.mm.yy" (ngModelChange)="calculate()"
+                    [minDate]="minStartDate"></p-calendar>
+      </div>
+      <div class="box">
+        <label for="endDate">End date</label>
+        <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="endDate" class="element"
+                    [minDate]="minEndDate" (ngModelChange)="calculate()"
+                    dateFormat="dd.mm.yy"></p-calendar>
+      </div>
+      <div id="costs">
+        <b><span id="price">{{booking.price}} zł </span></b>
+        <span *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} night</span>
+        <span *ngIf="numberOfDays>1" class="numberOfDays">/ {{numberOfDays}} nights</span>
+
+      </div>
+    </div>
+    <h3 class="facilities">Choose additional facilities: </h3>
+    <div id="facilities-container">
+      <div class="column">
+        <div *ngFor="let option of paidConveniences" class="field-checkbox">
+          <p-checkbox name="group" (onChange)="onSelectionChange(option)" [value]="option"></p-checkbox>
+          <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
+        </div>
+      </div>
+      <div class="column">
+        <div *ngFor="let option of paidConveniences" class="field-checkbox">
+          <label id="cost">{{option.additionalCost}} zł</label>
+        </div>
+      </div>
+    </div>
+    <div id="button">
+      <p-button label="Reserve" (onClick)="bookAccommodation()"></p-button>
+    </div>
+  </div>
+</div>
