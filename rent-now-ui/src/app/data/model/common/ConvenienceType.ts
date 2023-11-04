@@ -14,7 +14,7 @@ export enum ConvenienceType {
 
 export function getConvenienceType(convenienceString: string): ConvenienceType {
   convenienceString = convenienceString.toUpperCase();
-
+//todo do wywalenia
   switch (convenienceString) {
     case 'PRIVATE_BATHROOM':
       return ConvenienceType.PRIVATE_BATHROOM;
@@ -43,29 +43,29 @@ export function getConvenienceType(convenienceString: string): ConvenienceType {
   }
 }
 
-export function getConvenienceTypeText(convenienceType: ConvenienceType): string {
+export function getConvenienceTypeText(convenienceType: unknown): string {
   switch (convenienceType) {
-    case ConvenienceType.PRIVATE_BATHROOM:
+    case 'PRIVATE_BATHROOM':
       return 'Private Bathroom';
-    case ConvenienceType.BALCONY:
+    case 'BALCONY':
       return 'Balcony';
-    case ConvenienceType.KITCHEN:
+    case 'KITCHEN':
       return 'Kitchen';
-    case ConvenienceType.AIR_CONDITIONING:
+    case 'AIR_CONDITIONING':
       return 'Air Conditioning';
-    case ConvenienceType.POOL:
+    case 'POOL':
       return 'Pool';
-    case ConvenienceType.TV:
+    case 'TV':
       return 'TV';
-    case ConvenienceType.BREAKFAST:
+    case 'BREAKFAST':
       return 'Breakfast';
-    case ConvenienceType.WASHING_MACHINE:
+    case 'WASHING_MACHINE':
       return 'Washing Machine';
-    case ConvenienceType.DINNER:
+    case 'DINNER':
       return 'Dinner';
-    case ConvenienceType.SAUNA:
+    case 'SAUNA':
       return 'Sauna';
-    case ConvenienceType.PARKING:
+    case 'PARKING':
       return 'Parking';
     default:
       return 'Unknown';

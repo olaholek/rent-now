@@ -8,6 +8,7 @@ import {AddressRQ} from "../../data/model/rq/AddressRQ";
 import {AccommodationCriteriaRQ} from "../../data/model/rq/AccommodationCriteriaRQ";
 import {Page} from "../../data/model/common/Page";
 import {ConvenienceType} from "../../data/model/common/ConvenienceType";
+import {DateService} from "../date/date.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AccommodationServiceImpl implements AccommodationService {
 
   public readonly baseUrl = '/api/accommodations'
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(private readonly httpClient: HttpClient,
+              private readonly dateService: DateService) {
   }
 
   createAccommodation(accommodationData: AccommodationRQ): Observable<AccommodationRS> {
@@ -48,9 +50,9 @@ export class AccommodationServiceImpl implements AccommodationService {
     const httpParams: { [key: string]: string } = {}
 
     if (criteriaRQ.startDate != null)
-      httpParams['startDate'] = this.buildDateToSendInJSON(criteriaRQ.startDate);
+      httpParams['startDate'] = this.dateService.buildDateToSendInJSON(criteriaRQ.startDate);
     if (criteriaRQ.endDate != null)
-      httpParams['endDate'] = this.buildDateToSendInJSON(criteriaRQ.endDate);
+      httpParams['endDate'] = this.dateService.buildDateToSendInJSON(criteriaRQ.endDate);
     if (criteriaRQ.city != null && criteriaRQ.city !== '')
       httpParams['city'] = criteriaRQ.city;
     if (criteriaRQ.street != null && criteriaRQ.street !== '')
@@ -93,14 +95,6 @@ export class AccommodationServiceImpl implements AccommodationService {
     return this.httpClient.get<string[]>(this.baseUrl + '/photos/' + accommodationId);
   }
 
-  buildDateToSendInJSON(date: Date): string {
-    let rightMonth = date.getMonth() + 1;
-    let month = rightMonth < 10 ? '0' + rightMonth.toString() : rightMonth;
-    let day = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate();
-    return date.getFullYear().toString() + '-' +
-      month + '-' + day
-  }
-
   getConveniences(conveniences: ConvenienceType[]): string {
     let convenienceList = ''
     for (let convenience of conveniences) {
@@ -111,12 +105,5 @@ export class AccommodationServiceImpl implements AccommodationService {
       }
     }
     return convenienceList;
-  }
-
-  getNumberOfDays(startDate: Date, endDate: Date): number {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const timeDifference = end.getTime() - start.getTime();
-    return Math.floor((timeDifference) / (1000 * 60 * 60 * 24));
   }
 }

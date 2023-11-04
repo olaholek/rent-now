@@ -3,7 +3,7 @@ import {Page} from "../../../data/model/common/Page";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
 import {SafeUrl} from "@angular/platform-browser";
 import {Router} from "@angular/router";
-import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
+import {DateService} from "../../../services/date/date.service";
 
 @Component({
   selector: 'app-all-accommodations',
@@ -19,7 +19,8 @@ export class AllAccommodationsComponent implements OnInit {
   @Input() endDate !: Date;
   showEmptyHeart: boolean = false;
 
-  constructor(private readonly router: Router, private readonly accommodationService: AccommodationServiceImpl,) {
+  constructor(private readonly router: Router,
+              private readonly dateService: DateService) {
   }
 
   getPhoto(id: number): SafeUrl {
@@ -37,8 +38,8 @@ export class AllAccommodationsComponent implements OnInit {
     this.router.navigate(['booking'], {
       queryParams: {
         id: accommodationId,
-        startDate: this.accommodationService.buildDateToSendInJSON(this.startDate),
-        endDate: this.accommodationService.buildDateToSendInJSON(this.endDate), mode: 'reserve'
+        startDate: this.dateService.buildDateToSendInJSON(this.startDate),
+        endDate: this.dateService.buildDateToSendInJSON(this.endDate), mode: 'reserve'
       }
     })
   }
