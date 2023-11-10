@@ -38,6 +38,15 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingRS> getBookingById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(bookingService.getBooking(id));
+        } catch (BookingNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
         try {

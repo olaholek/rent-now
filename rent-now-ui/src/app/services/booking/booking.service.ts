@@ -27,4 +27,12 @@ export class BookingServiceImpl implements BookingService {
       'conveniences': Object.fromEntries(data.conveniences)
     })
   }
+
+  getBooking(bookingId: number): Observable<BookingRS> {
+    return this.httpClient.get<BookingRS>(this.baseUrl + "/" + bookingId);
+  }
+
+  cancelBooking(bookingId: number): Observable<String> {
+    return this.httpClient.delete<String>(this.baseUrl + "/" + bookingId);
+  }
 }

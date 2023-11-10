@@ -6,11 +6,13 @@ import {AccommodationCreateComponent} from "./pages/accommodation/accommodation-
 import {Step1DataComponent} from "./pages/accommodation/step1-data/step1-data.component";
 import {Step2PhotosComponent} from "./pages/accommodation/step2-photos/step2-photos.component";
 import {BookingComponent} from "./pages/home/booking/booking.component";
+import {BookingViewComponent} from "./pages/home/booking/booking-view/booking-view.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'booking', component: BookingComponent},
+  {path: 'booking', component: BookingComponent, pathMatch: 'full',},
+  {path: 'booking/view', component: BookingViewComponent, pathMatch: 'full',},
   {path: 'announcements/add', component: AccommodationCreateComponent,
     children: [
       { path: '', redirectTo: 'data', pathMatch: 'full' },

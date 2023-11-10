@@ -1,0 +1,91 @@
+<div class="main">
+  <div id="details">
+    <div id="photos">
+      <ng-container *ngIf="photos.length === 0">
+      </ng-container>
+      <ng-container *ngIf="photos.length === 1">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+      </ng-container>
+      <ng-container *ngIf="photos.length >= 2">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+        <div id="thumbnails">
+          <div *ngFor="let photo of photos.slice(1)">
+            <img [src]="path + photo" alt="Image" width="100" id="thumbnail" (click)="showDialog(path + photo)">
+            <p-dialog [(visible)]="visible" [style]="{height: '70vw', width:'60vw'}" [modal]="true">
+              <div id="fullImage">
+                <img [src]="src" alt="Image" width="85%">
+              </div>
+            </p-dialog>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div>
+      <p id="name"><b>{{booking.accommodation.name}}</b></p>
+      <div id="address">
+        <img src="assets/photos/location.png" alt="Image" width="20" id="location">
+        {{ booking.accommodation.addressRS.city }}
+        <ng-container
+          *ngIf="booking.accommodation.addressRS.street !== '' && booking.accommodation.addressRS.street != null">
+          ul. {{booking.accommodation.addressRS.street }}
+        </ng-container>
+        {{ booking.accommodation.addressRS.houseNumber }}
+        <ng-container
+          *ngIf="booking.accommodation.addressRS.apartmentNumber !== '' && booking.accommodation.addressRS.apartmentNumber != null">
+          /{{booking.accommodation.addressRS.apartmentNumber }}
+        </ng-container>
+        , {{booking.accommodation.addressRS.postalCode}} {{booking.accommodation.addressRS.post}}
+      </div>
+
+      <p-tag *ngIf="booking.status==='BOOKED'" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='FINISHED'" severity="success" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='PENDING'" severity="warning" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='CANCELED'" severity="danger" [value]="booking.status"></p-tag>
+
+      <p style="margin-top: 2em;"><b>Max number of people: </b>{{booking.accommodation.maxNoOfPeople}}</p>
+      <p><b>Square footage: </b>{{booking.accommodation.squareFootage}} m<sup>2</sup></p>
+      <div id="facilitiesListDiv">
+        <p class="facilities"><b>Facilities: </b></p>
+        <div *ngFor="let option of freeConveniences" class="facilitiesList">
+          <span class="pi pi-circle-fill" id="circle"></span>
+          <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
+        </div>
+        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>Additional facilities: </b></p>
+        <div class="column">
+          <div *ngFor="let option of paidConveniences" class="facilitiesList">
+            <span class="pi pi-circle-fill" id="circle2"></span>
+            <label [for]="option">{{getConvenienceTypeText(option.convenience) }} </label>
+          </div>
+          <div *ngFor="let category of paidConveniences" class="field-checkbox">
+            <label id="additionalCost"> {{ category.additionalCost}} zł</label>
+          </div>
+        </div>
+      </div>
+      <div id="dates">
+        <div class="box">
+          <label class="dateText"><b>Start date</b></label>
+          <input type="text" [value]="booking.startDate | date: 'dd.MM.yyyy'" disabled id="startDate">
+        </div>
+        <div class="box">
+          <label class="dateText"><b>End date</b></label>
+          <input type="text" [value]="booking.endDate | date: 'dd.MM.yyyy'" disabled id="endDate">
+        </div>
+        <div id="costs">
+          <b><span id="price">{{booking.price}} zł </span></b>
+          <span *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} night</span>
+          <span *ngIf="numberOfDays>1" class="numberOfDays">/ {{numberOfDays}} nights</span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div id="descriptionDiv">
+      <p class="header">Description</p>
+      <p id="description">{{booking.accommodation.description}}</p>
+    </div>
+    <div id="button">
+      <p-button label="Cancel reservation" (onClick)="cancelBooking()"></p-button>
+    </div>
+  </div>
+</div>

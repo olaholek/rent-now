@@ -11,4 +11,6 @@ public interface BookingService {
     BookingRS addBooking(BookingRQ bookingRQ) throws AccommodationNotFoundException, BookingConflictException;
 
     void deleteBooking(Long bookingId) throws BookingNotFoundException;
+
+    BookingRS getBooking(Long bookingId) throws BookingNotFoundException;
 }

@@ -32,6 +32,8 @@ import {ImageModule} from "primeng/image";
 import {BookingComponent} from './pages/home/booking/booking.component';
 import {DialogModule} from "primeng/dialog";
 import {NgOptimizedImage} from "@angular/common";
+import { BookingViewComponent } from './pages/home/booking/booking-view/booking-view.component';
+import {TagModule} from "primeng/tag";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -62,31 +64,33 @@ function initializeKeycloak(keycloak: KeycloakService) {
     Step2PhotosComponent,
     FilterComponent,
     AllAccommodationsComponent,
-    BookingComponent
+    BookingComponent,
+    BookingViewComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    KeycloakAngularModule,
-    ButtonModule,
-    SidebarModule,
-    BrowserAnimationsModule,
-    MenuModule,
-    AvatarModule,
-    CheckboxModule,
-    FormsModule,
-    InputTextareaModule,
-    FileUploadModule,
-    HttpClientModule,
-    StepsModule,
-    ToastModule,
-    CalendarModule,
-    PaginatorModule,
-    GalleriaModule,
-    ImageModule,
-    DialogModule,
-    NgOptimizedImage
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        KeycloakAngularModule,
+        ButtonModule,
+        SidebarModule,
+        BrowserAnimationsModule,
+        MenuModule,
+        AvatarModule,
+        CheckboxModule,
+        FormsModule,
+        InputTextareaModule,
+        FileUploadModule,
+        HttpClientModule,
+        StepsModule,
+        ToastModule,
+        CalendarModule,
+        PaginatorModule,
+        GalleriaModule,
+        ImageModule,
+        DialogModule,
+        NgOptimizedImage,
+        TagModule
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

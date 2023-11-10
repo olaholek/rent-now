@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,8 +78,9 @@ public class BookingServiceImpl implements BookingService {
         if (optionalBooking.isEmpty()) {
             throw new BookingNotFoundException();
         }
-        bookingConvenienceRepository.deleteConveniencesByBookingId(bookingId);
-        bookingRepository.deleteById(bookingId);
+        Booking entity = optionalBooking.get();
+        entity.setStatus(Status.CANCELED);
+        bookingRepository.save(entity);
     }
 
     private HashMap<ConvenienceType, BigDecimal> setAndSaveConveniences(HashMap<ConvenienceType, BigDecimal> conveniences, Booking saved) {
@@ -94,5 +96,22 @@ public class BookingServiceImpl implements BookingService {
         return conveniences;
     }
 
+    @Override
+    public BookingRS getBooking(Long bookingId) throws BookingNotFoundException {
+        Optional<Booking> booking = bookingRepository.findById(bookingId);
+        if (booking.isEmpty()) {
+            throw new BookingNotFoundException();
+        }
+        HashMap<ConvenienceType, BigDecimal> conveniences = getConveniences(bookingId);
+        return BookingMapper.mapToDto(booking.get(), conveniences);
+    }
 
+    private HashMap<ConvenienceType, BigDecimal> getConveniences(Long bookingId) {
+        List<BookingConvenience> convenienceList = bookingConvenienceRepository.getConvenienceByBookingId(bookingId);
+        HashMap<ConvenienceType, BigDecimal> conveniences = new HashMap<>();
+        for (BookingConvenience convenience : convenienceList) {
+            conveniences.put(convenience.getId().getConvenienceType(), convenience.getPrice());
+        }
+        return conveniences;
+    }
 }

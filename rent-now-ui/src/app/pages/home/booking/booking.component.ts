@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
 import {ToastService} from "../../../services/toast/toast.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, map} from "rxjs";
+import {catchError} from "rxjs";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
 import {ConvenienceType, getConvenienceTypeText} from "../../../data/model/common/ConvenienceType";
 import {ConvenienceOption} from "../../../data/model/common/ConvenienceOption";
@@ -111,12 +111,12 @@ export class BookingComponent implements OnInit {
     }
   }
 
-  async loadImages() {
-    const x = await this.accommodationService.getAccommodationImageNames(this.accommodationId)
-      .pipe(map(imageNames => {
+  loadImages() {
+    this.accommodationService.getAccommodationImageNames(this.accommodationId)
+      .subscribe(imageNames => {
           this.photos = imageNames
-        })
-      ).toPromise();
+        }
+      );
   }
 
   onSelectionChange(option: ConvenienceOption) {
