@@ -60,5 +60,4 @@ public class Booking implements Serializable {
 
     @OneToMany(mappedBy = "id.booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<BookingConvenience> bookingConveniences = new HashSet<>();
-    //todo dodać sprawdzic
 }

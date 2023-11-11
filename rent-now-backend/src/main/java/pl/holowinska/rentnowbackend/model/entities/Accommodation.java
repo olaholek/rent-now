@@ -57,5 +57,4 @@ public class Accommodation implements Serializable {
 
     @OneToMany(mappedBy = "id.accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Convenience> conveniences = new HashSet<>();
-    //todo to check czy działa jesli tak to zamienić w serwisie pobieranie udogodnien
 }

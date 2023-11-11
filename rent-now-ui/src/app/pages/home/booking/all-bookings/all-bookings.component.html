@@ -1,0 +1,60 @@
+<h1>Your reservations</h1>
+<div id="main" *ngFor="let booking of bookingList?.content">
+  <div id="full">
+    <div id="left">
+      <p-image [src]="getPhoto(booking.id)" alt="Image" width="400em"></p-image>
+    </div>
+    <div id="right">
+      <p id="name"><b>{{booking.accommodation.name}}</b></p>
+      <p>
+        {{ booking.accommodation.addressRS.city }}
+        <ng-container *ngIf="booking.accommodation.addressRS.street !== '' && booking.accommodation.addressRS.street != null">
+          ul.{{ booking.accommodation.addressRS.street }}
+        </ng-container>
+        {{ booking.accommodation.addressRS.houseNumber }}
+      </p>
+      <div id="dates">
+        <div class="box">
+          <label class="dateText"><b>Start date</b></label>
+          <input type="text" [value]="booking.startDate | date: 'dd.MM.yyyy'" disabled id="startDate">
+        </div>
+        <div class="box">
+          <label class="dateText"><b>End date</b></label>
+          <input type="text" [value]="booking.endDate | date: 'dd.MM.yyyy'" disabled id="endDate">
+        </div>
+        <div id="costs">
+          <b><span id="price">{{booking.price}} zł </span></b>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)<2" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} night</span>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)>1" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} nights</span>
+        </div>
+      </div>
+<!--      <div id="favourite">-->
+<!--        <div *ngIf="showEmptyHeart; then showHeart else showFillHeart"></div>-->
+<!--        <ng-template #showHeart>-->
+<!--          <span class="pi pi-heart" id="heart"></span>-->
+<!--        </ng-template>-->
+<!--        <ng-template #showFillHeart>-->
+<!--          <span class="pi pi-heart-fill" id="heart-fill"></span>-->
+<!--        </ng-template>-->
+<!--      </div>-->
+      <p-tag *ngIf="booking.status==='BOOKED'" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='FINISHED'" severity="success" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='PENDING'" severity="warning" [value]="booking.status"></p-tag>
+      <p-tag *ngIf="booking.status==='CANCELED'" severity="danger" [value]="booking.status"></p-tag>
+
+
+      <div id="button">
+        <p-button label="See more" (onClick)="showDetails(booking.id)" icon="pi pi-angle-right"
+                  iconPos="right"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="bookingList.totalElements === 0">
+  <p id="noAccommodations">You don't have any reservations yet :(</p>
+</div>
+
+
+
+<p-paginator *ngIf="bookingList" (onPageChange)="onPageChange($event)" [first]="1"
+             [rows]="10" [totalRecords]="bookingList.totalElements"></p-paginator>

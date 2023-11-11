@@ -24,11 +24,17 @@ import {Step2PhotosComponent} from './pages/accommodation/step2-photos/step2-pho
 import {StepsModule} from "primeng/steps";
 import {ToastModule} from "primeng/toast";
 import {FilterComponent} from './pages/home/filter/filter.component';
-import {AllAccommodationsComponent} from './pages/home/all-accommodations/all-accommodations.component';
+import {AllAccommodationsComponent} from './pages/accommodation/all-accommodations/all-accommodations.component';
 import {CalendarModule} from "primeng/calendar";
 import {PaginatorModule} from "primeng/paginator";
 import {GalleriaModule} from "primeng/galleria";
 import {ImageModule} from "primeng/image";
+import {BookingComponent} from './pages/home/booking/booking.component';
+import {DialogModule} from "primeng/dialog";
+import {NgOptimizedImage} from "@angular/common";
+import { BookingViewComponent } from './pages/home/booking/booking-view/booking-view.component';
+import {TagModule} from "primeng/tag";
+import { AllBookingsComponent } from './pages/home/booking/all-bookings/all-bookings.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -58,29 +64,35 @@ function initializeKeycloak(keycloak: KeycloakService) {
     Step1DataComponent,
     Step2PhotosComponent,
     FilterComponent,
-    AllAccommodationsComponent
+    AllAccommodationsComponent,
+    BookingComponent,
+    BookingViewComponent,
+    AllBookingsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    KeycloakAngularModule,
-    ButtonModule,
-    SidebarModule,
-    BrowserAnimationsModule,
-    MenuModule,
-    AvatarModule,
-    CheckboxModule,
-    FormsModule,
-    InputTextareaModule,
-    FileUploadModule,
-    HttpClientModule,
-    StepsModule,
-    ToastModule,
-    CalendarModule,
-    PaginatorModule,
-    GalleriaModule,
-    ImageModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        KeycloakAngularModule,
+        ButtonModule,
+        SidebarModule,
+        BrowserAnimationsModule,
+        MenuModule,
+        AvatarModule,
+        CheckboxModule,
+        FormsModule,
+        InputTextareaModule,
+        FileUploadModule,
+        HttpClientModule,
+        StepsModule,
+        ToastModule,
+        CalendarModule,
+        PaginatorModule,
+        GalleriaModule,
+        ImageModule,
+        DialogModule,
+        NgOptimizedImage,
+        TagModule
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

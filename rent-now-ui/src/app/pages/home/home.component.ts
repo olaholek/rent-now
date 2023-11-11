@@ -6,6 +6,7 @@ import {catchError} from "rxjs";
 import {AccommodationServiceImpl} from "../../services/accommodation/accommodation.service";
 import {ToastService} from "../../services/toast/toast.service";
 import {SafeUrl} from "@angular/platform-browser";
+import {DateService} from "../../services/date/date.service";
 
 @Component({
   selector: 'app-home',
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly accommodationService: AccommodationServiceImpl,
     private readonly toastService: ToastService,
+    private readonly dateService: DateService
   ) {
     this.criteria.startDate = new Date();
     const tomorrow = new Date();
@@ -57,9 +59,9 @@ export class HomeComponent implements OnInit {
   }
 
   onChangeSort() {
+    this.pageNo = 0;
     this.sort = <string>this.options.get(this.selectedSort);
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
-    console.log(this.sort)
   }
 
   onPageChange(event: any) {
@@ -91,7 +93,7 @@ export class HomeComponent implements OnInit {
 
   getAccommodationList(criteria: AccommodationCriteriaRQ) {
     this.criteria = criteria;
-    this.numberOfDays = this.accommodationService.getNumberOfDays(this.criteria.startDate, this.criteria.endDate);
+    this.numberOfDays = this.dateService.getNumberOfDays(this.criteria.startDate, this.criteria.endDate);
     this.getAccommodations(criteria, 0, this.sort);
   }
 }

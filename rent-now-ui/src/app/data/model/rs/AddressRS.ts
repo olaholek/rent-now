@@ -1,6 +1,6 @@
 export interface AddressRS {
     city: string;
-    street: string;
+    street: string | null;
     houseNumber: string;
     apartmentNumber?: string | null;
     postalCode: string;

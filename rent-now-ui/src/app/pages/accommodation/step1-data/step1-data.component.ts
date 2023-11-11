@@ -35,7 +35,7 @@ export class Step1DataComponent implements OnInit {
             this.categories.push({
                 convenience: conv,
                 selected: false,
-                additionalCost: ''
+                additionalCost: 0
             } as ConvenienceOption)
         }
         this.categories = this.categories.filter((category, index) => index < 11);
@@ -48,11 +48,13 @@ export class Step1DataComponent implements OnInit {
 
     nextPage(): void {
         const selectedConveniences = this.categories.filter(category => category.selected);
-        const conveniencesToSave = new Map<ConvenienceType, string>();
+        const conveniencesToSave = new Map<ConvenienceType, number>();
 
         for (const category of selectedConveniences) {
             conveniencesToSave.set(category.convenience, category.additionalCost);
         }
+
+        console.log(conveniencesToSave);
 
         this.value.conveniences = conveniencesToSave;
 
@@ -77,4 +79,8 @@ export class Step1DataComponent implements OnInit {
     capitalizeFirstLetter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
+  onSelectionChange(option: ConvenienceOption) {
+    option.selected = !option.selected;
+  }
 }

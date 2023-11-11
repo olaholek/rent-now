@@ -28,10 +28,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -75,7 +72,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public AccommodationRS addPhotosToAccommodation(Long accommodationId, List<MultipartFile> files) throws IOException, AccommodationNotFoundException {
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -84,7 +81,7 @@ public class AccommodationServiceImpl implements AccommodationService {
         for (MultipartFile file : files) {
             int i = file.getOriginalFilename().lastIndexOf(".");
             String ext = file.getOriginalFilename().substring(i);
-            Path of1 = Path.of("D:\\Praca Inżynierska\\photos\\" + accommodationId + "\\" + new Random().nextLong() + ext);
+            Path of1 = Path.of("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId + "\\" + new Random().nextLong() + ext);
             Files.write(of1, file.getBytes());
         }
 
@@ -142,25 +139,25 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public List<InputStreamResource> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, IOException {
+    public List<String> getAccommodationImageNames(Long accommodationId) throws AccommodationNotFoundException {
 
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
         if (accommodation.isEmpty()) {
             throw new AccommodationNotFoundException();
         }
 
-        List<InputStreamResource> photos = new ArrayList<>();
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
+        List<String> fileNameList = new ArrayList<>();
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();
             if (fileArray != null) {
                 for (File file : fileArray) {
-                    photos.add(new InputStreamResource(new FileInputStream(file)));
+                    fileNameList.add(file.getName());
                 }
             }
         }
-        return photos;
+        return fileNameList;
     }
 
     @Override
@@ -173,7 +170,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
         File defaultImage = new File("D:\\Praca Inżynierska\\photos\\default");
         InputStreamResource mainPhoto = null;
-        File directory = new File("D:\\Praca Inżynierska\\photos\\" + accommodationId);
+        File directory = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] fileArray = directory.listFiles();
@@ -192,11 +189,11 @@ public class AccommodationServiceImpl implements AccommodationService {
     private Specification<Accommodation> accommodationByCriteria(AccommodationCriteriaRQ accommodationCriteriaRQ) {
         return (root, query, cb) -> {
             long numberOfDays = getNumberOfBookingDays(accommodationCriteriaRQ.getStartDate(), accommodationCriteriaRQ.getEndDate());
-            LocalDateTime startDate = LocalDateTime.of(accommodationCriteriaRQ.getStartDate(), LocalTime.of(0, 0, 0));
-            LocalDateTime endDate = LocalDateTime.of(accommodationCriteriaRQ.getEndDate(), LocalTime.of(0, 0));
-            List<Long> accommodationIdsFromBooking = bookingRepository.getBookingAccommodationIdByDates(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
+            List<Long> accommodationIdsFromBooking = bookingRepository.getBookingAccommodationIdByDates
+                    (accommodationCriteriaRQ.getStartDate(), accommodationCriteriaRQ.getEndDate());
             List<Long> allAccommodationIds = accommodationRepository.findAll().stream().map(Accommodation::getId).toList();
-            List<Long> resultList = allAccommodationIds.stream().filter(element -> !accommodationIdsFromBooking.contains(element)).collect(Collectors.toList());
+            List<Long> resultList = allAccommodationIds.stream().filter(element -> !accommodationIdsFromBooking.contains(element))
+                    .collect(Collectors.toList());
             Predicate spec = root.get("id").in(resultList);
             if (accommodationCriteriaRQ.getCity() != null && !accommodationCriteriaRQ.getCity().isEmpty()) {
                 spec = cb.and(spec, cb.like(root.get("address").get("city"), accommodationCriteriaRQ.getCity()));
@@ -208,10 +205,12 @@ public class AccommodationServiceImpl implements AccommodationService {
                 spec = cb.and(spec, cb.equal(root.get("squareFootage"), accommodationCriteriaRQ.getSquareFootage()));
             }
             if (accommodationCriteriaRQ.getMinPrice() != null) {
-                spec = cb.and(spec, cb.greaterThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMinPrice().divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.DOWN)));
+                spec = cb.and(spec, cb.greaterThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMinPrice()
+                        .divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.DOWN)));
             }
             if (accommodationCriteriaRQ.getMaxPrice() != null) {
-                spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMaxPrice().divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.UP)));
+                spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("priceForDay"), accommodationCriteriaRQ.getMaxPrice()
+                        .divide(BigDecimal.valueOf(numberOfDays), 2, RoundingMode.UP)));
             }
             if (accommodationCriteriaRQ.getMaxNoOfPeople() != null) {
                 spec = cb.and(spec, cb.lessThanOrEqualTo(root.get("maxNoOfPeople"), accommodationCriteriaRQ.getMaxNoOfPeople()));
@@ -221,7 +220,8 @@ public class AccommodationServiceImpl implements AccommodationService {
             }
             List<ConvenienceType> filterConveniences = accommodationCriteriaRQ.getConveniences();
             if (filterConveniences != null && !filterConveniences.isEmpty()) {
-                spec = cb.and(spec, root.get("id").in(convenienceRepository.getAccommodationByConveniencesList(filterConveniences, filterConveniences.size())));
+                spec = cb.and(spec, root.get("id").in(convenienceRepository.getAccommodationByConveniencesList(filterConveniences,
+                        filterConveniences.size())));
             }
             return spec;
         };

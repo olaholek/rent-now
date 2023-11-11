@@ -29,7 +29,7 @@ public interface AccommodationService {
 
     Page<AccommodationRS> getAccommodationListByFilter(AccommodationCriteriaRQ accommodationCriteriaRQ, Pageable pageable);
 
-    List<InputStreamResource> getAccommodationPhotos(Long accommodationId) throws AccommodationNotFoundException, IOException;
+    List<String> getAccommodationImageNames(Long accommodationId) throws AccommodationNotFoundException;
 
     InputStreamResource getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException;
 }

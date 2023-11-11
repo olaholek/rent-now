@@ -1,0 +1,182 @@
+.main {
+  margin: 0 12% 2%;
+  align-items: center;
+  -webkit-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  -moz-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  position: relative;
+}
+
+#details {
+  display: flex;
+  flex-direction: row;
+  padding: 2em 1.5em 1.5em;
+}
+
+#photos {
+  width: 50%;
+  margin-right: 3em;
+}
+
+#thumbnails {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+#thumbnail {
+  margin-top: 1em;
+  margin-right: 0.5em;
+  transition: box-shadow 0.3s;
+}
+
+#thumbnail:hover {
+  cursor: pointer;
+  box-shadow: 4px 4px 15px rgb(91, 87, 87);
+}
+
+.bigPicture {
+  width: 100%;
+  transition: box-shadow 0.3s;
+}
+
+.bigPicture:hover {
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 4px 4px 15px rgb(91, 87, 87);
+}
+
+#fullImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#descriptionDiv {
+  padding: 1em 1.5em 1em;
+}
+
+#description {
+  font-size: 17px;
+  margin-right: 15em;
+}
+
+.header {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#name {
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+#address {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+}
+
+#location {
+  margin-right: 0.5em;
+}
+
+#circle {
+  font-size: 5px;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+#circle2 {
+  font-size: 5px;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+#facilitiesListDiv {
+  margin-bottom: 0.2em;
+  margin-top: 1em;
+  align-items: center;
+}
+
+.facilities {
+  margin-bottom: 0.5em;
+}
+
+.field-checkbox {
+  margin-bottom: 5px;
+}
+
+.column{
+  display: flex;
+  flex-direction: row;
+}
+
+#additionalCost{
+  margin-left: 1em;
+}
+
+#button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2em;
+  margin-right: 2em;
+}
+
+
+#dates {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+#startDate, #endDate {
+  width: 7em;
+  margin-top: 0.5em;
+  border: 2px solid #ccc;
+  padding: 0.7em;
+  text-align: center;
+  font-size: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-right: 2em;
+}
+
+.dateText{
+  font-size: 17px;
+  margin-top: 2em;
+}
+
+.numberOfDays {
+  font-size: 20px;
+  color: #717171
+}
+
+#price {
+  font-size: 30px;
+  color: #0050a0;
+}
+
+#costs {
+  margin-top: 4em;
+  margin-left: 1em;
+}
+
+#back{
+  margin: 1% 12%;
+}

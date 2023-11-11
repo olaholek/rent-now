@@ -8,6 +8,6 @@ export interface AccommodationRQ {
   priceForDay: number;
   squareFootage: number;
   description: string;
-  conveniences: Map<ConvenienceType, string>;
+  conveniences: Map<ConvenienceType, number>;
   maxNoOfPeople: number;
 }

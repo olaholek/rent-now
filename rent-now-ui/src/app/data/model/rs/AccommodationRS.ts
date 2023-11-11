@@ -1,5 +1,4 @@
 import {AddressRS} from "./AddressRS";
-import {ConvenienceType} from "../common/ConvenienceType";
 
 export interface AccommodationRS {
   id: number;
@@ -9,6 +8,6 @@ export interface AccommodationRS {
   priceForDay: number;
   squareFootage: number;
   description: string;
-  conveniences: Map<ConvenienceType, number>;
+  conveniences: Map<string, number>;
   maxNoOfPeople: number;
 }
