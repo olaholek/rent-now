@@ -1,5 +1,7 @@
 package pl.holowinska.rentnowbackend.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
 import pl.holowinska.rentnowbackend.exceptions.BookingConflictException;
 import pl.holowinska.rentnowbackend.exceptions.BookingNotFoundException;
@@ -13,4 +15,6 @@ public interface BookingService {
     void deleteBooking(Long bookingId) throws BookingNotFoundException;
 
     BookingRS getBooking(Long bookingId) throws BookingNotFoundException;
+
+    Page<BookingRS> getBookingListByUser(String uuid, Pageable pageable);
 }

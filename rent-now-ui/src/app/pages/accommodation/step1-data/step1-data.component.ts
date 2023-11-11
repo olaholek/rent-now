@@ -54,6 +54,8 @@ export class Step1DataComponent implements OnInit {
             conveniencesToSave.set(category.convenience, category.additionalCost);
         }
 
+        console.log(conveniencesToSave);
+
         this.value.conveniences = conveniencesToSave;
 
         this.accommodationService.createAccommodation(this.value)
@@ -77,4 +79,8 @@ export class Step1DataComponent implements OnInit {
     capitalizeFirstLetter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
+  onSelectionChange(option: ConvenienceOption) {
+    option.selected = !option.selected;
+  }
 }

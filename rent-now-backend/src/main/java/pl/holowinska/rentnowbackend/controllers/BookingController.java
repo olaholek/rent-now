@@ -2,6 +2,8 @@ package pl.holowinska.rentnowbackend.controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -56,6 +58,15 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/all/{uuid}")
+    public Page<BookingRS> getBookingListByUser(@PathVariable String uuid, Pageable pageable) {
+        try {
+            return bookingService.getBookingListByUser(uuid, pageable);
+        } catch (Exception e) {
+            return Page.empty();
         }
     }
 }

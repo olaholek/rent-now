@@ -1,3 +1,6 @@
+<div id="back">
+  <p-button icon="pi pi-arrow-left"></p-button>
+</div>
 <div class="main">
   <div id="details">
     <div id="photos">
@@ -74,7 +77,6 @@
           <b><span id="price">{{booking.price}} zł </span></b>
           <span *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} night</span>
           <span *ngIf="numberOfDays>1" class="numberOfDays">/ {{numberOfDays}} nights</span>
-
         </div>
       </div>
     </div>

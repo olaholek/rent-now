@@ -1,5 +1,8 @@
 package pl.holowinska.rentnowbackend.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
@@ -23,6 +26,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -104,6 +108,16 @@ public class BookingServiceImpl implements BookingService {
         }
         HashMap<ConvenienceType, BigDecimal> conveniences = getConveniences(bookingId);
         return BookingMapper.mapToDto(booking.get(), conveniences);
+    }
+
+    @Override
+    public Page<BookingRS> getBookingListByUser(String uuid, Pageable pageable) {
+        return bookingRepository.findAll(bookingByUser(uuid), pageable)
+                .map(entity -> BookingMapper.mapToDto(entity, getConveniences(entity.getId())));
+    }
+
+    private Specification<Booking> bookingByUser(String uuid) {
+        return (root, query, cb) -> cb.equal(root.get("user").get("id"), UUID.fromString(uuid));
     }
 
     private HashMap<ConvenienceType, BigDecimal> getConveniences(Long bookingId) {

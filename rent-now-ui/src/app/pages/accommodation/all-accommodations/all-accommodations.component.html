@@ -13,7 +13,8 @@
         {{ accommodation.addressRS.houseNumber }}
       </p>
       <div id="cost">
-        <p id="numberOfDays">{{numberOfDays}} night</p>
+        <p *ngIf="numberOfDays<2" class="numberOfDays">{{numberOfDays}} night</p>
+        <p *ngIf="numberOfDays>1" class="numberOfDays">{{numberOfDays}} nights</p>
         <p id="price">{{getCost(accommodation.priceForDay)}} zł</p>
       </div>
       <div id="favourite">

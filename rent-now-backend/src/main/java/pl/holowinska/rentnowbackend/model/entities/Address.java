@@ -43,12 +43,10 @@ public class Address implements Serializable {
     @NotEmpty
     private String post;
 
-    @Column(name = "COUNTY", nullable = false)
-    @NotEmpty
+    @Column(name = "COUNTY")
     private String county;
 
-    @Column(name = "PROVINCE", nullable = false)
-    @NotEmpty
+    @Column(name = "PROVINCE")
     private String province;
 
     @Column(name = "COUNTRY", nullable = false)

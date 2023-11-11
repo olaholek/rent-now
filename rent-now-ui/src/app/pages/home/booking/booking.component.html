@@ -73,7 +73,7 @@
         <span *ngIf="numberOfDays>1" class="numberOfDays">/ {{numberOfDays}} nights</span>
       </div>
     </div>
-    <h3 class="facilities">Choose additional facilities: </h3>
+    <h3 class="facilities" *ngIf="paidConveniences.length!=0">Choose additional facilities: </h3>
     <div id="facilities-container">
       <div class="column">
         <div *ngFor="let option of paidConveniences" class="field-checkbox">

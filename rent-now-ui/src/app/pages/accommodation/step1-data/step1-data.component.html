@@ -152,8 +152,7 @@
     <div class="column">
         <h3 class="facilities">Facilities</h3>
         <div *ngFor="let category of categories" class="field-checkbox">
-            <p-checkbox name="group" [value]="category" [(ngModel)]="category.selected"></p-checkbox>
-<!--          todo zrobic tak jak w booking bo to pewnie nie zmiania po odznaczeniu-->
+            <p-checkbox name="group" [value]="category" (onChange)="onSelectionChange(category)"></p-checkbox>
             <label [for]="category">{{beutify(category.convenience)}}</label>
         </div>
     </div>
@@ -162,8 +161,6 @@
         <div *ngFor="let category of categories" class="field-checkbox">
             <input pInputText id="cost" [disabled]="!category.selected" [(ngModel)]="category.additionalCost"
                    placeholder="0 zł">
-<!--          //todo to check czy dziala po zmianie na number-->
-<!--          chyba dziala-->
         </div>
     </div>
 </div>
