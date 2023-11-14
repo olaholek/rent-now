@@ -8,6 +8,7 @@ import {DateService} from "../../../../services/date/date.service";
 import {BookingRS} from "../../../../data/model/rs/BookingRS";
 import {ConvenienceOption} from "../../../../data/model/common/ConvenienceOption";
 import {catchError} from "rxjs";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-booking-view',
@@ -33,7 +34,8 @@ export class BookingViewComponent implements OnInit {
               private readonly bookingService: BookingServiceImpl,
               private readonly route: ActivatedRoute,
               private readonly toastService: ToastService,
-              private readonly dateService: DateService) {
+              private readonly dateService: DateService,
+              private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
         this.bookingId = Number(params.get('id'));
@@ -102,5 +104,9 @@ export class BookingViewComponent implements OnInit {
         this.toastService.showSuccess('Booking cancelled successfully.');
         window.location.reload();
       });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

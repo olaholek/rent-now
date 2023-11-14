@@ -1,5 +1,5 @@
 .main {
-  margin: 2% 12%;
+  margin: 0 12% 2%;
   align-items: center;
   -webkit-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
   -moz-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
@@ -160,4 +160,6 @@
   margin-bottom: 5px;
 }
 
-
+#back{
+  margin: 1% 12%;
+}

@@ -11,11 +11,13 @@ export interface AccommodationService {
     addPhotos(accommodationId: string | null | undefined, photos: Blob[]): Observable<any>;
 
     filterAccommodations(criteriaRQ: AccommodationCriteriaRQ, page: number, size: number, sort: string):
-    Observable<Page<AccommodationRS>>
+    Observable<Page<AccommodationRS>>;
 
-    getAccommodation(accommodationId: number): Observable<AccommodationRS>
+    getAccommodation(accommodationId: number): Observable<AccommodationRS>;
 
-    getAccommodationPhoto(accommodationId: number): Observable<Blob>
+    getAccommodationPhoto(accommodationId: number): Observable<Blob>;
 
-    getAccommodationImageNames(accommodationId: number): Observable<string[]>
+    getAccommodationImageNames(accommodationId: number): Observable<string[]>;
+
+    getUserAccommodations(uuid: string, page: number, size: number, sort: string): Observable<Page<AccommodationRS>>;
 }

@@ -1,5 +1,5 @@
 <div id="back">
-  <p-button icon="pi pi-arrow-left"></p-button>
+  <p-button icon="pi pi-arrow-left" (onClick)="goBack()"></p-button>
 </div>
 <div class="main">
   <div id="details">
@@ -86,7 +86,7 @@
       <p class="header">Description</p>
       <p id="description">{{booking.accommodation.description}}</p>
     </div>
-    <div id="button">
+    <div id="button" *ngIf="booking.status === 'BOOKED'">
       <p-button label="Cancel reservation" (onClick)="cancelBooking()"></p-button>
     </div>
   </div>

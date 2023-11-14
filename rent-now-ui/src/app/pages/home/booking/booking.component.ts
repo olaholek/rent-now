@@ -10,6 +10,7 @@ import {BookingRQ} from "../../../data/model/rq/BookingRQ";
 import {KeycloakService} from "keycloak-angular";
 import {BookingServiceImpl} from "../../../services/booking/booking.service";
 import {DateService} from "../../../services/date/date.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-booking',
@@ -63,7 +64,8 @@ export class BookingComponent implements OnInit {
               private readonly keycloak: KeycloakService,
               private readonly toastService: ToastService,
               private readonly router: Router,
-              private readonly dateService: DateService) {
+              private readonly dateService: DateService,
+              private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
         this.accommodationId = Number(params.get('id'));
@@ -168,6 +170,10 @@ export class BookingComponent implements OnInit {
         this.toastService.showSuccess('Booking completed successfully.');
         this.router.navigate(['booking/view'], {queryParams: {id: res.id}});
       });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   protected readonly getConvenienceTypeText = getConvenienceTypeText;

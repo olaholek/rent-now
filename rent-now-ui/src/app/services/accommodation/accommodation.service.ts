@@ -95,6 +95,19 @@ export class AccommodationServiceImpl implements AccommodationService {
     return this.httpClient.get<string[]>(this.baseUrl + '/photos/' + accommodationId);
   }
 
+  getUserAccommodations(uuid: string, page: number, size: number, sort: string): Observable<Page<AccommodationRS>> {
+    const httpParams: { [key: string]: string } = {}
+    if (page != null)
+      httpParams['page'] = page.toString();
+    if (size != null)
+      httpParams['size'] = size.toString();
+    if (sort != null && sort !== '')
+      httpParams['sort'] = sort;
+    return this.httpClient.get<Page<AccommodationRS>>(this.baseUrl + '/user/' + uuid,
+      {params: httpParams}
+    )
+  }
+
   getConveniences(conveniences: ConvenienceType[]): string {
     let convenienceList = ''
     for (let convenience of conveniences) {

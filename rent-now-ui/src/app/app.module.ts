@@ -35,6 +35,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { BookingViewComponent } from './pages/home/booking/booking-view/booking-view.component';
 import {TagModule} from "primeng/tag";
 import { AllBookingsComponent } from './pages/home/booking/all-bookings/all-bookings.component';
+import { UserAccommodationsComponent } from './pages/accommodation/user-accommodations/user-accommodations.component';
+import { ViewAccommodationComponent } from './pages/accommodation/view-accommodation/view-accommodation.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -67,7 +69,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AllAccommodationsComponent,
     BookingComponent,
     BookingViewComponent,
-    AllBookingsComponent
+    AllBookingsComponent,
+    UserAccommodationsComponent,
+    ViewAccommodationComponent
   ],
     imports: [
         BrowserModule,

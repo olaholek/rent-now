@@ -8,11 +8,15 @@ import {Step2PhotosComponent} from "./pages/accommodation/step2-photos/step2-pho
 import {BookingComponent} from "./pages/home/booking/booking.component";
 import {BookingViewComponent} from "./pages/home/booking/booking-view/booking-view.component";
 import {AllBookingsComponent} from "./pages/home/booking/all-bookings/all-bookings.component";
+import {UserAccommodationsComponent} from "./pages/accommodation/user-accommodations/user-accommodations.component";
+import {ViewAccommodationComponent} from "./pages/accommodation/view-accommodation/view-accommodation.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'booking', component: BookingComponent, pathMatch: 'full'},
+  {path: 'accommodations/view', component: ViewAccommodationComponent, pathMatch: 'full'},
+  {path: 'announcements', component: UserAccommodationsComponent, pathMatch: 'full'},
   {path: 'reservations', component: AllBookingsComponent, pathMatch: 'full'},
   {path: 'booking/view', component: BookingViewComponent, pathMatch: 'full'},
   {
