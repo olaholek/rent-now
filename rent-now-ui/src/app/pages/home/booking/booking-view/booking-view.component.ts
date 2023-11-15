@@ -63,7 +63,6 @@ export class BookingViewComponent implements OnInit {
     this.bookingService.getBooking(this.bookingId).subscribe(
       booking => {
         this.booking = booking;
-        console.log(this.booking);
         this.path = 'assets/photos/' + this.booking.accommodation.id + '/';
 
         for (const [type, cost] of Object.entries(this.booking.conveniences)) {

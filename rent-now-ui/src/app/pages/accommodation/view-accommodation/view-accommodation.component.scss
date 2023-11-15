@@ -1,0 +1,67 @@
+#description {
+  font-size: 17px;
+  margin-right: 15em;
+}
+
+#address {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+}
+
+#circle2 {
+  font-size: 5px;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.facilities {
+  margin-bottom: 0.5em;
+}
+
+.field-checkbox {
+  margin-bottom: 5px;
+}
+
+.column{
+  display: flex;
+  flex-direction: row;
+}
+
+#additionalCost{
+  margin-left: 1em;
+}
+
+.numberOfDays {
+  font-size: 20px;
+  color: #717171
+}
+
+#price {
+  font-size: 30px;
+  color: #0050a0;
+}
+
+#costs {
+  margin-top: 4em;
+  margin-left: 1em;
+}
+
+.column{
+  display: flex;
+  flex-direction: row;
+}
+
+#options{
+  display: flex;
+  flex-direction: row;
+}
+
+#additional{
+  display: flex;
+  flex-direction: row;
+}
+
+#optionLabel{
+  margin-bottom:0.3em;
+}

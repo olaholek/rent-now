@@ -1,1 +1,80 @@
-<p>view-accommodation works!</p>
+<div id="back">
+  <p-button icon="pi pi-arrow-left" (onClick)="goBack()"></p-button>
+</div>
+<div class="main">
+  <div id="details">
+    <div id="photos">
+      <ng-container *ngIf="photos.length === 0">
+      </ng-container>
+      <ng-container *ngIf="photos.length === 1">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+      </ng-container>
+      <ng-container *ngIf="photos.length >= 2">
+        <img [src]="path + photos[0]" alt="Image" class="bigPicture" (click)="showDialog(path + photos[0])">
+        <div id="thumbnails">
+          <div *ngFor="let photo of photos.slice(1)">
+            <img [src]="path + photo" alt="Image" width="100" id="thumbnail" (click)="showDialog(path + photo)">
+            <p-dialog [(visible)]="visible" [style]="{height: '70vw', width:'60vw'}" [modal]="true">
+              <div id="fullImage">
+                <img [src]="src" alt="Image" width="85%">
+              </div>
+            </p-dialog>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div>
+      <p id="name"><b>{{accommodation.name}}</b></p>
+      <div id="address">
+        <img src="assets/photos/location.png" alt="Image" width="20" id="location">
+        {{ accommodation.addressRS.city }}
+        <ng-container
+          *ngIf="accommodation.addressRS.street !== '' && accommodation.addressRS.street != null">
+          ul. {{accommodation.addressRS.street }}
+        </ng-container>
+        {{ accommodation.addressRS.houseNumber }}
+        <ng-container
+          *ngIf="accommodation.addressRS.apartmentNumber !== '' && accommodation.addressRS.apartmentNumber != null">
+          /{{accommodation.addressRS.apartmentNumber }}
+        </ng-container>
+        , {{accommodation.addressRS.postalCode}} {{accommodation.addressRS.post}}
+      </div>
+
+      <p style="margin-top: 2em;"><b>Max number of people: </b>{{accommodation.maxNoOfPeople}}</p>
+      <p><b>Square footage: </b>{{accommodation.squareFootage}} m<sup>2</sup></p>
+      <div id="facilitiesListDiv">
+        <p class="facilities"><b>Facilities: </b></p>
+        <div *ngFor="let option of freeConveniences">
+          <span class="pi pi-circle-fill" id="circle"></span>
+          <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
+        </div>
+        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>Additional facilities: </b></p>
+        <div id="additional">
+          <div>
+            <div *ngFor="let option of paidConveniences" id="options">
+              <div>
+                <span class="pi pi-circle-fill" id="circle2"></span>
+              </div>
+              <label [for]="option" id="optionLabel">{{getConvenienceTypeText(option.convenience) }} </label>
+            </div>
+          </div>
+          <div>
+            <div *ngFor="let category of paidConveniences" class="field-checkbox">
+              <label id="additionalCost"> {{ category.additionalCost}} zł</label>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div id="costs">
+          <b><span id="price">{{accommodation.priceForDay}} zł </span></b>
+          <span class="numberOfDays">/ 1 night</span>
+        </div>
+    </div>
+  </div>
+  <div class="column">
+    <div id="descriptionDiv">
+      <p class="header">Description</p>
+      <p id="description">{{accommodation.description}}</p>
+    </div>
+  </div>
+</div>

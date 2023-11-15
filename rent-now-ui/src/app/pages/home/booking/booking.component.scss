@@ -1,103 +1,11 @@
-.main {
-  margin: 0 12% 2%;
-  align-items: center;
-  -webkit-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
-  -moz-box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
-  box-shadow: 1px 0px 50px -7px rgba(184, 185, 192, 1);
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  position: relative;
-}
-
-#details {
-  display: flex;
-  flex-direction: row;
-  padding: 2em 1.5em 1.5em;
-}
-
-#photos {
-  width: 50%;
-  margin-right: 3em;
-}
-
-#thumbnails {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-#thumbnail {
-  margin-top: 1em;
-  margin-right: 0.5em;
-  transition: box-shadow 0.3s;
-}
-
-#thumbnail:hover {
-  cursor: pointer;
-  box-shadow: 4px 4px 15px rgb(91, 87, 87);
-}
-
-.bigPicture {
-  width: 100%;
-  transition: box-shadow 0.3s;
-}
-
-.bigPicture:hover {
-  width: 100%;
-  cursor: pointer;
-  box-shadow: 4px 4px 15px rgb(91, 87, 87);
-}
-
-#fullImage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
-
-#descriptionDiv {
-  padding: 1em 1.5em 1em;
-}
-
 #description {
   font-size: 17px;
-}
-
-.header {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-#name {
-  font-size: 30px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
 }
 
 #address {
   display: flex;
   flex-direction: row;
   margin-bottom: 3.5em;
-}
-
-#location {
-  margin-right: 0.5em;
-}
-
-#circle {
-  font-size: 5px;
-  margin-right: 0.5em;
-  vertical-align: middle;
-}
-
-#facilitiesListDiv {
-  margin-bottom: 0.2em;
-  margin-top: 1em;
-  align-items: center;
 }
 
 #facilities {
@@ -158,8 +66,4 @@
 
 .field-checkbox {
   margin-bottom: 5px;
-}
-
-#back{
-  margin: 1% 12%;
 }

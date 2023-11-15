@@ -49,18 +49,24 @@
       <p><b>Square footage: </b>{{booking.accommodation.squareFootage}} m<sup>2</sup></p>
       <div id="facilitiesListDiv">
         <p class="facilities"><b>Facilities: </b></p>
-        <div *ngFor="let option of freeConveniences" class="facilitiesList">
+        <div *ngFor="let option of freeConveniences">
           <span class="pi pi-circle-fill" id="circle"></span>
           <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
         </div>
         <p class="facilities" *ngIf="paidConveniences.length!=0"><b>Additional facilities: </b></p>
-        <div class="column">
-          <div *ngFor="let option of paidConveniences" class="facilitiesList">
-            <span class="pi pi-circle-fill" id="circle2"></span>
-            <label [for]="option">{{getConvenienceTypeText(option.convenience) }} </label>
+        <div id="additional">
+          <div>
+            <div *ngFor="let option of paidConveniences" id="options">
+              <div>
+              <span class="pi pi-circle-fill" id="circle2"></span>
+              </div>
+              <label [for]="option" id="optionLabel">{{getConvenienceTypeText(option.convenience) }} </label>
+            </div>
           </div>
-          <div *ngFor="let category of paidConveniences" class="field-checkbox">
-            <label id="additionalCost"> {{ category.additionalCost}} zł</label>
+          <div>
+            <div *ngFor="let category of paidConveniences" class="field-checkbox">
+              <label id="additionalCost"> {{ category.additionalCost}} zł</label>
+            </div>
           </div>
         </div>
       </div>
