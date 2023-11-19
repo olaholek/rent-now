@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ConvenienceOption} from "../../../data/model/common/ConvenienceOption";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
 import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {ConvenienceType, getConvenienceTypeText} from "../../../data/model/common/ConvenienceType";
+import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-view-accommodation',
@@ -28,6 +29,7 @@ export class ViewAccommodationComponent implements OnInit {
 
   constructor(private readonly accommodationService: AccommodationServiceImpl,
               private readonly route: ActivatedRoute,
+              private readonly router: Router,
               private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
@@ -81,5 +83,13 @@ export class ViewAccommodationComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  showReservations(): void {
+    this.router.navigate(['accommodation-reservations'], {queryParams: {id: this.accommodationId}});
+  }
+
+  editAnnouncement(): void {
+    this.router.navigate(['edit-accommodation'], {queryParams: {id: this.accommodationId}});
   }
 }

@@ -40,6 +40,10 @@
         , {{accommodation.addressRS.postalCode}} {{accommodation.addressRS.post}}
       </div>
 
+      <div id="edit">
+        <p-button icon="pi pi-pencil" label="Edit" (onClick)="editAnnouncement()"></p-button>
+      </div>
+
       <p style="margin-top: 2em;"><b>Max number of people: </b>{{accommodation.maxNoOfPeople}}</p>
       <p><b>Square footage: </b>{{accommodation.squareFootage}} m<sup>2</sup></p>
       <div id="facilitiesListDiv">
@@ -75,6 +79,9 @@
     <div id="descriptionDiv">
       <p class="header">Description</p>
       <p id="description">{{accommodation.description}}</p>
+    </div>
+    <div id="button">
+      <p-button label="Show reservations" (onClick)="showReservations()"></p-button>
     </div>
   </div>
 </div>

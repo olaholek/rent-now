@@ -37,6 +37,8 @@ import {TagModule} from "primeng/tag";
 import { AllBookingsComponent } from './pages/home/booking/all-bookings/all-bookings.component';
 import { UserAccommodationsComponent } from './pages/accommodation/user-accommodations/user-accommodations.component';
 import { ViewAccommodationComponent } from './pages/accommodation/view-accommodation/view-accommodation.component';
+import { EditAccommodationComponent } from './pages/accommodation/edit-accommodation/edit-accommodation.component';
+import { AccommodationBookingsComponent } from './pages/home/booking/accommodation-bookings/accommodation-bookings.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -71,7 +73,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BookingViewComponent,
     AllBookingsComponent,
     UserAccommodationsComponent,
-    ViewAccommodationComponent
+    ViewAccommodationComponent,
+    EditAccommodationComponent,
+    AccommodationBookingsComponent
   ],
     imports: [
         BrowserModule,

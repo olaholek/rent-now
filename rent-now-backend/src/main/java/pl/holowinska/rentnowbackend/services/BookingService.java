@@ -17,4 +17,6 @@ public interface BookingService {
     BookingRS getBooking(Long bookingId) throws BookingNotFoundException;
 
     Page<BookingRS> getBookingListByUser(String uuid, Pageable pageable);
+
+    Page<BookingRS> getBookingListByAccommodation(String accommodationId, Pageable pageable);
 }

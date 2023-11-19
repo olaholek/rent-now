@@ -10,12 +10,16 @@ import {BookingViewComponent} from "./pages/home/booking/booking-view/booking-vi
 import {AllBookingsComponent} from "./pages/home/booking/all-bookings/all-bookings.component";
 import {UserAccommodationsComponent} from "./pages/accommodation/user-accommodations/user-accommodations.component";
 import {ViewAccommodationComponent} from "./pages/accommodation/view-accommodation/view-accommodation.component";
+import {AccommodationBookingsComponent} from "./pages/home/booking/accommodation-bookings/accommodation-bookings.component";
+import {EditAccommodationComponent} from "./pages/accommodation/edit-accommodation/edit-accommodation.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'booking', component: BookingComponent, pathMatch: 'full'},
   {path: 'accommodations/view', component: ViewAccommodationComponent, pathMatch: 'full'},
+  {path: 'accommodation-reservations', component: AccommodationBookingsComponent, pathMatch: 'full'},
+  {path: 'edit-accommodation', component: EditAccommodationComponent, pathMatch: 'full'},
   {path: 'announcements', component: UserAccommodationsComponent, pathMatch: 'full'},
   {path: 'reservations', component: AllBookingsComponent, pathMatch: 'full'},
   {path: 'booking/view', component: BookingViewComponent, pathMatch: 'full'},

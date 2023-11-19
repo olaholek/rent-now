@@ -49,4 +49,17 @@ export class BookingServiceImpl implements BookingService {
       {params: httpParams}
     )
   }
+
+  getBookingsByAccommodation(accommodationId: number, page: number, size: number, sort: string): Observable<Page<BookingRS>> {
+    const httpParams: { [key: string]: string } = {}
+    if (page != null)
+      httpParams['page'] = page.toString();
+    if (size != null)
+      httpParams['size'] = size.toString();
+    if (sort != null && sort !== '')
+      httpParams['sort'] = sort;
+    return this.httpClient.get<Page<BookingRS>>(this.baseUrl + '/accommodation-bookings/' + accommodationId,
+      {params: httpParams}
+    )
+  }
 }

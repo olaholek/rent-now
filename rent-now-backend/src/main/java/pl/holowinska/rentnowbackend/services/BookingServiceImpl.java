@@ -116,6 +116,16 @@ public class BookingServiceImpl implements BookingService {
                 .map(entity -> BookingMapper.mapToDto(entity, getConveniences(entity.getId())));
     }
 
+    @Override
+    public Page<BookingRS> getBookingListByAccommodation(String accommodationId, Pageable pageable) {
+        return bookingRepository.findAll(bookingByAccommodation(accommodationId), pageable)
+                .map(entity -> BookingMapper.mapToDto(entity, getConveniences(entity.getId())));
+    }
+
+    private Specification<Booking> bookingByAccommodation(String accommodationId) {
+        return (root, query, cb) -> cb.equal(root.get("accommodation").get("id"), accommodationId);
+    }
+
     private Specification<Booking> bookingByUser(String uuid) {
         return (root, query, cb) -> cb.equal(root.get("user").get("id"), UUID.fromString(uuid));
     }

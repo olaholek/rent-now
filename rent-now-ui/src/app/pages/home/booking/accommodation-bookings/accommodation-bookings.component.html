@@ -1,0 +1,40 @@
+<h1>Reservations</h1>
+<div id="main" *ngFor="let booking of bookingList?.content">
+  <div id="full">
+    <div id="right">
+      <div id="dates">
+        <div class="box">
+          <label class="dateText"><b>Start date</b></label>
+          <input type="text" [value]="booking.startDate | date: 'dd.MM.yyyy'" disabled id="startDate">
+        </div>
+        <div class="box">
+          <label class="dateText"><b>End date</b></label>
+          <input type="text" [value]="booking.endDate | date: 'dd.MM.yyyy'" disabled id="endDate">
+        </div>
+        <div id="costs">
+          <b><span id="price">{{booking.price}} zł </span></b>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)<2"
+                class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} night</span>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)>1"
+                class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} nights</span>
+        </div>
+      </div>
+      <div id="tagDiv">
+        <p-tag *ngIf="booking.status === 'BOOKED'" [value]="booking.status"></p-tag>
+        <p-tag *ngIf="booking.status === 'FINISHED'" severity="success" [value]="booking.status"></p-tag>
+        <p-tag *ngIf="booking.status === 'PENDING'" severity="warning" [value]="booking.status"></p-tag>
+        <p-tag *ngIf="booking.status === 'CANCELED'" severity="danger" [value]="booking.status"></p-tag>
+      </div>
+      <div id="button">
+        <p-button label="See more" (onClick)="showDetails(booking.id)" icon="pi pi-angle-right"
+                  iconPos="right"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="bookingList.totalElements === 0">
+  <p id="noAccommodations">This accommodation doesn't have any reservations yet :(</p>
+</div>
+<p-paginator *ngIf="bookingList" (onPageChange)="onPageChange($event)" [first]="1"
+             [rows]="10" [totalRecords]="bookingList.totalElements"></p-paginator>
+

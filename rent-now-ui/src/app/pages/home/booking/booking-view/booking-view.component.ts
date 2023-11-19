@@ -23,6 +23,7 @@ export class BookingViewComponent implements OnInit {
   src !: string;
   numberOfDays !: number;
   bookingId !: number;
+  mode !: string | null;
 
   booking !: BookingRS;
   freeConveniences: ConvenienceOption[] = [];
@@ -39,6 +40,7 @@ export class BookingViewComponent implements OnInit {
     this.route.queryParamMap
       .subscribe(params => {
         this.bookingId = Number(params.get('id'));
+        this.mode = params.get('mode');
       })
   }
 

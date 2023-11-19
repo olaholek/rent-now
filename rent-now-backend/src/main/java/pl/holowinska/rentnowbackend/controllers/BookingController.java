@@ -69,4 +69,13 @@ public class BookingController {
             return Page.empty();
         }
     }
+
+    @GetMapping("/accommodation-bookings/{accommodationId}")
+    public Page<BookingRS> getBookingListByAccommodation(@PathVariable String accommodationId, Pageable pageable) {
+        try {
+            return bookingService.getBookingListByAccommodation(accommodationId, pageable);
+        } catch (Exception e) {
+            return Page.empty();
+        }
+    }
 }
