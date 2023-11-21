@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
 import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
@@ -32,4 +33,6 @@ public interface AccommodationService {
     List<String> getAccommodationImageNames(Long accommodationId) throws AccommodationNotFoundException;
 
     InputStreamResource getAccommodationMainPhoto(Long accommodationId) throws AccommodationNotFoundException, IOException;
+
+    void deletePhotoFromAccommodation(Long accommodationId, String photoName) throws AccommodationNotFoundException, PhotoDeleteException;
 }

@@ -95,6 +95,18 @@ export class AccommodationServiceImpl implements AccommodationService {
     return this.httpClient.get<string[]>(this.baseUrl + '/photos/' + accommodationId);
   }
 
+  deletePhoto(photo: string, accommodationId: number): Observable<string> {
+    const httpParams: { [key: string]: string } = {}
+    if (photo != null && photo !== '')
+      httpParams['photoName'] = photo;
+    return this.httpClient.delete<string>(this.baseUrl + '/photos/' + accommodationId,
+      {params: httpParams});
+  }
+
+  deleteAccommodation(accommodationId: number): Observable<string>{
+    return this.httpClient.delete<string>(this.baseUrl + '/' + accommodationId);
+  }
+
   getUserAccommodations(uuid: string, page: number, size: number, sort: string): Observable<Page<AccommodationRS>> {
     const httpParams: { [key: string]: string } = {}
     if (page != null)

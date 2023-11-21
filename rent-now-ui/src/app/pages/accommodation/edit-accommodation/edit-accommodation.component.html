@@ -1,3 +1,6 @@
+<div id="back">
+  <p-button icon="pi pi-arrow-left" (onClick)="goBack()"></p-button>
+</div>
 <div *ngIf="accommodation != undefined" id="main">
   <h1 id="heading">Edit accommodation</h1>
 
@@ -185,7 +188,7 @@
       </div>
     </p-dialog>
   </div>
-  <div style="padding-bottom: 5em">
+  <div style="padding-bottom: 5em; margin-top:1em;">
     <p-fileUpload name="file"
                   [customUpload]="true"
                   (uploadHandler)="onUpload($event)"

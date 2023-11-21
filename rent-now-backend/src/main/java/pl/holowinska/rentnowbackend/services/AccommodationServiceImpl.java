@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.mappers.AccommodationMapper;
 import pl.holowinska.rentnowbackend.mappers.AddressMapper;
 import pl.holowinska.rentnowbackend.model.entities.*;
@@ -112,6 +113,7 @@ public class AccommodationServiceImpl implements AccommodationService {
     public void deleteAccommodation(Long accommodationId) {
         convenienceRepository.deleteConveniencesByAccommodationId(accommodationId);
         accommodationRepository.deleteById(accommodationId);
+        //todo sprawdzić listę rezerwacji i albo je usuwać razem z noclegiem albo nie
     }
 
     @Override
@@ -184,6 +186,20 @@ public class AccommodationServiceImpl implements AccommodationService {
             }
         }
         return mainPhoto;
+    }
+
+    public void deletePhotoFromAccommodation(Long accommodationId, String photoName) throws AccommodationNotFoundException, PhotoDeleteException {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
+        if (accommodation.isEmpty()) {
+            throw new AccommodationNotFoundException();
+        }
+
+        File file = new File("D:\\Praca Inżynierska\\rent-now\\rent-now-ui\\src\\assets\\photos\\" + accommodationId + "\\" + photoName);
+
+        boolean delete = file.delete();
+        if (!delete) {
+            throw new PhotoDeleteException();
+        }
     }
 
     private Specification<Accommodation> accommodationByCriteria(AccommodationCriteriaRQ accommodationCriteriaRQ) {

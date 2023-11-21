@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
@@ -71,6 +72,19 @@ public class AccommodationController {
                     .body(accommodationService.getAccommodationImageNames(accommodationId));
         } catch (AccommodationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping(value = "/photos/{id}")
+    public ResponseEntity<String> deletePhotoFromAccommodation(@PathVariable("id") Long accommodationId,
+                                                               @RequestParam("photoName") String photoName) {
+        try {
+            accommodationService.deletePhotoFromAccommodation(accommodationId, photoName);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (AccommodationNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (PhotoDeleteException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 

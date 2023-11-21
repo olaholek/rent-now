@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ConvenienceOption} from "../../../data/model/common/ConvenienceOption";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
 import {ConvenienceType} from "../../../data/model/common/ConvenienceType";
 import {ToastService} from "../../../services/toast/toast.service";
 import {catchError} from "rxjs";
 import {ConfirmationService} from "primeng/api";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-edit-accommodation',
@@ -29,7 +30,8 @@ export class EditAccommodationComponent implements OnInit {
   constructor(private readonly confirmationService: ConfirmationService,
               private readonly toastService: ToastService,
               private readonly accommodationService: AccommodationServiceImpl,
-              private readonly route: ActivatedRoute) {
+              private readonly route: ActivatedRoute,
+              private readonly location: Location) {
     this.route.queryParamMap.subscribe(params => {
       this.accommodationId = Number(params.get('id'));
       this.getAccommodation();
@@ -72,7 +74,6 @@ export class EditAccommodationComponent implements OnInit {
 
   getCost(type: ConvenienceType): number {
     for (const [convenience, cost] of Object.entries(this.accommodation.conveniences)) {
-      console.log('key' + convenience, cost)
       if (convenience === type.toString()) {
         return cost;
       }
@@ -123,12 +124,24 @@ export class EditAccommodationComponent implements OnInit {
       message: 'Are you sure you want to delete this photo?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        //this.accommodationService.deletePhoto(photo, this.accommodationId);
-        location.reload();
-        this.toastService.showSuccess('Photo deleted successfully.');
+        this.accommodationService.deletePhoto(photo, this.accommodationId)
+          .pipe(
+            catchError((error) => {
+              this.toastService.showError('Error during deleting photo.');
+              throw error;
+            })
+          )
+          .subscribe((res) => {
+            this.photos = this.photos.filter(deletedPhoto => photo!=deletedPhoto);
+            this.toastService.showSuccess('Photo deleted successfully.');
+          });
       },
       reject: () => {
       }
     })
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

@@ -41,6 +41,7 @@ import { EditAccommodationComponent } from './pages/accommodation/edit-accommoda
 import { AccommodationBookingsComponent } from './pages/home/booking/accommodation-bookings/accommodation-bookings.component';
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import { ConfirmationService } from 'primeng/api';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -79,31 +80,32 @@ function initializeKeycloak(keycloak: KeycloakService) {
     EditAccommodationComponent,
     AccommodationBookingsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        KeycloakAngularModule,
-        ButtonModule,
-        SidebarModule,
-        BrowserAnimationsModule,
-        MenuModule,
-        AvatarModule,
-        CheckboxModule,
-        FormsModule,
-        InputTextareaModule,
-        FileUploadModule,
-        HttpClientModule,
-        StepsModule,
-        ToastModule,
-        CalendarModule,
-        PaginatorModule,
-        GalleriaModule,
-        ImageModule,
-        DialogModule,
-        NgOptimizedImage,
-        TagModule,
-        ConfirmPopupModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    KeycloakAngularModule,
+    ButtonModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    MenuModule,
+    AvatarModule,
+    CheckboxModule,
+    FormsModule,
+    InputTextareaModule,
+    FileUploadModule,
+    HttpClientModule,
+    StepsModule,
+    ToastModule,
+    CalendarModule,
+    PaginatorModule,
+    GalleriaModule,
+    ImageModule,
+    DialogModule,
+    NgOptimizedImage,
+    TagModule,
+    ConfirmPopupModule,
+    ConfirmDialogModule
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,
