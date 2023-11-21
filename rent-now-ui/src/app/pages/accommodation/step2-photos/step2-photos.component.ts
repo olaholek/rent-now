@@ -36,7 +36,7 @@ export class Step2PhotosComponent implements OnInit {
     )
       .subscribe((res) => {
         this.toastService.showSuccess('Photos uploaded successfully.');
-        this.router.navigate(['announcements/view'], {queryParams: {id: res.id}});
+        this.router.navigate(['accommodations/view'], {queryParams: {id: res.id}});
       });
   }
 }

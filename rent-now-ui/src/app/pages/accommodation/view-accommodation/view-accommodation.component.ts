@@ -5,7 +5,6 @@ import {AccommodationServiceImpl} from "../../../services/accommodation/accommod
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {ConvenienceType, getConvenienceTypeText} from "../../../data/model/common/ConvenienceType";
-import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-view-accommodation',

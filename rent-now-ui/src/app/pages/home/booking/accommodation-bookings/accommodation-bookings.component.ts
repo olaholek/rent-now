@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from "../../../../data/model/common/Page";
 import {BookingRS} from "../../../../data/model/rs/BookingRS";
 import {ActivatedRoute, Router} from "@angular/router";
-import {KeycloakService} from "keycloak-angular";
 import {BookingServiceImpl} from "../../../../services/booking/booking.service";
 import {DateService} from "../../../../services/date/date.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-accommodation-bookings',
@@ -20,7 +20,8 @@ export class AccommodationBookingsComponent implements OnInit {
   constructor(private readonly router: Router,
               private readonly route: ActivatedRoute,
               private readonly bookingService: BookingServiceImpl,
-              private readonly dateService: DateService) {
+              private readonly dateService: DateService,
+              private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
         this.bookingId = Number(params.get('id'));
@@ -56,5 +57,9 @@ export class AccommodationBookingsComponent implements OnInit {
 
   getNumberOfDays(startDate: Date, endDate: Date): number {
     return this.dateService.getNumberOfDays(startDate, endDate);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

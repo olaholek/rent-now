@@ -1,1 +1,206 @@
-<p>edit-accommodation works!</p>
+<div *ngIf="accommodation != undefined" id="main">
+  <h1 id="heading">Edit accommodation</h1>
+
+  <div class="container1">
+    <div class="box">
+      <label>Name<span class="asterisk"> *</span></label>
+      <input pInputText [(ngModel)]="accommodation.name" id="acc-name" type="text" name="name" required
+             #name="ngModel"/>
+      <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Name is required.</small>
+    </div>
+  </div>
+
+  <div class="container2">
+    <div class="box">
+      <label>Country<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.country"
+        id="acc-country"
+        type="text"
+        name="country" required #country="ngModel"/>
+      <small *ngIf="country.invalid && (country.dirty || country.touched)" class="p-error">Country is
+        required.</small>
+    </div>
+  </div>
+
+  <div class="container2">
+    <div class="box">
+      <label>City<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.city"
+        id="acc-city"
+        type="text"
+        name="city" required #city="ngModel"/>
+      <small *ngIf="city.invalid && (city.dirty || city.touched)" class="p-error">City is required.</small>
+    </div>
+
+    <div class="box">
+      <label>Street</label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.street"
+        id="acc-street"
+        type="text"
+      />
+    </div>
+
+    <div class="box">
+      <label>House number<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.houseNumber"
+        id="acc-houseNumber"
+        type="text"
+        name="houseNumber" required #houseNumber="ngModel"/>
+      <small *ngIf="houseNumber.invalid && (houseNumber.dirty || houseNumber.touched)" class="p-error">House number is
+        required.</small>
+    </div>
+
+    <div class="box">
+      <label>Apartment number</label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.apartmentNumber"
+        id="acc-ApartmentNumber"
+        type="text"
+      />
+    </div>
+  </div>
+
+  <div class="container2">
+    <div class="box">
+      <label>Postal code<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.postalCode"
+        pattern="^[0-9]{2}-[0-9]{3}"
+        id="acc-postalCode"
+        name="postalCode" required #postalCode="ngModel"/>
+      <small *ngIf="postalCode.touched && postalCode?.errors?.['required']" class="p-error">Postal code is
+        required.</small>
+      <small *ngIf="postalCode?.invalid && postalCode?.errors?.['pattern']" class="p-error">Invalid postal code
+        format.</small>
+    </div>
+
+    <div class="box">
+      <label>Post<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.post"
+        id="acc-post"
+        type="text"
+        name="post" required #post="ngModel"/>
+      <small *ngIf="post.invalid && (post.dirty || post.touched)" class="p-error">Post is required.</small>
+    </div>
+
+    <div class="box">
+      <label>County</label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.county"
+        id="acc-county"
+        type="text"
+        name="county"/>
+    </div>
+
+    <div class="box">
+      <label>Province</label>
+      <input
+        pInputText [(ngModel)]="accommodation.addressRS.province"
+        id="acc-province"
+        type="text"
+        name="province"/>
+    </div>
+  </div>
+
+  <div class="container2">
+    <div class="box">
+      <label>Price for day<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.priceForDay"
+        id="acc-price"
+        type="text"
+        pattern="^[0-9]*$"
+        name="price" required #price="ngModel"/>
+      <small *ngIf="price.touched && price?.errors?.['required']" class="p-error">Price for day is required.</small>
+      <small *ngIf="price?.invalid && price?.errors?.['pattern']" class="p-error">Invalid characters.</small>
+    </div>
+
+    <div class="box">
+      <label>Square footage<span class="asterisk"> *</span></label>
+      <input
+        pInputText [(ngModel)]="accommodation.squareFootage"
+        id="acc-square"
+        type="text"
+        pattern="^[0-9]*$"
+        name="square" required #square="ngModel"/>
+      <small *ngIf="square.touched && square?.errors?.['required']" class="p-error">Square footage is
+        required.</small>
+      <small *ngIf="square?.invalid && square?.errors?.['pattern']" class="p-error">Invalid characters.</small>
+    </div>
+
+    <div class="box">
+      <label>Maximum number of people<span class="asterisk"> *</span></label>
+      <input [(ngModel)]="accommodation.maxNoOfPeople"
+             id="acc-max"
+             type="number"
+             name="maxNumberOfPeople" required #maxNumberOfPeople="ngModel"/>
+      <small *ngIf="maxNumberOfPeople.invalid && (maxNumberOfPeople.dirty || maxNumberOfPeople.touched)"
+             class="p-error">Maximum number of people required.</small>
+    </div>
+  </div>
+
+  <div class="box">
+    <label>Description</label>
+    <textarea
+      [(ngModel)]="accommodation.description"
+      id="acc-desc"
+    ></textarea>
+  </div>
+
+  <div id="facilities-container">
+    <div class="column">
+      <h3 class="facilities">Facilities</h3>
+      <div *ngFor="let category of categories" class="field-checkbox">
+        <p-checkbox name="group" [ngModel]="category.selected" [binary]="true"
+                    (onChange)="onSelectionChange(category)"></p-checkbox>
+        <label [for]="category">{{beutify(category.convenience)}}</label>
+      </div>
+    </div>
+    <div class="column">
+      <h3 class="facilities">Additional cost</h3>
+      <div *ngFor="let category of categories" class="field-checkbox">
+        <input pInputText id="cost" [disabled]="!category.selected" [(ngModel)]="category.additionalCost"
+               placeholder="0 zł">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h2>Add or delete photos</h2>
+
+  <div class="image-container">
+    <p-confirmPopup></p-confirmPopup>
+    <div *ngFor="let photo of photos" class="photo-wrapper">
+      <img [src]="path + photo" alt="Image" id="thumbnail" width="150" (click)="showDialog(path + photo)">
+      <div class="delete-overlay" (click)="onDeleteClick($event, photo)">X</div>
+    </div>
+    <p-dialog [(visible)]="visible" [style]="{height: '70vw', width:'60vw'}" [modal]="true">
+      <div id="fullImage">
+        <img [src]="src" alt="Image" width="85%">
+      </div>
+    </p-dialog>
+  </div>
+  <div style="padding-bottom: 5em">
+    <p-fileUpload name="file"
+                  [customUpload]="true"
+                  (uploadHandler)="onUpload($event)"
+                  [multiple]="true" accept="image/*">
+      <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+
+  <div id="divButton">
+    <div id="button" class="grid grid-nogutter justify-content-end">
+      <p-button label="Save" (onClick)="edit()" icon="pi pi-check" iconPos="right"></p-button>
+    </div>
+  </div>
+</div>

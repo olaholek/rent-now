@@ -39,6 +39,8 @@ import { UserAccommodationsComponent } from './pages/accommodation/user-accommod
 import { ViewAccommodationComponent } from './pages/accommodation/view-accommodation/view-accommodation.component';
 import { EditAccommodationComponent } from './pages/accommodation/edit-accommodation/edit-accommodation.component';
 import { AccommodationBookingsComponent } from './pages/home/booking/accommodation-bookings/accommodation-bookings.component';
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import { ConfirmationService } from 'primeng/api';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -99,7 +101,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
         ImageModule,
         DialogModule,
         NgOptimizedImage,
-        TagModule
+        TagModule,
+        ConfirmPopupModule
     ],
   providers: [
     {
@@ -113,7 +116,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
       useClass: KeycloakBearerInterceptor,
       multi: true
     },
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
