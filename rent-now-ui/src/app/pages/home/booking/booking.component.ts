@@ -77,7 +77,7 @@ export class BookingComponent implements OnInit {
           this.endDate = new Date(params.get('endDate') as string);
         }
         this.keycloak.getKeycloakInstance().loadUserProfile().then(profile => {
-          this.booking.userUUID = profile.id!;
+          this.booking.userUUID = profile.id as string;
         })
       })
 

@@ -103,7 +103,7 @@ export class AccommodationServiceImpl implements AccommodationService {
       {params: httpParams});
   }
 
-  deleteAccommodation(accommodationId: number): Observable<string>{
+  deleteAccommodation(accommodationId: number): Observable<string> {
     return this.httpClient.delete<string>(this.baseUrl + '/' + accommodationId);
   }
 
@@ -118,6 +118,19 @@ export class AccommodationServiceImpl implements AccommodationService {
     return this.httpClient.get<Page<AccommodationRS>>(this.baseUrl + '/user/' + uuid,
       {params: httpParams}
     )
+  }
+
+  updateAccommodation(accommodationId: number, accommodationData: AccommodationRQ, conveniences: Map<ConvenienceType, number>): Observable<AccommodationRS> {
+    return this.httpClient.put<AccommodationRS>(this.baseUrl + '/' + accommodationId, {
+      'addressRQ': accommodationData.addressRQ as AddressRQ,
+      'userUUID': accommodationData.userUUID,
+      'name': accommodationData.name,
+      'priceForDay': accommodationData.priceForDay,
+      'squareFootage': accommodationData.squareFootage,
+      'description': accommodationData.description,
+      'conveniences': Object.fromEntries(conveniences),
+      'maxNoOfPeople': accommodationData.maxNoOfPeople
+    })
   }
 
   getConveniences(conveniences: ConvenienceType[]): string {

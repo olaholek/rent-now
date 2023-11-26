@@ -1,13 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ConvenienceOption} from "../../../data/model/common/ConvenienceOption";
 import {AccommodationRS} from "../../../data/model/rs/AccommodationRS";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AccommodationServiceImpl} from "../../../services/accommodation/accommodation.service";
 import {ConvenienceType} from "../../../data/model/common/ConvenienceType";
 import {ToastService} from "../../../services/toast/toast.service";
 import {catchError} from "rxjs";
 import {ConfirmationService} from "primeng/api";
 import {Location} from "@angular/common";
+import {AccommodationRQ} from "../../../data/model/rq/AccommodationRQ";
+import {AddressRQ} from "../../../data/model/rq/AddressRQ";
+import {AddressRS} from "../../../data/model/rs/AddressRS";
 
 @Component({
   selector: 'app-edit-accommodation',
@@ -31,6 +34,7 @@ export class EditAccommodationComponent implements OnInit {
               private readonly toastService: ToastService,
               private readonly accommodationService: AccommodationServiceImpl,
               private readonly route: ActivatedRoute,
+              private readonly router: Router,
               private readonly location: Location) {
     this.route.queryParamMap.subscribe(params => {
       this.accommodationId = Number(params.get('id'));
@@ -95,6 +99,24 @@ export class EditAccommodationComponent implements OnInit {
   }
 
   edit(): void {
+    const selectedConveniences = this.categories.filter(category => category.selected);
+    const conveniencesToSave = new Map<ConvenienceType, number>();
+
+    for (const category of selectedConveniences) {
+      conveniencesToSave.set(category.convenience, category.additionalCost);
+    }
+
+    this.accommodationService.updateAccommodation(this.accommodationId, this.mapAccommodation(), conveniencesToSave)
+      .pipe(
+        catchError((error) => {
+          this.toastService.showError('Error during update announcement.');
+          throw error;
+        })
+      )
+      .subscribe((res) => {
+        this.toastService.showSuccess('Announcement updated successfully.');
+        this.router.navigate(['accommodations/view'], {queryParams: {id: res.id}});
+      });
   }
 
   onUpload(event: { files: Blob[] }) {
@@ -132,7 +154,7 @@ export class EditAccommodationComponent implements OnInit {
             })
           )
           .subscribe((res) => {
-            this.photos = this.photos.filter(deletedPhoto => photo!=deletedPhoto);
+            this.photos = this.photos.filter(deletedPhoto => photo != deletedPhoto);
             this.toastService.showSuccess('Photo deleted successfully.');
           });
       },
@@ -143,5 +165,32 @@ export class EditAccommodationComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  mapAccommodation(): AccommodationRQ {
+    return {
+      addressRQ: this.mapAddress(this.accommodation.addressRS),
+      userUUID: this.accommodation.userUUID,
+      name: this.accommodation.name,
+      priceForDay: this.accommodation.priceForDay,
+      squareFootage: this.accommodation.squareFootage,
+      description: this.accommodation.description,
+      maxNoOfPeople: this.accommodation.maxNoOfPeople,
+      conveniences: new Map<ConvenienceType, number>()
+    };
+  }
+
+  mapAddress(addressRS: AddressRS): AddressRQ {
+    return {
+      city: addressRS.city,
+      street: addressRS.street,
+      houseNumber: addressRS.houseNumber,
+      apartmentNumber: addressRS.apartmentNumber,
+      postalCode: addressRS.postalCode,
+      post: addressRS.post,
+      country: addressRS.country,
+      county: addressRS.county,
+      province: addressRS.province
+    };
   }
 }

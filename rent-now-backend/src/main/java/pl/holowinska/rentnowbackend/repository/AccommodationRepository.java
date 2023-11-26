@@ -13,6 +13,6 @@ import java.util.UUID;
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long>, JpaSpecificationExecutor<Accommodation> {
 
-    @Query("select a from ACCOMMODATION a where a.user.id = :userUUID")
+    @Query("select a from ACCOMMODATION a where a.user.id = :userUUID and a.status IS NULL")
     Page<Accommodation> getAllByUser(UUID userUUID, Pageable pageable);
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.BookingConflictException;
 import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.mappers.AccommodationMapper;
 import pl.holowinska.rentnowbackend.mappers.AddressMapper;
@@ -110,10 +111,22 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public void deleteAccommodation(Long accommodationId) {
-        convenienceRepository.deleteConveniencesByAccommodationId(accommodationId);
-        accommodationRepository.deleteById(accommodationId);
-        //todo sprawdzić listę rezerwacji i albo je usuwać razem z noclegiem albo nie
+    public void deleteAccommodation(Long accommodationId) throws AccommodationNotFoundException, BookingConflictException {
+        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(accommodationId);
+        if (optionalAccommodation.isEmpty()){
+            throw new AccommodationNotFoundException();
+        }
+        else{
+            List<Booking> bookingsByAccommodation = bookingRepository.getBookingsByAccommodation(accommodationId);
+            if(!bookingsByAccommodation.isEmpty()){
+                throw new BookingConflictException("This accommodation has future bookings");
+            }
+            else {
+                Accommodation deleted = optionalAccommodation.get();
+                deleted.setStatus(-1L);
+                accommodationRepository.save(deleted);
+            }
+        }
     }
 
     @Override
@@ -234,6 +247,7 @@ public class AccommodationServiceImpl implements AccommodationService {
             if (accommodationCriteriaRQ.getName() != null && !accommodationCriteriaRQ.getName().isEmpty()) {
                 spec = cb.and(spec, cb.like(root.get("name"), accommodationCriteriaRQ.getName()));
             }
+            spec = cb.and(spec, cb.isNull(root.get("status")));
             List<ConvenienceType> filterConveniences = accommodationCriteriaRQ.getConveniences();
             if (filterConveniences != null && !filterConveniences.isEmpty()) {
                 spec = cb.and(spec, root.get("id").in(convenienceRepository.getAccommodationByConveniencesList(filterConveniences,

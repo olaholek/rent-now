@@ -31,4 +31,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
             "(DATE(b.startDate) <= :startDate and DATE(b.endDate) > :startDate or " +
             "DATE(b.endDate) >= :endDate and DATE(b.startDate) < :endDate)")
     boolean isBookingAvailable(LocalDate startDate, LocalDate endDate, Long accommodationId);
+
+    @Query("select b from BOOKING b where b.accommodation.id= :accommodationId and " +
+            "(b.status = 'PENDING' or b.status='BOOKED')")
+    List<Booking> getBookingsByAccommodation(Long accommodationId);
 }

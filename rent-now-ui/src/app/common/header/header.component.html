@@ -3,17 +3,11 @@
     <div id="title">
       <b><p (click)="toMainPage()" id="name">RENT-NOW</p></b>
     </div>
-    <div>
-      <b><span (click)="toMainPage()" id="search" class="pi pi-search"> Search for accommodation</span></b>
-    </div>
   </div>
   <div id="right-div">
-    <div>
-      <span (click)="toFavouritePage()" id="favourite" class="pi pi-heart-fill"> My favourite</span>
-    </div>
-    <div>
-      <span (click)="toAddAnnouncementPage()" id="add_announcement" class="pi pi-plus"> Add an announcement</span>
-    </div>
+    <span pTooltip="Add an announcement" id="icon_plus" class="pi pi-plus" (click)="toAddAnnouncementPage()"></span>
+
+    <span pTooltip="Search for accommodation" id="icon_search" class="pi pi-search" (click)="toMainPage()"></span>
     <span id="user_icon" class="pi pi-user" (click)="menu.toggle($event)"></span>
     <p-menu #menu [model]="avatarMenuItems" [popup]="true"
             styleClass="menu-items-override"></p-menu>

@@ -55,6 +55,9 @@ public class Accommodation implements Serializable {
     @NotNull
     private Integer maxNoOfPeople;
 
+    @Column(name = "STATUS")
+    private Long status;
+
     @OneToMany(mappedBy = "id.accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Convenience> conveniences = new HashSet<>();
 }

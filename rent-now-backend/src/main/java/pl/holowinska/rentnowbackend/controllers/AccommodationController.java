@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.BookingConflictException;
 import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
@@ -121,6 +122,10 @@ public class AccommodationController {
         try {
             accommodationService.deleteAccommodation(id);
             return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (AccommodationNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (BookingConflictException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

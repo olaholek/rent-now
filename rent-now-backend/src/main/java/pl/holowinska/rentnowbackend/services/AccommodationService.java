@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.exceptions.BookingConflictException;
 import pl.holowinska.rentnowbackend.exceptions.PhotoDeleteException;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationCriteriaRQ;
 import pl.holowinska.rentnowbackend.model.rq.AccommodationRQ;
@@ -24,7 +25,7 @@ public interface AccommodationService {
 
     Page<AccommodationRS> getAccommodationByUserUUID(UUID userUUID, Pageable pageable);
 
-    void deleteAccommodation(Long accommodationId);
+    void deleteAccommodation(Long accommodationId) throws AccommodationNotFoundException, BookingConflictException;
 
     AccommodationRS updateAccommodation(Long accommodationId, AccommodationRQ accommodationRQ) throws AccommodationNotFoundException;
 

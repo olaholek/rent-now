@@ -81,7 +81,7 @@
       <div class="column">
         <div *ngFor="let option of paidConveniences" class="field-checkbox">
           <p-checkbox name="group" (onChange)="onSelectionChange(option)" [value]="option"></p-checkbox>
-          <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
+          <label [for]="option" style="padding-left: 0.5em;">{{getConvenienceTypeText(option.convenience)}}</label>
         </div>
       </div>
       <div class="column">

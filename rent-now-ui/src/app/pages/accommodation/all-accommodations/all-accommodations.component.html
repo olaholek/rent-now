@@ -33,6 +33,6 @@
     </div>
   </div>
 </div>
-<div *ngIf="accommodationList.totalElements === 0">
+<div *ngIf="accommodationList.totalElements!= undefined && accommodationList.totalElements === 0">
   <p id="noAccommodations">No matching accommodations found :(</p>
 </div>
