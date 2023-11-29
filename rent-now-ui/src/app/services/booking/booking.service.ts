@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {BookingRQ} from "../../data/model/rq/BookingRQ";
 import {BookingRS} from "../../data/model/rs/BookingRS";
 import {BookingService} from "./BookingService";
@@ -31,6 +31,20 @@ export class BookingServiceImpl implements BookingService {
 
   getBooking(bookingId: number): Observable<BookingRS> {
     return this.httpClient.get<BookingRS>(this.baseUrl + "/" + bookingId);
+  }
+
+  getBookedStartDatesByAccommodation(accommodationId: number): Observable<Date[]> {
+    return this.httpClient.get<Date[]>(this.baseUrl + "/" + accommodationId + "/booked-start-dates")
+      .pipe(
+        map(dates => dates.map(date => new Date(date))),
+      );
+  }
+
+  getBookedEndDatesByAccommodation(accommodationId: number): Observable<Date[]> {
+    return this.httpClient.get<Date[]>(this.baseUrl + "/" + accommodationId + "/booked-end-dates")
+      .pipe(
+        map(dates => dates.map(date => new Date(date))),
+      );
   }
 
   cancelBooking(bookingId: number): Observable<String> {

@@ -1,5 +1,6 @@
 package pl.holowinska.rentnowbackend.services;
 
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,12 +22,11 @@ import pl.holowinska.rentnowbackend.repository.UserRepository;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 @Transactional
@@ -122,8 +122,52 @@ public class BookingServiceImpl implements BookingService {
                 .map(entity -> BookingMapper.mapToDto(entity, getConveniences(entity.getId())));
     }
 
+    @Override
+    public List<LocalDate> getBookedStartDatesByAccommodation(String accommodationId) {
+        List<Booking> bookings = bookingRepository.findAll(activeBookingByAccommodation(accommodationId));
+
+        List<LocalDate> bookedStartDates = new ArrayList<>();
+        bookings.forEach(booking -> {
+            LocalDate iterDate = booking.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate endDate = booking.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            while (iterDate.isBefore(endDate)) {
+                bookedStartDates.add(iterDate);
+                iterDate = iterDate.plusDays(1);
+            }
+        });
+        return bookedStartDates;
+    }
+
+    @Override
+    public List<LocalDate> getBookedEndDatesByAccommodation(String accommodationId) {
+        List<Booking> bookings = bookingRepository.findAll(activeBookingByAccommodation(accommodationId));
+
+        List<LocalDate> bookedEndDates = new ArrayList<>();
+        bookings.forEach(booking -> {
+            LocalDate iterDate = booking.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate startDate = booking.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+
+            while (iterDate.isAfter(startDate)) {
+                bookedEndDates.add(iterDate);
+                iterDate = iterDate.minusDays(1);
+            }
+        });
+        return bookedEndDates;
+    }
+
     private Specification<Booking> bookingByAccommodation(String accommodationId) {
         return (root, query, cb) -> cb.equal(root.get("accommodation").get("id"), accommodationId);
+    }
+
+    private Specification<Booking> activeBookingByAccommodation(String accommodationId) {
+        return (root, query, cb) -> {
+            Predicate spec = cb.equal(root.get("accommodation").get("id"), accommodationId);
+            spec = cb.and(spec, cb.or(cb.equal(root.get("status"), Status.BOOKED),
+                    cb.equal(root.get("status"), Status.PENDING)));
+            return spec;
+        };
     }
 
     private Specification<Booking> bookingByUser(String uuid) {

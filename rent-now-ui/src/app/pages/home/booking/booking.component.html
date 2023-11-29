@@ -61,14 +61,14 @@
       <div class="box">
         <label for="startDate">Start date</label>
         <p-calendar [(ngModel)]="startDate" [showIcon]="true" id="startDate" class="element"
-                    dateFormat="dd.mm.yy" (ngModelChange)="calculate()"
-                    [minDate]="minStartDate"></p-calendar>
+                    dateFormat="dd.mm.yy" (ngModelChange)="onStartDateChange($event)"
+                    [minDate]="minStartDate" [disabledDates]="disabledStartDates"></p-calendar>
       </div>
       <div class="box">
         <label for="endDate">End date</label>
         <p-calendar [(ngModel)]="endDate" [showIcon]="true" id="endDate" class="element"
-                    [minDate]="minEndDate" (ngModelChange)="calculate()"
-                    dateFormat="dd.mm.yy"></p-calendar>
+                    [minDate]="minEndDate" (ngModelChange)="onEndDateChange($event)"
+                    dateFormat="dd.mm.yy" [disabledDates]="disabledEndDates"></p-calendar>
       </div>
       <div id="costs">
         <b><span id="price">{{booking.price}} zł </span></b>
@@ -91,7 +91,7 @@
       </div>
     </div>
     <div id="button">
-      <p-button label="Reserve" (onClick)="bookAccommodation()"></p-button>
+      <p-button label="Reserve" (onClick)="bookAccommodation()" [disabled]="invalidDateError"></p-button>
     </div>
   </div>
 </div>

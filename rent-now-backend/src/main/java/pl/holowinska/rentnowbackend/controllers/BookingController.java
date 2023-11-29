@@ -15,6 +15,10 @@ import pl.holowinska.rentnowbackend.model.rq.BookingRQ;
 import pl.holowinska.rentnowbackend.model.rs.BookingRS;
 import pl.holowinska.rentnowbackend.services.BookingService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/reservations")
 @Slf4j
@@ -76,6 +80,24 @@ public class BookingController {
             return bookingService.getBookingListByAccommodation(accommodationId, pageable);
         } catch (Exception e) {
             return Page.empty();
+        }
+    }
+
+    @GetMapping("{accommodationId}/booked-start-dates")
+    public List<LocalDate> getBookedStartDatesByAccommodation(@PathVariable String accommodationId) {
+        try {
+            return bookingService.getBookedStartDatesByAccommodation(accommodationId);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @GetMapping("{accommodationId}/booked-end-dates")
+    public List<LocalDate> getBookedEndDatesByAccommodation(@PathVariable String accommodationId) {
+        try {
+            return bookingService.getBookedEndDatesByAccommodation(accommodationId);
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
     }
 }

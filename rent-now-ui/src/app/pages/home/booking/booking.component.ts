@@ -31,6 +31,12 @@ export class BookingComponent implements OnInit {
   minStartDate = new Date();
   minEndDate = new Date();
 
+  startDateToValid = new Date();
+  invalidDateError = false;
+
+  disabledStartDates !: Date[];
+  disabledEndDates !: Date[];
+
   accommodation: AccommodationRS = {
     id: this.accommodationId,
     addressRS: {
@@ -92,6 +98,7 @@ export class BookingComponent implements OnInit {
   ngOnInit() {
     this.loadImages();
     this.getAccommodation();
+    this.getDisabledDates();
     this.minEndDate.setDate(this.minStartDate.getDate() + 1);
   }
 
@@ -150,6 +157,19 @@ export class BookingComponent implements OnInit {
     )
   }
 
+  getDisabledDates(): void {
+    this.bookingService.getBookedStartDatesByAccommodation(this.accommodationId)
+      .subscribe(dates => {
+          this.disabledStartDates = dates
+        }
+      );
+    this.bookingService.getBookedEndDatesByAccommodation(this.accommodationId)
+      .subscribe(dates => {
+          this.disabledEndDates = dates
+        }
+      );
+  }
+
   sumConveniences(): number {
     let total = 0;
     for (const value of this.booking.conveniences.values()) {
@@ -174,6 +194,26 @@ export class BookingComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  onStartDateChange(event: Date) {
+    const today = new Date(Date.now());
+    this.startDateToValid = event;
+    this.invalidDateError = this.startDateToValid === null
+      || (this.startDateToValid.getFullYear() < today.getFullYear() &&
+        this.startDateToValid.getMonth() < today.getMonth() &&
+        this.startDateToValid.getDate() < today.getDate())
+      || this.endDate === undefined ? true : (this.startDateToValid.getFullYear() >= this.endDate.getFullYear() &&
+        this.startDateToValid.getMonth() >= this.endDate.getMonth() &&
+        this.startDateToValid.getDate() >= this.endDate.getDate());
+
+    this.calculate();
+  }
+
+  onEndDateChange(event: Date) {
+    this.invalidDateError = event === null || event <= this.startDateToValid;
+
+    this.calculate();
   }
 
   protected readonly getConvenienceTypeText = getConvenienceTypeText;
