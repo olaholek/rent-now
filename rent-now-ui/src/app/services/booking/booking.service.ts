@@ -12,7 +12,7 @@ import {Page} from "../../data/model/common/Page";
 })
 export class BookingServiceImpl implements BookingService {
 
-  public readonly baseUrl = '/api/reservations'
+  public readonly baseUrl = '/api/reservations';
 
   constructor(private readonly httpClient: HttpClient,
               private readonly dateService: DateService) {

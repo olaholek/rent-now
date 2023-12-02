@@ -47,6 +47,15 @@
 
       <p style="margin-top: 2em;"><b>Max number of people: </b>{{booking.accommodation.maxNoOfPeople}}</p>
       <p><b>Square footage: </b>{{booking.accommodation.squareFootage}} m<sup>2</sup></p>
+      <div id="favourite" *ngIf="mode != 'ownerMode'">
+        <div *ngIf="isFavourite(); then showFillHeart else showHeart"></div>
+        <ng-template #showHeart>
+          <span class="pi pi-heart" id="heart" pTooltip="Add to favourites" (click)="addToFavourites(booking.accommodation.id)"></span>
+        </ng-template>
+        <ng-template #showFillHeart>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="Delete from favourites" (click)="deleteFromFavourites(booking.accommodation.id)"></span>
+        </ng-template>
+      </div>
       <div id="facilitiesListDiv">
         <p class="facilities"><b>Facilities: </b></p>
         <div *ngFor="let option of freeConveniences">

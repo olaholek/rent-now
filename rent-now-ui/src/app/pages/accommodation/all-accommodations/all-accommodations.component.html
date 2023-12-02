@@ -18,12 +18,12 @@
         <p id="price">{{getCost(accommodation.priceForDay)}} zł</p>
       </div>
       <div id="favourite">
-        <div *ngIf="showEmptyHeart; then showHeart else showFillHeart"></div>
+        <div *ngIf="isFavourite(accommodation.id); then showFillHeart else showHeart"></div>
         <ng-template #showHeart>
-          <span class="pi pi-heart" id="heart"></span>
+          <span class="pi pi-heart" id="heart" pTooltip="Add to favourites" (click)="addToFavourites(accommodation.id)"></span>
         </ng-template>
         <ng-template #showFillHeart>
-          <span class="pi pi-heart-fill" id="heart-fill"></span>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="Delete from favourites" (click)="deleteFromFavourites(accommodation.id)"></span>
         </ng-template>
       </div>
       <div id="button">

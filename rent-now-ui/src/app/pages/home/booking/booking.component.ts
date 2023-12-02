@@ -11,6 +11,7 @@ import {KeycloakService} from "keycloak-angular";
 import {BookingServiceImpl} from "../../../services/booking/booking.service";
 import {DateService} from "../../../services/date/date.service";
 import {Location} from "@angular/common";
+import {FavouriteServiceImpl} from "../../../services/favourite/favourite.service";
 
 @Component({
   selector: 'app-booking',
@@ -64,6 +65,9 @@ export class BookingComponent implements OnInit {
 
   booking: BookingRQ = {} as BookingRQ;
 
+  userUUID !: string;
+  favourites: number[] = [];
+
   constructor(private readonly accommodationService: AccommodationServiceImpl,
               private readonly bookingService: BookingServiceImpl,
               private readonly route: ActivatedRoute,
@@ -71,6 +75,7 @@ export class BookingComponent implements OnInit {
               private readonly toastService: ToastService,
               private readonly router: Router,
               private readonly dateService: DateService,
+              private readonly favouriteService: FavouriteServiceImpl,
               private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
@@ -84,6 +89,8 @@ export class BookingComponent implements OnInit {
         }
         this.keycloak.getKeycloakInstance().loadUserProfile().then(profile => {
           this.booking.userUUID = profile.id as string;
+            this.userUUID = profile.id!;
+            this.getFavourites();
         })
       })
 
@@ -214,6 +221,28 @@ export class BookingComponent implements OnInit {
     this.invalidDateError = event === null || event <= this.startDateToValid;
 
     this.calculate();
+  }
+
+  isFavourite(id: number): boolean {
+    return this.favourites.includes(id);
+  }
+
+  addToFavourites(id: number) {
+    this.favouriteService.addToFavourites(this.userUUID, id).subscribe();
+    window.location.reload();
+  }
+
+  deleteFromFavourites(id: number) {
+    this.favouriteService.deleteFromFavourites(this.userUUID, id).subscribe();
+    window.location.reload();
+  }
+
+  getFavourites() {
+    this.favouriteService.getFavouriteListByUser(this.userUUID).subscribe(
+        favouriteList => {
+          this.favourites = favouriteList;
+        }
+    )
   }
 
   protected readonly getConvenienceTypeText = getConvenienceTypeText;

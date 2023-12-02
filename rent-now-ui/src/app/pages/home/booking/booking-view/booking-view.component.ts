@@ -9,6 +9,7 @@ import {BookingRS} from "../../../../data/model/rs/BookingRS";
 import {ConvenienceOption} from "../../../../data/model/common/ConvenienceOption";
 import {catchError} from "rxjs";
 import {Location} from '@angular/common';
+import {FavouriteServiceImpl} from "../../../../services/favourite/favourite.service";
 
 @Component({
   selector: 'app-booking-view',
@@ -29,6 +30,8 @@ export class BookingViewComponent implements OnInit {
   freeConveniences: ConvenienceOption[] = [];
   paidConveniences: ConvenienceOption[] = [];
 
+  favourites: number[] = [];
+
   protected readonly getConvenienceTypeText = getConvenienceTypeText;
 
   constructor(private readonly accommodationService: AccommodationServiceImpl,
@@ -36,6 +39,7 @@ export class BookingViewComponent implements OnInit {
               private readonly route: ActivatedRoute,
               private readonly toastService: ToastService,
               private readonly dateService: DateService,
+              private readonly favouriteService: FavouriteServiceImpl,
               private readonly location: Location) {
     this.route.queryParamMap
       .subscribe(params => {
@@ -109,5 +113,27 @@ export class BookingViewComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  isFavourite(): boolean {
+    return this.favourites.includes(this.booking.accommodation.id);
+  }
+
+  addToFavourites(id: number) {
+    this.favouriteService.addToFavourites(this.booking.userUUID, id).subscribe();
+    window.location.reload();
+  }
+
+  deleteFromFavourites(id: number) {
+    this.favouriteService.deleteFromFavourites(this.booking.userUUID, id).subscribe();
+    window.location.reload();
+  }
+
+  getFavourites() {
+    this.favouriteService.getFavouriteListByUser(this.booking.userUUID).subscribe(
+        favouriteList => {
+          this.favourites = favouriteList;
+        }
+    )
   }
 }

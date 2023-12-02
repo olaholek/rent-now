@@ -1,11 +1,14 @@
 package pl.holowinska.rentnowbackend.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
+import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.services.FavouriteObjectServiceImpl;
 
 import java.util.ArrayList;
@@ -54,9 +57,14 @@ public class FavouriteObjectController {
     }
 
     @GetMapping("{uuid}")
-    public List<Long> getFavouritesByUser(@PathVariable String uuid) {
+    public Page<AccommodationRS> getFavouritesByUser(@PathVariable String uuid, Pageable pageable) {
+        return favouriteObjectService.getFavouritesByUser(uuid, pageable);
+    }
+
+    @GetMapping("{uuid}/favouriteList")
+    public List<Long> getFavouriteListByUser(@PathVariable String uuid) {
         try {
-            return favouriteObjectService.getFavouritesByUser(uuid);
+            return favouriteObjectService.getFavouriteListByUser(uuid);
         } catch (Exception e) {
             return new ArrayList<>();
         }

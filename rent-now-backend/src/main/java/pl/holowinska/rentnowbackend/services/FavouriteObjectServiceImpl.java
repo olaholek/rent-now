@@ -1,16 +1,21 @@
 package pl.holowinska.rentnowbackend.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.holowinska.rentnowbackend.exceptions.AccommodationNotFoundException;
-import pl.holowinska.rentnowbackend.model.entities.Accommodation;
-import pl.holowinska.rentnowbackend.model.entities.FavouriteObject;
-import pl.holowinska.rentnowbackend.model.entities.FavouriteObjectId;
-import pl.holowinska.rentnowbackend.model.entities.User;
+import pl.holowinska.rentnowbackend.mappers.AccommodationMapper;
+import pl.holowinska.rentnowbackend.model.entities.*;
+import pl.holowinska.rentnowbackend.model.enums.ConvenienceType;
+import pl.holowinska.rentnowbackend.model.rs.AccommodationRS;
 import pl.holowinska.rentnowbackend.repository.AccommodationRepository;
+import pl.holowinska.rentnowbackend.repository.ConvenienceRepository;
 import pl.holowinska.rentnowbackend.repository.FavouriteObjectRepository;
 import pl.holowinska.rentnowbackend.repository.UserRepository;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,11 +27,13 @@ public class FavouriteObjectServiceImpl implements FavouriteObjectService {
     private final UserRepository userRepository;
     private final AccommodationRepository accommodationRepository;
     private final FavouriteObjectRepository favouriteObjectRepository;
+    private final ConvenienceRepository convenienceRepository;
 
-    public FavouriteObjectServiceImpl(UserRepository userRepository, AccommodationRepository accommodationRepository, FavouriteObjectRepository favouriteObjectRepository) {
+    public FavouriteObjectServiceImpl(UserRepository userRepository, AccommodationRepository accommodationRepository, FavouriteObjectRepository favouriteObjectRepository, ConvenienceRepository convenienceRepository) {
         this.userRepository = userRepository;
         this.accommodationRepository = accommodationRepository;
         this.favouriteObjectRepository = favouriteObjectRepository;
+        this.convenienceRepository = convenienceRepository;
     }
 
     @Override
@@ -62,9 +69,24 @@ public class FavouriteObjectServiceImpl implements FavouriteObjectService {
     }
 
     @Override
-    public List<Long> getFavouritesByUser(String uuid) {
+    public List<Long> getFavouriteListByUser(String uuid) {
         User user = userRepository.findById(UUID.fromString(uuid))
                 .orElse(userRepository.save(new User(UUID.fromString(uuid))));
         return favouriteObjectRepository.getFavouritesByUser(user.getId());
+    }
+
+    @Override
+    public Page<AccommodationRS> getFavouritesByUser(String uuid, Pageable pageable) {
+        return favouriteObjectRepository.getAllByUser(UUID.fromString(uuid), pageable)
+                .map(a -> AccommodationMapper.mapToDto(a, getConveniences(a.getId())));
+    }
+
+    private HashMap<ConvenienceType, BigDecimal> getConveniences(Long accommodationId) {
+        List<Convenience> convenienceList = convenienceRepository.getConvenienceByAccommodationId(accommodationId);
+        HashMap<ConvenienceType, BigDecimal> conveniences = new HashMap<>();
+        for (Convenience convenience : convenienceList) {
+            conveniences.put(convenience.getId().getConvenienceType(), convenience.getPrice());
+        }
+        return conveniences;
     }
 }
