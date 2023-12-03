@@ -1,23 +1,23 @@
 <div id="main">
   <div id="first">
     <div class="box">
-      <label for="startDate">Start date<span class="asterisk"> *</span></label>
+      <label for="startDate">{{'filter.startDate' | transloco}}<span class="asterisk"> *</span></label>
       <p-calendar [(ngModel)]="value.startDate" [showIcon]="true" id="startDate" class="element"
                   (ngModelChange)="onStartDateChange($event)" dateFormat="dd.mm.yy"
                   [minDate]="minStartDate"></p-calendar>
     </div>
     <div class="box">
-      <label for="endDate">End date<span class="asterisk"> *</span></label>
+      <label for="endDate">{{'filter.endDate' | transloco}}<span class="asterisk"> *</span></label>
       <p-calendar [(ngModel)]="value.endDate" [showIcon]="true" id="endDate" class="element"
                   (ngModelChange)="onEndDateChange($event)" [minDate]="minEndDate"
                   dateFormat="dd.mm.yy"></p-calendar>
     </div>
     <div class="box">
-      <label for="city">City</label>
+      <label for="city">{{'filter.city' | transloco}}</label>
       <input pInputText [(ngModel)]="value.city" id="city" type="text" class="element"/>
     </div>
     <div class="box">
-      <label for="minPrice">Price from</label>
+      <label for="minPrice">{{'filter.priceFrom' | transloco}}</label>
       <input
         pInputText
         [(ngModel)]="value.minPrice"
@@ -30,11 +30,11 @@
         placeholder=" zł"
       />
       <small *ngIf="minPrice.invalid && (minPrice.dirty || minPrice.touched)" class="p-error">
-        Invalid characters.
+        {{'invalidCharacters' | transloco}}
       </small>
     </div>
     <div class="box">
-      <label for="maxPrice">Price to</label>
+      <label for="maxPrice">{{'filter.priceTo' | transloco}}</label>
       <input
         pInputText
         [(ngModel)]="value.maxPrice"
@@ -47,11 +47,11 @@
         placeholder=" zł"
       />
       <small *ngIf="maxPrice.invalid && (maxPrice.dirty || maxPrice.touched)" class="p-error">
-        Invalid characters.
+        {{'invalidCharacters' | transloco}}
       </small>
     </div>
     <div class="box">
-      <label for="maxNumberOfPeople">Number of people</label>
+      <label for="maxNumberOfPeople">{{'filter.numberOfPeople' | transloco}}</label>
       <input [(ngModel)]="value.maxNoOfPeople"
              id="maxNumberOfPeople"
              type="number"
@@ -59,31 +59,31 @@
              class="element"/>
     </div>
     <div id="divButton">
-      <button pButton type="button" label="Search" id="button" (click)="search()"
+      <button pButton type="button" label="{{'filter.search' | transloco}}" id="button" (click)="search()"
               [disabled]="invalidDateError"></button>
     </div>
   </div>
 
   <div id="buttons">
-    <button pButton type="button" label="More filters" id="buttonMore" class="p-button-outlined"
+    <button pButton type="button" label="{{'filter.moreFilters' | transloco}}" id="buttonMore" class="p-button-outlined"
             icon="pi pi-angle-down"
             (click)="toggleFilters()" iconPos="right" *ngIf="!showFilters"></button>
-    <button pButton type="button" label="Less filters" id="buttonLess" class="p-button-outlined" icon="pi pi-angle-up"
+    <button pButton type="button" label="{{'filter.lessFilters' | transloco}}" id="buttonLess" class="p-button-outlined" icon="pi pi-angle-up"
             (click)="toggleFilters()" iconPos="right" *ngIf="showFilters"></button>
   </div>
   <div id="filters">
     <div class="box" *ngIf="showFilters">
-      <label for="name1">Name</label>
+      <label for="name1">{{'filter.name' | transloco}}</label>
       <input pInputText [(ngModel)]="value.name" id="name1" type="text" class="element"/>
     </div>
 
     <div class="box" *ngIf="showFilters">
-      <label for="street">Street</label>
+      <label for="street">{{'filter.street' | transloco}}</label>
       <input pInputText [(ngModel)]="value.street" id="street" type="text" class="element"/>
     </div>
     <div *ngIf="showFilters">
       <div class="box">
-        <label for="square">Square footage</label>
+        <label for="square">{{'filter.square' | transloco}}</label>
         <input
           pInputText
           [(ngModel)]="value.squareFootage"
@@ -95,13 +95,13 @@
           #squareInput="ngModel"
         />
         <small *ngIf="squareInput.invalid && (squareInput.dirty || squareInput.touched)" class="p-error">
-          Invalid characters.
+          {{'invalidCharacters' | transloco}}
         </small>
       </div>
     </div>
   </div>
   <div class="column" *ngIf="showFilters">
-    <p class="facilities">Facilities</p>
+    <p class="facilities">{{'filter.facilities' | transloco}}</p>
     <div id="conveniences" class="field-checkbox">
       <div *ngFor="let category of conveniencesList" class="field-checkbox">
         <div id="convenience-wrapper">

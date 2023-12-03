@@ -33,7 +33,7 @@
 
 #user_icon:hover, #icon_search:hover, #icon_plus:hover {
   color: #e5e4e4;
-  border: 3px solid #e5e4e4;
+  border: 3.5px solid #e5e4e4;
   cursor: pointer;
 
 }
@@ -76,4 +76,33 @@
   flex-direction: row;
   align-items: center;
   margin-right: 1em;
+}
+
+#englishPNG{
+  width: 28px;
+  cursor: pointer;
+  margin-bottom:0.15em;
+  margin-top:0.3em;
+}
+
+#polishPNG{
+  width: 30px;
+  cursor: pointer;
+  margin-top:0.3em;
+}
+
+#flags{
+  display: flex;
+  flex-direction: row;
+  text-align:center;
+}
+
+.flag{
+  display: flex;
+  flex-direction: column;
+  margin-left:0.5em;
+}
+
+#en, #pl{
+  color:white;
 }

@@ -1,0 +1,22 @@
+{
+  "header.tooltip.add": "Add an announcement",
+  "header.tooltip.search": "Search for accommodation",
+  "filter.startDate": "Start date",
+  "filter.endDate": "End date",
+  "filter.city": "City",
+  "filter.priceFrom": "Price from",
+  "filter.priceTo": "Price to",
+  "invalidCharacters": "Invalid characters.",
+  "filter.numberOfPeople": "Number of people",
+  "filter.moreFilters": "More filters",
+  "filter.lessFilters": "Less filters",
+  "filter.name": "Name",
+  "filter.square": "Square footage",
+  "filter.street": "Street",
+  "filter.facilities": "Facilities",
+  "filter.search": "Search",
+  "myAnnouncements": "My announcements",
+  "myReservations": "My reservations",
+  "signOut": "Sign out",
+  "greetings": "Sign out"
+}

@@ -5,9 +5,22 @@
     </div>
   </div>
   <div id="right-div">
-    <span pTooltip="Add an announcement" id="icon_plus" class="pi pi-plus" (click)="toAddAnnouncementPage()"></span>
 
-    <span pTooltip="Search for accommodation" id="icon_search" class="pi pi-search" (click)="toMainPage()"></span>
+    <div id="flags">
+      <div (click)="changeLanguage(languagesList[0].code)" class="flag">
+        <img [src]="languagesList[0].imgUrl" [alt]="languagesList[0].name" id="englishPNG"/>
+        <span id="en"> {{ languagesList[0].shorthand }} </span>
+      </div>
+      <div (click)="changeLanguage(languagesList[1].code)" class="flag"
+      >
+        <img [src]="languagesList[1].imgUrl" [alt]="languagesList[1].name" id="polishPNG"/>
+        <span id="pl"> {{ languagesList[1].shorthand }} </span>
+      </div>
+    </div>
+
+    <span pTooltip="{{ 'header.tooltip.add' | transloco }}" id="icon_plus" class="pi pi-plus" (click)="toAddAnnouncementPage()"></span>
+
+    <span pTooltip="{{ 'header.tooltip.search' | transloco }}" id="icon_search" class="pi pi-search" (click)="toMainPage()"></span>
     <span id="user_icon" class="pi pi-user" (click)="menu.toggle($event)"></span>
     <p-menu #menu [model]="avatarMenuItems" [popup]="true"
             styleClass="menu-items-override"></p-menu>

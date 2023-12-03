@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, isDevMode, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -7,7 +7,7 @@ import {HeaderComponent} from './common/header/header.component';
 import {FooterComponent} from './common/footer/footer.component';
 import {HomeComponent} from './pages/home/home.component';
 import {ErrorPageComponent} from './common/error-page/error-page.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient} from "@angular/common/http";
 import {ButtonModule} from "primeng/button";
 import {SidebarModule} from "primeng/sidebar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -42,6 +42,8 @@ import { AccommodationBookingsComponent } from './pages/home/booking/accommodati
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import { ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {provideTransloco, TranslocoModule} from "@ngneat/transloco";
+import {TranslocoHttpLoader} from "../transloco/TranslocoHttpLoader";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -104,7 +106,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NgOptimizedImage,
     TagModule,
     ConfirmPopupModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TranslocoModule
   ],
   providers: [
     {
@@ -119,7 +122,17 @@ function initializeKeycloak(keycloak: KeycloakService) {
       multi: true
     },
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    provideHttpClient(),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'pl'],
+        defaultLang: 'en',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader
+    })
   ],
   bootstrap: [AppComponent]
 })

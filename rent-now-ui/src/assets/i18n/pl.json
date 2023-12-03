@@ -1,0 +1,22 @@
+{
+  "header.tooltip.add": "Dodaj ogłoszenie",
+  "header.tooltip.search": "Wyszukaj nocleg",
+  "filter.startDate": "Data początkowa",
+  "filter.endDate": "Data końcowa",
+  "filter.city": "Miasto",
+  "filter.priceFrom": "Cena od",
+  "filter.priceTo": "Cena do",
+  "invalidCharacters": "Błędne znaki.",
+  "filter.numberOfPeople": "Liczba osób",
+  "filter.moreFilters": "Więcej filtrów",
+  "filter.lessFilters": "Mniej filtrów",
+  "filter.name": "Nazwa",
+  "filter.square": "Metraż",
+  "filter.street": "Ulica",
+  "filter.facilities": "Udogodnienia",
+  "filter.search": "Szukaj",
+  "myAnnouncements": "Moje ogłoszenia",
+  "myReservations": "Moje rezerwacje",
+  "signOut": "Wyloguj się"
+
+}
