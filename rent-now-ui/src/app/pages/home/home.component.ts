@@ -7,6 +7,7 @@ import {AccommodationServiceImpl} from "../../services/accommodation/accommodati
 import {ToastService} from "../../services/toast/toast.service";
 import {SafeUrl} from "@angular/platform-browser";
 import {DateService} from "../../services/date/date.service";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,11 @@ export class HomeComponent implements OnInit {
   sortOptions = ['From the newest', 'Price high to low', 'Price low to high'];
   options = new Map([
     ['From the newest', 'id,desc'], ['Price high to low', 'priceForDay,desc'], ['Price low to high', 'priceForDay,asc']
+  ]);
+
+  sortOptionsPL = ['Od najnowszych', 'Od najdroższych', 'Od najtańszych'];
+  optionsPL = new Map([
+    ['Od najnowszych', 'id,desc'], ['Od najdroższych', 'priceForDay,desc'], ['Od najtańszych', 'priceForDay,asc']
   ]);
   selectedSort !: string;
 
@@ -43,19 +49,20 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly accommodationService: AccommodationServiceImpl,
     private readonly toastService: ToastService,
-    private readonly dateService: DateService
+    private readonly dateService: DateService,
+    public translocoService: TranslocoService
   ) {
     this.criteria.startDate = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.criteria.endDate = tomorrow;
-    this.selectedSort = this.sortOptions[0];
-    this.sort = <string>this.options.get(this.selectedSort);
+    this.setDefault();
   }
 
   ngOnInit(): void {
     this.pageNo = 0;
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
+    this.setDefault();
   }
 
   onChangeSort() {
@@ -64,10 +71,26 @@ export class HomeComponent implements OnInit {
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
   }
 
+  onChangeSortPL() {
+    this.pageNo = 0;
+    this.sort = <string>this.optionsPL.get(this.selectedSort);
+    this.getAccommodations(this.criteria, this.pageNo, this.sort);
+  }
+
   onPageChange(event: any) {
     this.pageNo = event.page;
     this.getAccommodations(this.criteria, this.pageNo, this.sort);
     window.scrollTo(0, 0);
+  }
+
+  setDefault(){
+    if(this.translocoService.getActiveLang() == 'en') {
+      this.selectedSort = this.sortOptions[0];
+      this.sort = <string>this.options.get(this.selectedSort);
+    }else{
+      this.selectedSort = this.sortOptionsPL[0];
+      this.sort = <string>this.optionsPL.get(this.selectedSort);
+    }
   }
 
   private getAccommodations(criteria: AccommodationCriteriaRQ, pageNumber: number, sort: string) {

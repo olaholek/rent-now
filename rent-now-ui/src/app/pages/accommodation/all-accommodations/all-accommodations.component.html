@@ -13,26 +13,26 @@
         {{ accommodation.addressRS.houseNumber }}
       </p>
       <div id="cost">
-        <p *ngIf="numberOfDays<2" class="numberOfDays">{{numberOfDays}} night</p>
-        <p *ngIf="numberOfDays>1" class="numberOfDays">{{numberOfDays}} nights</p>
+        <p *ngIf="numberOfDays<2" class="numberOfDays">{{numberOfDays}} {{ 'night' | transloco }}:</p>
+        <p *ngIf="numberOfDays>1" class="numberOfDays">{{numberOfDays}} {{ 'nights' | transloco }}</p>
         <p id="price">{{getCost(accommodation.priceForDay)}} zł</p>
       </div>
       <div id="favourite">
         <div *ngIf="isFavourite(accommodation.id); then showFillHeart else showHeart"></div>
         <ng-template #showHeart>
-          <span class="pi pi-heart" id="heart" pTooltip="Add to favourites" (click)="addToFavourites(accommodation.id)"></span>
+          <span class="pi pi-heart" id="heart" pTooltip="{{ 'addToFavourites' | transloco }}" (click)="addToFavourites(accommodation.id)"></span>
         </ng-template>
         <ng-template #showFillHeart>
-          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="Delete from favourites" (click)="deleteFromFavourites(accommodation.id)"></span>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="{{ 'deleteFromFavourites' | transloco }}" (click)="deleteFromFavourites(accommodation.id)"></span>
         </ng-template>
       </div>
       <div id="button">
-        <p-button label="See more" (onClick)="showDetails(accommodation.id)" icon="pi pi-angle-right"
+        <p-button label="{{ 'seeMore' | transloco }}" (onClick)="showDetails(accommodation.id)" icon="pi pi-angle-right"
                   iconPos="right"></p-button>
       </div>
     </div>
   </div>
 </div>
 <div *ngIf="accommodationList.totalElements!= undefined && accommodationList.totalElements === 0">
-  <p id="noAccommodations">No matching accommodations found :(</p>
+  <p id="noAccommodations">{{ 'noMatching' | transloco }} :(</p>
 </div>

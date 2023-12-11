@@ -1,37 +1,37 @@
 <div class="container1">
     <div class="box">
-        <label for="name">Name<span class="asterisk"> *</span></label>
+        <label for="name">{{ 'name' | transloco }}<span class="asterisk"> *</span></label>
         <input pInputText [(ngModel)]="value.name" id="acc-name" type="text" name="name" required #name="ngModel"/>
-        <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Name is required.</small>
+        <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">{{ 'nameRequired' | transloco }}.</small>
     </div>
 </div>
 
 <div class="container2">
     <div class="box">
-        <label for="country">Country<span class="asterisk"> *</span></label>
+        <label for="country">{{ 'country' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.country"
                 id="acc-country"
                 type="text"
                 name="country" required #country="ngModel"/>
-        <small *ngIf="country.invalid && (country.dirty || country.touched)" class="p-error">Country is
-            required.</small>
+        <small *ngIf="country.invalid && (country.dirty || country.touched)" class="p-error">
+          {{ 'countryIsRequired' | transloco }}.</small>
     </div>
 </div>
 
 <div class="container2">
     <div class="box">
-        <label for="city">City<span class="asterisk"> *</span></label>
+        <label for="city">{{ 'city' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.city"
                 id="acc-city"
                 type="text"
                 name="city" required #city="ngModel"/>
-        <small *ngIf="city.invalid && (city.dirty || city.touched)" class="p-error">City is required.</small>
+        <small *ngIf="city.invalid && (city.dirty || city.touched)" class="p-error">{{ 'cityIsRequired' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="street">Street</label>
+        <label for="street">{{ 'street' | transloco }}</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.street"
                 id="acc-street"
@@ -40,18 +40,18 @@
     </div>
 
     <div class="box">
-        <label for="houseNumber">House number<span class="asterisk"> *</span></label>
+        <label for="houseNumber">{{ 'houseNumber' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.houseNumber"
                 id="acc-houseNumber"
                 type="text"
                 name="houseNumber" required #houseNumber="ngModel"/>
-        <small *ngIf="houseNumber.invalid && (houseNumber.dirty || houseNumber.touched)" class="p-error">House number is
-            required.</small>
+        <small *ngIf="houseNumber.invalid && (houseNumber.dirty || houseNumber.touched)" class="p-error">
+          {{ 'houseNumberIsRequired' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="apartmentNumber">Apartment number</label>
+        <label for="apartmentNumber">{{ 'apartmentNumber' | transloco }}</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.apartmentNumber"
                 id="acc-ApartmentNumber"
@@ -62,30 +62,30 @@
 
 <div class="container2">
     <div class="box">
-        <label for="postalCode">Postal code<span class="asterisk"> *</span></label>
+        <label for="postalCode">{{ 'postalCode' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.postalCode"
                 pattern="^[0-9]{2}-[0-9]{3}"
                 id="acc-postalCode"
                 name="postalCode" required #postalCode="ngModel"/>
-        <small *ngIf="postalCode.touched && postalCode?.errors?.['required']" class="p-error">Postal code is
-            required.</small>
-        <small *ngIf="postalCode?.invalid && postalCode?.errors?.['pattern']" class="p-error">Invalid postal code
-            format.</small>
+        <small *ngIf="postalCode.touched && postalCode?.errors?.['required']" class="p-error">
+          {{ 'postalCodeIsRequired' | transloco }}.</small>
+        <small *ngIf="postalCode?.invalid && postalCode?.errors?.['pattern']" class="p-error">
+          {{ 'invalidPostalCodeFormat' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="post">Post<span class="asterisk"> *</span></label>
+        <label for="post">{{ 'post' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.post"
                 id="acc-post"
                 type="text"
                 name="post" required #post="ngModel"/>
-        <small *ngIf="post.invalid && (post.dirty || post.touched)" class="p-error">Post is required.</small>
+        <small *ngIf="post.invalid && (post.dirty || post.touched)" class="p-error">{{ 'postIsRequired' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="county">County</label>
+        <label for="county">{{ 'county' | transloco }}</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.county"
                 id="acc-county"
@@ -94,7 +94,7 @@
     </div>
 
     <div class="box">
-        <label for="province">Province</label>
+        <label for="province">{{ 'province' | transloco }}</label>
         <input
                 pInputText [(ngModel)]="value.addressRQ.province"
                 id="acc-province"
@@ -105,43 +105,45 @@
 
 <div class="container2">
     <div class="box">
-        <label for="price">Price for day<span class="asterisk"> *</span></label>
+        <label for="price">{{ 'price' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.priceForDay"
                 id="acc-price"
                 type="text"
                 pattern="^[0-9]*$"
                 name="price" required #price="ngModel"/>
-        <small *ngIf="price.touched && price?.errors?.['required']" class="p-error">Price for day is required.</small>
-        <small *ngIf="price?.invalid && price?.errors?.['pattern']" class="p-error">Invalid characters.</small>
+        <small *ngIf="price.touched && price?.errors?.['required']" class="p-error">
+          {{ 'priceIsRequired' | transloco }}.</small>
+        <small *ngIf="price?.invalid && price?.errors?.['pattern']" class="p-error">
+          {{ 'invalidCharacters' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="square">Square footage<span class="asterisk"> *</span></label>
+        <label for="square">{{ 'square' | transloco }}<span class="asterisk"> *</span></label>
         <input
                 pInputText [(ngModel)]="value.squareFootage"
                 id="acc-square"
                 type="text"
                 pattern="^[0-9]*$"
                 name="square" required #square="ngModel"/>
-      <small *ngIf="square.touched && square?.errors?.['required']" class="p-error">Square footage is
-            required.</small>
-        <small *ngIf="square?.invalid && square?.errors?.['pattern']" class="p-error">Invalid characters.</small>
+      <small *ngIf="square.touched && square?.errors?.['required']" class="p-error">
+        {{ 'squareFootageIsRequired' | transloco }}.</small>
+        <small *ngIf="square?.invalid && square?.errors?.['pattern']" class="p-error">{{ 'invalidCharacters' | transloco }}.</small>
     </div>
 
     <div class="box">
-        <label for="maxNumberOfPeople">Maximum number of people<span class="asterisk"> *</span></label>
+        <label for="maxNumberOfPeople">{{ 'maxNumberOfPeople' | transloco }}<span class="asterisk"> *</span></label>
         <input [(ngModel)]="value.maxNoOfPeople"
                id="acc-max"
                type="number"
                name="maxNumberOfPeople" required #maxNumberOfPeople="ngModel"/>
         <small *ngIf="maxNumberOfPeople.invalid && (maxNumberOfPeople.dirty || maxNumberOfPeople.touched)"
-               class="p-error">Maximum number of people required.</small>
+               class="p-error">{{ 'maxNumberOfPeopleIsRequired' | transloco }}.</small>
     </div>
 </div>
 
 <div class="box">
-    <label for="description">Description</label>
+    <label for="description">{{ 'description' | transloco }}</label>
     <textarea
             [(ngModel)]="value.description"
             id="acc-desc"
@@ -150,14 +152,14 @@
 
 <div id="facilities-container">
     <div class="column">
-        <h3 class="facilities">Facilities</h3>
+        <h3 class="facilities">{{ 'facilities' | transloco }}</h3>
         <div *ngFor="let category of categories" class="field-checkbox">
             <p-checkbox name="group" [value]="category" (onChange)="onSelectionChange(category)"></p-checkbox>
             <label [for]="category">{{beutify(category.convenience)}}</label>
         </div>
     </div>
     <div class="column">
-        <h3 class="facilities">Additional cost</h3>
+        <h3 class="facilities">{{ 'additionalCost' | transloco }}</h3>
         <div *ngFor="let category of categories" class="field-checkbox">
             <input pInputText id="cost" [disabled]="!category.selected" [(ngModel)]="category.additionalCost"
                    placeholder="0 zł">
@@ -166,5 +168,5 @@
 </div>
 
 <div id="divButton" class="grid grid-nogutter justify-content-end">
-    <p-button label="Save" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    <p-button label="{{ 'save' | transloco }}" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
 </div>

@@ -36,7 +36,11 @@ export class HeaderComponent implements OnInit{
   ) { }
 
   public ngOnInit() {
-    this.initAvatarMenuItems();
+    if(this.translocoService.getActiveLang()=='en') {
+      this.initAvatarMenuItems();
+    }else{
+      this.initAvatarMenuItemsPL();
+    }
   }
 
   private async initAvatarMenuItems(){
@@ -63,6 +67,30 @@ export class HeaderComponent implements OnInit{
     ]
   }
 
+  private async initAvatarMenuItemsPL(){
+    this.avatarMenuItems = [
+      {
+        label: 'Moje ogłoszenia',
+        command: () => {
+          this.router.navigate(['/announcements'])
+        },
+      },
+      {
+        label: 'Moje rezerwacje',
+        command: () => {
+          this.router.navigate(['/reservations'])
+        },
+      },
+      {
+        label: 'Wyloguj się',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.keycloak.logout()
+        },
+      }
+    ]
+  }
+
   public toMainPage() {
     this.router.navigate(['/home']);
   }
@@ -77,5 +105,6 @@ export class HeaderComponent implements OnInit{
 
   public changeLanguage(languageCode: string): void {
     this.translocoService.setActiveLang(languageCode);
+    this.ngOnInit();
   }
 }

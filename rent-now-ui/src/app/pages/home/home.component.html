@@ -1,8 +1,11 @@
 <app-filter (filtersEmitter)="getAccommodationList($event)"></app-filter>
 <div id="sortDiv" style="display: flex; justify-content: flex-end;">
-  <span id="sortText">Sort: </span>
-  <select id="selectSort" (change)="onChangeSort()" [(ngModel)]="selectedSort">
+  <span id="sortText">{{ 'home.sort' | transloco }}: </span>
+  <select *ngIf="translocoService.getActiveLang() == 'en'" class="selectSort" (change)="onChangeSort()" [(ngModel)]="selectedSort">
     <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">{{sortOption}}</option>
+  </select>
+  <select *ngIf="translocoService.getActiveLang() == 'pl'" class="selectSort" (change)="onChangeSortPL()" [(ngModel)]="selectedSort">
+    <option *ngFor="let sortOptionPL of sortOptionsPL" [ngValue]="sortOptionPL">{{sortOptionPL}}</option>
   </select>
 </div>
 <app-all-accommodations [accommodationList]="accommodationList" [photos]="photos"
