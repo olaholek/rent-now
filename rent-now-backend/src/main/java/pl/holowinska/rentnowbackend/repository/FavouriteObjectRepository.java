@@ -18,6 +18,6 @@ public interface FavouriteObjectRepository extends JpaRepository<FavouriteObject
     @Query("select f.id.accommodation.id from FAVOURITE_OBJECT f where f.id.user.id = :userUUID")
     List<Long> getFavouritesByUser(UUID userUUID);
 
-    @Query("select a from ACCOMMODATION a, FAVOURITE_OBJECT f where f.id.user.id = :userUUID and f.id.user.id = a.user.id")
+    @Query("SELECT a FROM ACCOMMODATION a INNER JOIN FAVOURITE_OBJECT f ON a.id = f.id.accommodation.id WHERE f.id.user.id = :userUUID")
     Page<Accommodation> getAllByUser(UUID userUUID, Pageable pageable);
 }

@@ -1,0 +1,41 @@
+<h1>{{ 'yourFavourites' | transloco }}</h1>
+<div id="main" *ngFor="let accommodation of favourites?.content">
+  <div id="full">
+    <div id="left">
+      <p-image [src]="getPhoto(accommodation.id)" alt="Image" width="400em"></p-image>
+    </div>
+    <div id="right">
+      <p id="name"><b>{{accommodation.name}}</b></p>
+      <p>
+        {{ accommodation.addressRS.city }}
+        <ng-container *ngIf="accommodation.addressRS.street !== '' && accommodation.addressRS.street != null">
+          ul.{{ accommodation.addressRS.street }}
+        </ng-container>
+        {{ accommodation.addressRS.houseNumber }}
+      </p>
+      <div id="costs">
+        <b><span id="price">{{accommodation.priceForDay}} zł </span></b>
+        <span class="numberOfDays">/ 1 {{ 'night' | transloco }}</span>
+      </div>
+      <div id="favourite">
+        <div *ngIf="isFavourite(accommodation.id); then showFillHeart else showHeart"></div>
+        <ng-template #showHeart>
+          <span class="pi pi-heart" id="heart" pTooltip="{{ 'addToFavourites' | transloco }}" (click)="addToFavourites(accommodation.id)"></span>
+        </ng-template>
+        <ng-template #showFillHeart>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="{{ 'deleteFromFavourites' | transloco }}" (click)="deleteFromFavourites(accommodation.id)"></span>
+        </ng-template>
+      </div>
+
+      <div id="button">
+        <p-button label="{{ 'seeMore' | transloco }}" (onClick)="showDetails(accommodation.id)" icon="pi pi-angle-right"
+                  iconPos="right"></p-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="favourites.totalElements === 0">
+  <p id="noAccommodations">{{ 'anyFavourites' | transloco }} :(</p>
+</div>
+<p-paginator *ngIf="favourites" (onPageChange)="onPageChange($event)" [first]="1"
+             [rows]="10" [totalRecords]="favourites.totalElements"></p-paginator>

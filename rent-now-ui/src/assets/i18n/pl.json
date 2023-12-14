@@ -71,5 +71,7 @@
   "editAccommodation": "Edytuj ogłoszenie",
   "yourAnnouncements": "Twoje ogłoszenia",
   "addOrDeletePhotos": "Dodaj lub usuń zdjęcia",
-  "anyAnnouncements": "Nie masz jeszcze żadnych ogłoszeń"
+  "yourFavourites": "Twoje ulubione",
+  "anyAnnouncements": "Nie masz jeszcze żadnych ogłoszeń",
+  "anyFavourites": "Nie masz jeszcze żadnych ulubionych noclegów"
 }

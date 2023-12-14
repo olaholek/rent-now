@@ -52,6 +52,12 @@ export class HeaderComponent implements OnInit{
         },
       },
       {
+        label: 'My favourites',
+        command: () => {
+          this.router.navigate(['/favourites'])
+        },
+      },
+      {
         label: 'My reservations',
         command: () => {
           this.router.navigate(['/reservations'])
@@ -76,6 +82,12 @@ export class HeaderComponent implements OnInit{
         },
       },
       {
+        label: 'Moje ulubione',
+        command: () => {
+          this.router.navigate(['/favourites'])
+        },
+      },
+      {
         label: 'Moje rezerwacje',
         command: () => {
           this.router.navigate(['/reservations'])
@@ -93,10 +105,6 @@ export class HeaderComponent implements OnInit{
 
   public toMainPage() {
     this.router.navigate(['/home']);
-  }
-
-  public toFavouritePage() {
-    this.router.navigate(['/favourites']);
   }
 
   public toAddAnnouncementPage() {

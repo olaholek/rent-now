@@ -12,6 +12,9 @@ import {UserAccommodationsComponent} from "./pages/accommodation/user-accommodat
 import {ViewAccommodationComponent} from "./pages/accommodation/view-accommodation/view-accommodation.component";
 import {AccommodationBookingsComponent} from "./pages/home/booking/accommodation-bookings/accommodation-bookings.component";
 import {EditAccommodationComponent} from "./pages/accommodation/edit-accommodation/edit-accommodation.component";
+import {
+  FavouritesAccommodationComponent
+} from "./pages/favourite/favourites-accommodation/favourites-accommodation.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -22,6 +25,7 @@ const routes: Routes = [
   {path: 'edit-accommodation', component: EditAccommodationComponent, pathMatch: 'full'},
   {path: 'announcements', component: UserAccommodationsComponent, pathMatch: 'full'},
   {path: 'reservations', component: AllBookingsComponent, pathMatch: 'full'},
+  {path: 'favourites', component: FavouritesAccommodationComponent, pathMatch: 'full'},
   {path: 'booking/view', component: BookingViewComponent, pathMatch: 'full'},
   {
     path: 'announcements/add', component: AccommodationCreateComponent,

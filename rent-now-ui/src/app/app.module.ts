@@ -44,6 +44,7 @@ import { ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {provideTransloco, TranslocoModule} from "@ngneat/transloco";
 import {TranslocoHttpLoader} from "../transloco/TranslocoHttpLoader";
+import { FavouritesAccommodationComponent } from './pages/favourite/favourites-accommodation/favourites-accommodation.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -80,7 +81,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UserAccommodationsComponent,
     ViewAccommodationComponent,
     EditAccommodationComponent,
-    AccommodationBookingsComponent
+    AccommodationBookingsComponent,
+    FavouritesAccommodationComponent
   ],
   imports: [
     BrowserModule,

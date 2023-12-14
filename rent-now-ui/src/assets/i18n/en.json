@@ -70,6 +70,8 @@
   "anyAnnouncements": "You don't have any announcements yet",
   "anyReservations": "You don't have any reservations yet",
   "addPhotos": "Add photos of your accommodation",
+  "yourFavourites": "Your favourites",
+  "anyFavourites": "You don't have any favourite accommodation yet",
   "anyReservationsForAccommodation": "This accommodation doesn't have any reservations yet",
   "maxNoOfPeople": "Max number of people"
 }
