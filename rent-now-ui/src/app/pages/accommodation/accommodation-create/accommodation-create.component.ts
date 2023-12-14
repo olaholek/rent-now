@@ -1,35 +1,42 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem, MessageService} from "primeng/api";
 import {Subscription} from "rxjs";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
-    selector: 'app-accommodation-create',
-    templateUrl: './accommodation-create.component.html',
-    styleUrls: ['./accommodation-create.component.scss']
+  selector: 'app-accommodation-create',
+  templateUrl: './accommodation-create.component.html',
+  styleUrls: ['./accommodation-create.component.scss']
 })
 export class AccommodationCreateComponent implements OnInit {
 
-    items: MenuItem[] = [];
-    subscription: Subscription | undefined;
+  items: MenuItem[] = [];
+  subscription: Subscription | undefined;
 
-    constructor(public messageService: MessageService) {
-    }
+  constructor(public translocoService: TranslocoService) {
+  }
 
-    ngOnInit() {
-        this.items = [{
-            label: 'Data',
-            routerLink: 'data'
-        },
-            {
-                label: 'Photos',
-                routerLink: 'photos'
-            }
-        ];
-    }
-
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+  ngOnInit() {
+    if (this.translocoService.getActiveLang() === 'en') {
+      this.items = [{
+        label: 'Data',
+        routerLink: 'data'
+      },
+        {
+          label: 'Photos',
+          routerLink: 'photos'
         }
+      ];
+    } else {
+      this.items = [{
+        label: 'Dane',
+        routerLink: 'data'
+      },
+        {
+          label: 'Zdjęcia',
+          routerLink: 'photos'
+        }
+      ];
     }
+  }
 }

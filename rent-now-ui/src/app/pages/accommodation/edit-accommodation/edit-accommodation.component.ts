@@ -11,6 +11,7 @@ import {Location} from "@angular/common";
 import {AccommodationRQ} from "../../../data/model/rq/AccommodationRQ";
 import {AddressRQ} from "../../../data/model/rq/AddressRQ";
 import {AddressRS} from "../../../data/model/rs/AddressRS";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-edit-accommodation',
@@ -34,6 +35,7 @@ export class EditAccommodationComponent implements OnInit {
               private readonly toastService: ToastService,
               private readonly accommodationService: AccommodationServiceImpl,
               private readonly route: ActivatedRoute,
+              private readonly translocoService: TranslocoService,
               private readonly router: Router,
               private readonly location: Location) {
     this.route.queryParamMap.subscribe(params => {
@@ -143,7 +145,8 @@ export class EditAccommodationComponent implements OnInit {
   public onDeleteClick(event: Event, photo: string): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Are you sure you want to delete this photo?',
+      message: this.translocoService.getActiveLang()=='en' ? 'Are you sure you want to delete this photo?' :
+      'Jesteś pewny, że chcesz usunąć to zdjęcie?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.accommodationService.deletePhoto(photo, this.accommodationId)

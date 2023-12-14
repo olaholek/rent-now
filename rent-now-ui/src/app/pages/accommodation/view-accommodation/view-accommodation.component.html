@@ -44,23 +44,23 @@
 
       <div id="angle">
         <div id="edit">
-          <p-button icon="pi pi-pencil" label="Edit" (onClick)="editAnnouncement()"></p-button>
+          <p-button icon="pi pi-pencil" label="{{ 'edit' | transloco }}" (onClick)="editAnnouncement()"></p-button>
         </div>
         <div id="delete">
-          <button pButton icon="pi pi-times" class="p-button-danger" label="Delete"
+          <button pButton icon="pi pi-times" class="p-button-danger" label="{{ 'delete' | transloco }}"
                   (click)="confirm()"></button>
         </div>
       </div>
 
-      <p style="margin-top: 2em;"><b>Max number of people: </b>{{accommodation.maxNoOfPeople}}</p>
-      <p><b>Square footage: </b>{{accommodation.squareFootage}} m<sup>2</sup></p>
+      <p style="margin-top: 2em;"><b>{{ 'maxNoOfPeople' | transloco }}: </b>{{accommodation.maxNoOfPeople}}</p>
+      <p><b>{{ 'square' | transloco }}: </b>{{accommodation.squareFootage}} m<sup>2</sup></p>
       <div id="facilitiesListDiv">
-        <p class="facilities"><b>Facilities: </b></p>
+        <p class="facilities"><b>{{ 'facilities' | transloco }}: </b></p>
         <div *ngFor="let option of freeConveniences">
           <span class="pi pi-circle-fill" id="circle"></span>
           <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
         </div>
-        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>Additional facilities: </b></p>
+        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>{{ 'additionalFacilities' | transloco }}: </b></p>
         <div id="additional">
           <div>
             <div *ngFor="let option of paidConveniences" id="options">
@@ -79,17 +79,17 @@
       </div>
       <div id="costs">
         <b><span id="price">{{accommodation.priceForDay}} zł </span></b>
-        <span class="numberOfDays">/ 1 night</span>
+        <span class="numberOfDays">/ 1 {{ 'night' | transloco }}</span>
       </div>
     </div>
   </div>
   <div class="column">
     <div id="descriptionDiv">
-      <p class="header">Description</p>
+      <p class="header">{{ 'description' | transloco }}</p>
       <p id="description">{{accommodation.description}}</p>
     </div>
     <div id="button">
-      <p-button label="Show reservations" (onClick)="showReservations()"></p-button>
+      <p-button label="{{ 'showReservations' | transloco }}" (onClick)="showReservations()"></p-button>
     </div>
   </div>
 </div>

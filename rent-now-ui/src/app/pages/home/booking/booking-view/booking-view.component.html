@@ -45,24 +45,24 @@
       <p-tag *ngIf="booking.status==='PENDING'" severity="warning" [value]="booking.status"></p-tag>
       <p-tag *ngIf="booking.status==='CANCELED'" severity="danger" [value]="booking.status"></p-tag>
 
-      <p style="margin-top: 2em;"><b>Max number of people: </b>{{booking.accommodation.maxNoOfPeople}}</p>
-      <p><b>Square footage: </b>{{booking.accommodation.squareFootage}} m<sup>2</sup></p>
+      <p style="margin-top: 2em;"><b>{{ 'maxNoOfPeople' | transloco }}: </b>{{booking.accommodation.maxNoOfPeople}}</p>
+      <p><b>{{ 'square' | transloco }}: </b>{{booking.accommodation.squareFootage}} m<sup>2</sup></p>
       <div id="favourite" *ngIf="mode != 'ownerMode'">
         <div *ngIf="isFavourite(); then showFillHeart else showHeart"></div>
         <ng-template #showHeart>
-          <span class="pi pi-heart" id="heart" pTooltip="Add to favourites" (click)="addToFavourites(booking.accommodation.id)"></span>
+          <span class="pi pi-heart" id="heart" pTooltip="{{ 'addToFavourites' | transloco }}" (click)="addToFavourites(booking.accommodation.id)"></span>
         </ng-template>
         <ng-template #showFillHeart>
-          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="Delete from favourites" (click)="deleteFromFavourites(booking.accommodation.id)"></span>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="{{ 'deleteFromFavourites' | transloco }}" (click)="deleteFromFavourites(booking.accommodation.id)"></span>
         </ng-template>
       </div>
       <div id="facilitiesListDiv">
-        <p class="facilities"><b>Facilities: </b></p>
+        <p class="facilities"><b>{{ 'facilities' | transloco }}: </b></p>
         <div *ngFor="let option of freeConveniences">
           <span class="pi pi-circle-fill" id="circle"></span>
           <label [for]="option">{{getConvenienceTypeText(option.convenience)}}</label>
         </div>
-        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>Additional facilities: </b></p>
+        <p class="facilities" *ngIf="paidConveniences.length!=0"><b>{{ 'additionalFacilities' | transloco }}: </b></p>
         <div id="additional">
           <div>
             <div *ngFor="let option of paidConveniences" id="options">
@@ -81,28 +81,29 @@
       </div>
       <div id="dates">
         <div class="box">
-          <label class="dateText"><b>Start date</b></label>
+          <label class="dateText"><b>{{ 'filter.startDate' | transloco }}</b></label>
           <input type="text" [value]="booking.startDate | date: 'dd.MM.yyyy'" disabled id="startDate">
         </div>
         <div class="box">
-          <label class="dateText"><b>End date</b></label>
+          <label class="dateText"><b>{{ 'filter.endDate' | transloco }}</b></label>
           <input type="text" [value]="booking.endDate | date: 'dd.MM.yyyy'" disabled id="endDate">
         </div>
         <div id="costs">
           <b><span id="price">{{booking.price}} zł </span></b>
-          <span *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} night</span>
-          <span *ngIf="numberOfDays>1" class="numberOfDays">/ {{numberOfDays}} nights</span>
+          <span *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} {{ 'night' | transloco }}</span>
+          <span *ngIf="numberOfDays>1 && numberOfDays<5" class="numberOfDays">/ {{numberOfDays}} {{ 'oddNights' | transloco }}</span>
+          <span *ngIf="numberOfDays>4" class="numberOfDays">/ {{numberOfDays}} {{ 'nights' | transloco }}</span>
         </div>
       </div>
     </div>
   </div>
   <div class="column">
     <div id="descriptionDiv">
-      <p class="header">Description</p>
+      <p class="header">{{ 'description' | transloco }}</p>
       <p id="description">{{booking.accommodation.description}}</p>
     </div>
     <div id="button" *ngIf="booking.status === 'BOOKED' && mode == null">
-      <p-button label="Cancel reservation" (onClick)="cancelBooking()"></p-button>
+      <p-button label="{{ 'cancelReservation' | transloco }}" (onClick)="cancelBooking()"></p-button>
     </div>
   </div>
 </div>

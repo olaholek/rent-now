@@ -1,4 +1,4 @@
-<h1>Your announcements</h1>
+<h1>{{ 'yourAnnouncements' | transloco }}</h1>
 <div id="main" *ngFor="let accommodation of accommodationList?.content">
   <div id="full">
     <div id="left">
@@ -16,17 +16,17 @@
 
       <div id="costs">
         <b><span id="price">{{accommodation.priceForDay}} zł </span></b>
-        <span class="numberOfDays">/ 1 night</span>
+        <span class="numberOfDays">/ 1 {{ 'night' | transloco }}</span>
       </div>
       <div id="button">
-        <p-button label="See more" (onClick)="showDetails(accommodation.id)" icon="pi pi-angle-right"
+        <p-button label="{{ 'seeMore' | transloco }}" (onClick)="showDetails(accommodation.id)" icon="pi pi-angle-right"
                   iconPos="right"></p-button>
       </div>
     </div>
   </div>
 </div>
 <div *ngIf="accommodationList.totalElements === 0">
-  <p id="noAccommodations">You don't have any announcements yet :(</p>
+  <p id="noAccommodations">{{ 'anyAnnouncements' | transloco }} :(</p>
 </div>
 <p-paginator *ngIf="accommodationList" (onPageChange)="onPageChange($event)" [first]="1"
              [rows]="10" [totalRecords]="accommodationList.totalElements"></p-paginator>

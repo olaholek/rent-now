@@ -28,13 +28,22 @@
   right: 0;
 }
 
+#favourite {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 #heart-fill {
   font-size: 1.7em;
   color: #cc6969;
+  cursor: pointer;
 }
 
 #heart {
   font-size: 1.7em;
+  color: #cc6969;
+  cursor: pointer;
 }
 
 #dates {

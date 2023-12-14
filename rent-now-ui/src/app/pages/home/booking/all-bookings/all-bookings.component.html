@@ -1,4 +1,4 @@
-<h1>Your reservations</h1>
+<h1>{{ 'yourReservations' | transloco }}</h1>
 <div id="main" *ngFor="let booking of bookingList?.content">
   <div id="full">
     <div id="left">
@@ -15,28 +15,29 @@
       </p>
       <div id="dates">
         <div class="box">
-          <label class="dateText"><b>Start date</b></label>
+          <label class="dateText"><b>{{ 'filter.startDate' | transloco }}</b></label>
           <input type="text" [value]="booking.startDate | date: 'dd.MM.yyyy'" disabled id="startDate">
         </div>
         <div class="box">
-          <label class="dateText"><b>End date</b></label>
+          <label class="dateText"><b>{{ 'filter.endDate' | transloco }}</b></label>
           <input type="text" [value]="booking.endDate | date: 'dd.MM.yyyy'" disabled id="endDate">
         </div>
         <div id="costs">
           <b><span id="price">{{booking.price}} zł </span></b>
-          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)<2" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} night</span>
-          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)>1" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} nights</span>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)<2" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} {{ 'night' | transloco }}</span>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)>1 && getNumberOfDays(booking.startDate, booking.endDate)<5" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} {{ 'oddNights' | transloco }}</span>
+          <span *ngIf="getNumberOfDays(booking.startDate, booking.endDate)>4" class="numberOfDays">/ {{getNumberOfDays(booking.startDate, booking.endDate)}} {{ 'nights' | transloco }}</span>
         </div>
       </div>
-<!--      <div id="favourite">-->
-<!--        <div *ngIf="showEmptyHeart; then showHeart else showFillHeart"></div>-->
-<!--        <ng-template #showHeart>-->
-<!--          <span class="pi pi-heart" id="heart"></span>-->
-<!--        </ng-template>-->
-<!--        <ng-template #showFillHeart>-->
-<!--          <span class="pi pi-heart-fill" id="heart-fill"></span>-->
-<!--        </ng-template>-->
-<!--      </div>-->
+      <div id="favourite">
+        <div *ngIf="isFavourite(booking.accommodation.id); then showFillHeart else showHeart"></div>
+        <ng-template #showHeart>
+          <span class="pi pi-heart" id="heart" pTooltip="{{ 'addToFavourites' | transloco }}" (click)="addToFavourites(booking.accommodation.id)"></span>
+        </ng-template>
+        <ng-template #showFillHeart>
+          <span class="pi pi-heart-fill" id="heart-fill" pTooltip="{{ 'deleteFromFavourites' | transloco }}" (click)="deleteFromFavourites(booking.accommodation.id)"></span>
+        </ng-template>
+      </div>
       <p-tag *ngIf="booking.status==='BOOKED'" [value]="booking.status"></p-tag>
       <p-tag *ngIf="booking.status==='FINISHED'" severity="success" [value]="booking.status"></p-tag>
       <p-tag *ngIf="booking.status==='PENDING'" severity="warning" [value]="booking.status"></p-tag>
@@ -44,17 +45,14 @@
 
 
       <div id="button">
-        <p-button label="See more" (onClick)="showDetails(booking.id)" icon="pi pi-angle-right"
+        <p-button label="{{ 'seeMore' | transloco }}" (onClick)="showDetails(booking.id)" icon="pi pi-angle-right"
                   iconPos="right"></p-button>
       </div>
     </div>
   </div>
 </div>
 <div *ngIf="bookingList.totalElements === 0">
-  <p id="noAccommodations">You don't have any reservations yet :(</p>
+  <p id="noAccommodations">{{ 'anyReservations' | transloco }} :(</p>
 </div>
-
-
-
 <p-paginator *ngIf="bookingList" (onPageChange)="onPageChange($event)" [first]="1"
              [rows]="10" [totalRecords]="bookingList.totalElements"></p-paginator>
