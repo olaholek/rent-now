@@ -42,6 +42,7 @@ label {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .element {
@@ -79,11 +80,13 @@ label {
   background-color: #f3f1ef;
   float: right;
   width: 9em;
+  margin-right:1.5em;
 }
 
 #filters {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .facilities {

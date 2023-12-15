@@ -1,6 +1,8 @@
 #left {
-  width: 45%;
-  height: 18em;
+  width: 40%;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
 }
 
 #full {
@@ -19,7 +21,6 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  margin-bottom: 2em;
 }
 
 h1{
@@ -43,4 +44,31 @@ h1{
 #noAccommodations {
   text-align: center;
   margin: 2em;
+}
+
+@media only screen and (max-width: 800px) {
+  #full {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  #left {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    margin: 0.5em;
+  }
+
+  #costs {
+    margin-bottom: 0em;
+    position:relative;
+  }
+
+  #favourite {
+    position: absolute;
+    top: -0.7em;
+    right: -1.2em;
+  }
 }

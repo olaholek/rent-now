@@ -17,8 +17,7 @@ public class SchedulerConfig {
         this.updateBookingStatusJob = updateBookingStatusJob;
     }
 
-    //    @Scheduled(cron = "0 0 1 * * ?")
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedRate = 3600000)
     public void executeUpdateStatusJob() {
         updateBookingStatusJob.executeJob(new JobContext());
     }

@@ -1,7 +1,7 @@
 <div id="main" *ngFor="let accommodation of accommodationList?.content">
   <div id="full">
     <div id="left">
-      <p-image [src]="getPhoto(accommodation.id)" alt="Image" width="400em"></p-image>
+      <p-image [src]="getPhoto(accommodation.id)" alt="Image" width="90%"></p-image>
     </div>
     <div id="right">
       <p id="name"><b>{{accommodation.name}}</b></p>
@@ -13,9 +13,9 @@
         {{ accommodation.addressRS.houseNumber }}
       </p>
       <div id="cost">
-        <p *ngIf="numberOfDays<2" class="numberOfDays">/ {{numberOfDays}} {{ 'night' | transloco }}</p>
-        <p *ngIf="numberOfDays>1 && numberOfDays<5" class="numberOfDays">/ {{numberOfDays}} {{ 'oddNights' | transloco }}</p>
-        <p *ngIf="numberOfDays>4" class="numberOfDays">/ {{numberOfDays}} {{ 'nights' | transloco }}</p>
+        <p *ngIf="numberOfDays<2" class="numberOfDays"> {{numberOfDays}} {{ 'night' | transloco }}</p>
+        <p *ngIf="numberOfDays>1 && numberOfDays<5" class="numberOfDays"> {{numberOfDays}} {{ 'oddNights' | transloco }}</p>
+        <p *ngIf="numberOfDays>4" class="numberOfDays"> {{numberOfDays}} {{ 'nights' | transloco }}</p>
         <p id="price">{{getCost(accommodation.priceForDay)}} zł</p>
       </div>
       <div id="favourite">

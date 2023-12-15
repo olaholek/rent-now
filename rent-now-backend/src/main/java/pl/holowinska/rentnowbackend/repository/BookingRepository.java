@@ -15,7 +15,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
 
     @Query("select distinct b.accommodation.id from BOOKING b where DATE(b.startDate) <= :startDate " +
             "and DATE(b.endDate) > :startDate and b.status!='CANCELED' " +
-            "or DATE(b.endDate) >= :endDate and DATE(b.startDate) < :endDate and b.status!='CANCELED'")
+            "or DATE(b.endDate) >= :endDate and DATE(b.startDate) < :endDate or DATE(b.endDate) <= :endDate and DATE(b.startDate) >= :startDate" +
+            " and b.status!='CANCELED'")
     List<Long> getBookingAccommodationIdByDates(LocalDate startDate, LocalDate endDate);
 
     @Modifying
@@ -26,10 +27,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long>, JpaSpec
     @Query("update BOOKING b set b.status='FINISHED' where b.status='PENDING' and DATE(b.endDate) < CURDATE()")
     void updateFinishedReservations();
 
-    @Query("select case when count(*) = 0 then true else false end " +
-            "from BOOKING b where b.status != 'CANCELED' and b.accommodation.id= :accommodationId and " +
-            "(DATE(b.startDate) <= :startDate and DATE(b.endDate) > :startDate or " +
-            "DATE(b.endDate) >= :endDate and DATE(b.startDate) < :endDate)")
+    @Query("select case when count(*) > 0 then false else true end " +
+            "from BOOKING b where (b.status = 'BOOKED' or b.status = 'PENDING') and b.accommodation.id= :accommodationId and " +
+            "(DATE(b.startDate) >= :startDate and DATE(b.endDate) <= :endDate or " +
+            "DATE(b.startDate) >= :startDate and DATE(b.startDate) < :endDate or " +
+            "DATE(b.endDate) <= :endDate and DATE(b.endDate) > :startDate)")
     boolean isBookingAvailable(LocalDate startDate, LocalDate endDate, Long accommodationId);
 
     @Query("select b from BOOKING b where b.accommodation.id= :accommodationId and " +
