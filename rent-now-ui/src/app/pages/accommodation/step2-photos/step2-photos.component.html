@@ -1,5 +1,7 @@
 <h2>{{ 'addPhotos' | transloco }}</h2>
-<p-fileUpload name="file"
+<p-fileUpload name="file" [chooseLabel]="isPolish ? chooseLabelPolish : chooseLabelEnglish"
+              [uploadLabel]="isPolish ? uploadLabelPolish : uploadLabelEnglish"
+              [cancelLabel]="isPolish ? cancelLabelPolish : cancelLabelEnglish"
               [customUpload]="true"
               (uploadHandler)="onUpload($event)"
               [multiple]="true" accept="image/*">

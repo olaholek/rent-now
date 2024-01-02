@@ -214,11 +214,25 @@ export class BookingComponent implements OnInit {
         this.startDateToValid.getMonth() >= this.endDate.getMonth() &&
         this.startDateToValid.getDate() >= this.endDate.getDate());
 
+    for (let date of this.disabledStartDates) {
+      if(this.startDate != null && this.endDate!=null &&
+      this.startDate<date && this.endDate>date){
+        this.invalidDateError = true;
+      }
+    }
+
     this.calculate();
   }
 
   onEndDateChange(event: Date) {
     this.invalidDateError = event === null || event <= this.startDateToValid;
+
+    for (let date of this.disabledStartDates) {
+      if(this.startDate != null && this.endDate!=null &&
+        this.startDate<date && this.endDate>date){
+        this.invalidDateError = true;
+      }
+    }
 
     this.calculate();
   }

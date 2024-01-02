@@ -36,71 +36,37 @@ export class HeaderComponent implements OnInit{
   ) { }
 
   public ngOnInit() {
-    if(this.translocoService.getActiveLang()=='en') {
-      this.initAvatarMenuItems();
-    }else{
-      this.initAvatarMenuItemsPL();
-    }
+    this.changeLanguage(this.translocoService.getActiveLang());
   }
 
-  private async initAvatarMenuItems(){
+  private async initAvatarMenuItems(languageCode: string): Promise<void> {
     this.avatarMenuItems = [
       {
-        label: 'My announcements',
+        label: languageCode === 'en' ? 'My announcements' : 'Moje ogłoszenia',
         command: () => {
           this.router.navigate(['/announcements'])
         },
       },
       {
-        label: 'My favourites',
+        label: languageCode === 'en' ? 'My favourites' : 'Moje ulubione',
         command: () => {
           this.router.navigate(['/favourites'])
         },
       },
       {
-        label: 'My reservations',
+        label: languageCode === 'en' ? 'My reservations' : 'Moje rezerwacje',
         command: () => {
           this.router.navigate(['/reservations'])
         },
       },
       {
-        label: 'Sign out',
+        label: languageCode === 'en' ? 'Sign out' : 'Wyloguj się',
         icon: 'pi pi-sign-out',
         command: () => {
           this.keycloak.logout()
         },
       }
-    ]
-  }
-
-  private async initAvatarMenuItemsPL(){
-    this.avatarMenuItems = [
-      {
-        label: 'Moje ogłoszenia',
-        command: () => {
-          this.router.navigate(['/announcements'])
-        },
-      },
-      {
-        label: 'Moje ulubione',
-        command: () => {
-          this.router.navigate(['/favourites'])
-        },
-      },
-      {
-        label: 'Moje rezerwacje',
-        command: () => {
-          this.router.navigate(['/reservations'])
-        },
-      },
-      {
-        label: 'Wyloguj się',
-        icon: 'pi pi-sign-out',
-        command: () => {
-          this.keycloak.logout()
-        },
-      }
-    ]
+    ];
   }
 
   public toMainPage() {
@@ -113,6 +79,7 @@ export class HeaderComponent implements OnInit{
 
   public changeLanguage(languageCode: string): void {
     this.translocoService.setActiveLang(languageCode);
-    this.ngOnInit();
+    localStorage.setItem('lang', languageCode);
+    this.initAvatarMenuItems(languageCode);
   }
 }

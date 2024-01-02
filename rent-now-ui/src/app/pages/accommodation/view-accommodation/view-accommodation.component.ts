@@ -8,6 +8,7 @@ import {ConvenienceType, getConvenienceTypeText} from "../../../data/model/commo
 import {ConfirmationService} from "primeng/api";
 import {catchError} from "rxjs";
 import {ToastService} from "../../../services/toast/toast.service";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-view-accommodation',
@@ -31,6 +32,7 @@ export class ViewAccommodationComponent implements OnInit {
 
   constructor(private readonly accommodationService: AccommodationServiceImpl,
               private readonly route: ActivatedRoute,
+              private readonly translocoService: TranslocoService,
               private readonly router: Router,
               private readonly toastService: ToastService,
               private readonly location: Location,
@@ -99,25 +101,42 @@ export class ViewAccommodationComponent implements OnInit {
 
   deleteAnnouncement(): void {
     this.accommodationService.deleteAccommodation(this.accommodationId).pipe(catchError((error) => {
-      this.toastService.showError('Error during deleting announcement.');
+      this.translocoService.getActiveLang() === 'en' ?
+        this.toastService.showError('Error during deleting announcement.') :
+        this.toastService.showError('Wystąpił błąd podczas usuwania ogłoszenia.')
       throw error;
     }))
       .subscribe((res) => {
-        this.toastService.showSuccess('Announcement deleted successfully.');
+        this.translocoService.getActiveLang() === 'en' ?
+          this.toastService.showSuccess('Announcement deleted successfully.') :
+          this.toastService.showError('Ogłoszenie zostało usunięte.')
         this.goBack()
       });
   }
 
   confirm() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this announcement?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.deleteAnnouncement();
-      },
-      reject: () => {
-      }
-    });
+    if (this.translocoService.getActiveLang() === 'en') {
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to delete this announcement?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.deleteAnnouncement();
+        },
+        reject: () => {
+        }
+      });
+    } else {
+      this.confirmationService.confirm({
+        message: 'Jesteś pewny, że chcesz usunąć ten nocleg?',
+        header: 'Potwierdzenie',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.deleteAnnouncement();
+        },
+        reject: () => {
+        }
+      });
+    }
   }
 }

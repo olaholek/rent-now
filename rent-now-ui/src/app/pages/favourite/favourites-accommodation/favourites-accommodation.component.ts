@@ -63,7 +63,7 @@ export class FavouritesAccommodationComponent implements OnInit{
   }
 
   showDetails(accommodationId: number) {
-    this.router.navigate(['accommodations/view'], {
+    this.router.navigate(['booking'], {
       queryParams: {
         id: accommodationId
       }
