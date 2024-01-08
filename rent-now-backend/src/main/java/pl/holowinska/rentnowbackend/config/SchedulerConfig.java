@@ -10,7 +10,7 @@ import pl.holowinska.rentnowbackend.jobs.UpdateBookingStatusJob;
 @Configuration
 @EnableScheduling
 public class SchedulerConfig {
-    private UpdateBookingStatusJob updateBookingStatusJob;
+    private final UpdateBookingStatusJob updateBookingStatusJob;
 
     @Autowired
     public SchedulerConfig(UpdateBookingStatusJob updateBookingStatusJob) {
